@@ -5,18 +5,18 @@
   <link rel="stylesheet" href="../css/normalize.css">
 </head>
 
-<div class="container">
-
   <div class="input-group">
-    <input type="radio" name="role" value="true" id="login-button" [(ngModel)]="login" />
+    <input type="radio" name="role" value="true" id="login-button" routerLink="/login" />
     <label for="login-button">Login</label>
-    <input type="radio" name="role" value="false" id="register-button" [(ngModel)]="login" />
+    <input type="radio" name="role" value="false" id="register-button" routerLink="/registration" />
     <label for="register-button">Register</label>
   </div>
 
   <br>
 
-  <form id="register-form" action="signup.php" method="post">
+  <div class="container">
+
+  <form id="register-form">
 
     <div class="space-bot text-center">
       <h1>Registration</h1>

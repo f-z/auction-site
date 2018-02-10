@@ -14,6 +14,7 @@ var app_routing_module_1 = require("./app-routing.module");
 var item_component_1 = require("./item.component");
 var item_details_component_1 = require("./item-details.component");
 var registration_component_1 = require("./registration.component");
+var login_component_1 = require("./login.component");
 var search_pipe_1 = require("./search.pipe");
 var common_1 = require("@angular/common");
 var http_1 = require("@angular/common/http");
@@ -29,6 +30,7 @@ AppModule = __decorate([
             home_1.HomeComponent,
             app_component_1.AppComponent,
             registration_component_1.RegistrationComponent,
+            login_component_1.LoginComponent,
             item_component_1.ItemComponent,
             item_details_component_1.ItemDetailsComponent,
             search_pipe_1.SearchPipe

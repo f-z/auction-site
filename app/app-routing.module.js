@@ -9,12 +9,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var app_component_1 = require("./app.component");
 var registration_component_1 = require("./registration.component");
+var login_component_1 = require("./login.component");
 var item_details_component_1 = require("./item-details.component");
 var routes = [
     { path: '', redirectTo: '/app', pathMatch: 'full' },
     { path: 'app', component: app_component_1.AppComponent },
     { path: 'registration', component: registration_component_1.RegistrationComponent },
-    // { path: 'login', component: LoginComponent },
+    { path: 'login', component: login_component_1.LoginComponent },
     { path: 'item-details', component: item_details_component_1.ItemDetailsComponent }
 ];
 var AppRoutingModule = (function () {
