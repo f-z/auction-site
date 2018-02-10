@@ -1,0 +1,143 @@
+/* -------------- */
+
+/* Login Card Styles */
+
+/* Inspired by: https://www.w3schools.com/css/css3_buttons.asp. */
+
+/* -------------- */
+
+.login {
+  position: fixed;
+  top: 0;
+  right: 0;
+  font-weight: 300;
+  z-index: 1;
+  background-color: #1A1A1D;
+  border: none;
+}
+
+.login .button {
+  text-align: center;
+  font-size: 16px;
+  width: 150px;
+  cursor: pointer;
+  padding: 10px 10px;
+  opacity: .95;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+  float: right;
+}
+
+.login .button span {
+  cursor: pointer;
+  display: inline-block;
+  transition: 0.5s;
+}
+
+.login .button span:after {
+  content: '\00bb';
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.login .button:hover span:after {
+  opacity: 1;
+}
+
+/* -------------- */
+
+/* Headline Styles */
+
+/* -------------- */
+
+.headline {
+  margin: 0;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: #C3073F;
+}
+
+/* -------------- */
+
+/* Search Card Styles */
+
+/* -------------- */
+
+.search {
+  position: absolute;
+  width: 100%;
+  font-weight: 300;
+  min-width: 320px;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 20px 30px;
+  z-index: 2;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search .search-headline {
+  margin-bottom: 30px;
+}
+
+.search .search-label {
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: left;
+  font-family: inherit;
+}
+
+.search .search-input {
+  width: 100%;
+  display: inline-block;
+  font-weight: 100;
+  padding: 15px;
+  margin: 5px 0;
+  font-size: 1.3rem;
+  color: #475B62;
+  border: 1px solid #C5C5C5;
+  border-radius: 4px;
+  outline: 0;
+}
+
+/* ------------------ */
+
+/* Item List Styles */
+
+/* ------------------ */
+
+.search .itemlist {
+  position: fixed;
+  width: 100%;
+  min-width: 320px;
+  max-width: 400px;
+  background: white;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+  z-index: 3;
+  padding: 0;
+}
+
+.search .itemlist-item {
+  padding: 10px 10px 0 10px;
+  border-bottom: 1px solid #999;
+  opacity: .9;
+  transition: all 0.3s ease-out;
+}
+
+.search .itemlist-item:hover {
+  cursor: pointer;
+  background: #FDF6E3;
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}

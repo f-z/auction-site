@@ -1,0 +1,29 @@
+/* ---------------------- */
+
+/* item.css Styles */
+
+/* ---------------------- */
+
+.item-img {
+  width: 60px;
+  border-radius: 12px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+.item-info {
+  display: block;
+  margin: 5px 0;
+}
+
+.item-info .item-name {
+  font-size: 1.4rem;
+  margin-top: 0;
+}
+
+.item-info .item-reknown {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-top: 0;
+}
