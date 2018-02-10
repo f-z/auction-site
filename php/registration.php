@@ -53,8 +53,8 @@
             $year = filter_var($obj->year, FILTER_SANITIZE_NUMBER_INT);
 
             // Convertin to date format
-            $DOB = strtotime("$year-$month-$day");
-
+            $olddate = '28/01/2008';
+            $DOB = date('Y-m-d', strtotime(str_replace('-', '/', $olddate)));
             $sql = 'INSERT INTO buyer(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
 
             $insert = $pdo->prepare($sql);
@@ -62,7 +62,7 @@
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
             $insert->bindParam(':password', $passwordHash, PDO::PARAM_STR);
-            $insert->bindParam(':DOB', $dob, PDO::PARAM_STR);
+            $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
             $insert->bindParam(':firstname', $firstName, PDO::PARAM_STR);
             $insert->bindParam(':lastname', $lastName, PDO::PARAM_STR);
             $insert->bindParam(':photo', $photo, PDO::PARAM_STR);
