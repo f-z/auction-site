@@ -13,6 +13,7 @@ var http_1 = require("@angular/common/http");
 var LoginComponent = (function () {
     function LoginComponent(http) {
         this.http = http;
+        this.loginPage = 'true';
         this.localURI = 'https://localhost:3000/php/';
         this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
     }

@@ -13,7 +13,7 @@ var http_1 = require("@angular/common/http");
 var RegistrationComponent = (function () {
     function RegistrationComponent(http) {
         this.http = http;
-        this.login = true;
+        this.loginPage = 'false';
         this.localURI = 'https://localhost:3000/php/';
         this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
     }
@@ -38,9 +38,6 @@ var RegistrationComponent = (function () {
     };
     RegistrationComponent.prototype.goBack = function () {
         window.history.back();
-    };
-    RegistrationComponent.prototype.show = function () {
-        console.log(this.login);
     };
     return RegistrationComponent;
 }());

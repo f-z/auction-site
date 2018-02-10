@@ -7,7 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./css/registration.css']
 })
 export class RegistrationComponent {
-  login: boolean;
+  loginPage: string;
+
   userRole: string;
   firstName: string;
   lastName: string;
@@ -29,7 +30,7 @@ export class RegistrationComponent {
   private remoteURI: string;
 
   constructor(public http: HttpClient) {
-    this.login = true;
+    this.loginPage = 'false';
 
     this.localURI = 'https://localhost:3000/php/';
     this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
@@ -62,9 +63,5 @@ export class RegistrationComponent {
 
   goBack(): void {
     window.history.back();
-  }
-
-  show(): void {
-    console.log(this.login);
   }
 }

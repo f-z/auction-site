@@ -7,6 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./css/login.css']
 })
 export class LoginComponent {
+  loginPage: string;
+
   username: string;
   email: string;
   password: string;
@@ -15,6 +17,8 @@ export class LoginComponent {
   private remoteURI: string;
 
   constructor(public http: HttpClient) {
+    this.loginPage = 'true';
+
     this.localURI = 'https://localhost:3000/php/';
     this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
   }

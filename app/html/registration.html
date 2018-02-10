@@ -6,9 +6,9 @@
 </head>
 
   <div class="input-group">
-    <input type="radio" name="role" value="true" id="login-button" routerLink="/login" />
+    <input type="radio" name="role" value="true" [(ngModel)]="loginPage"  id="login-button" routerLink="/login" />
     <label for="login-button">Login</label>
-    <input type="radio" name="role" value="false" id="register-button" routerLink="/registration" />
+    <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/registration" />
     <label for="register-button">Register</label>
   </div>
 
