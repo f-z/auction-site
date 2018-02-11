@@ -31,6 +31,10 @@
       <label for="role-seller">Seller</label>
     </div>
 
+    <br>
+    <br>
+    <br>
+
     <div class="row">
       <h4>Name</h4>
       <div class="col-half">
@@ -114,15 +118,15 @@
         <input type="checkbox" id="terms" name="checkbox" [(ngModel)]="termsAccepted" />
         <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
       </div>
-    <br>
-    <div class="col-half">
-      <input type="radio" id="cancel-button" routerLink="/app" />
-      <label for="cancel-button">Cancel</label>
+      <br>
+      <div class="col-half">
+        <input type="radio" id="cancel-button" routerLink="/app" />
+        <label for="cancel-button">Cancel</label>
+      </div>
+      <div class="col-half">
+        <input type="submit" name=register (click)="register()">
+      </div>
     </div>
-    <div class="col-half">
-      <input type="submit" name=register (click)="register()">
-    </div>
-  </div>
 
   </form>
 </div>
