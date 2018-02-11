@@ -20,38 +20,27 @@
 
     <div class="space-bot text-center">
       <h1>Login</h1>
-      <div class="divider"></div>
     </div>
 
     <div class="row">
       <h4>Account</h4>
-
+      <br>
       <div class="col-half">
         <div class="input">
           <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
         </div>
       </div>
-
-      <div class="col-half">
-        <div class="input">
-          <input type="email" [(ngModel)]="email" name="email" placeholder="Email Address" />
-        </div>
-      </div>
-
       <div class="col-half">
         <div class="input">
           <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
         </div>
       </div>
-
     </div>
 
+    <br>
+
     <div class="row">
-
-      <div class="row">
-        <input type="submit" name=register (click)="register()">
-      </div>
-
+      <input type="submit" name=register (click)="register()">
     </div>
 
   </form>
