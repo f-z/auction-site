@@ -23,7 +23,6 @@ export class RegistrationComponent {
   day: number;
   month: number;
   year: number;
-  gender: string;
   termsAccepted: boolean;
 
   private localURI: string;
@@ -32,21 +31,20 @@ export class RegistrationComponent {
   constructor(public http: HttpClient) {
     this.loginPage = 'false';
 
-    this.localURI = 'https://localhost:3000/php/';
+    this.localURI = 'http://localhost:3000/php/';
     this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
   }
 
   register(): void {
-    console.log('registering');
-
+    if (this.termsAccepted) {
       let headers: any		= new HttpHeaders({ 'Content-Type': 'application/json' }),
           options: any		= { 'userRole': this.userRole, 'firstName': this.firstName,
                               'lastName': this.lastName, 'street': this.street, 'city': this.city,
                               'postcode': this.postcode, 'username': this.username,
                               'email': this.email, 'password': this.password,
                               'confirmedPassword': this.confirmedPassword,
-                              'phone': this.phone, 'day': this.day, 'month': this.month, 'year': this.year,
-                              'gender': this.gender },
+                              'phone': this.phone, 'day': this.day,
+                              'month': this.month, 'year': this.year },
           url: any      	= this.remoteURI + 'registration.php';
 
       this.http.post(url, JSON.stringify(options), headers)
@@ -55,10 +53,11 @@ export class RegistrationComponent {
         console.log(`Congratulations, the user: ${this.username} was successfully added!`);
       },
       (error: any) => {
-        console.log('Something went wrong!');
+        console.log('Error!');
       });
 
-    this.goBack();
+      this.goBack();
+    }
   }
 
   goBack(): void {

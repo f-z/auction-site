@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(public http: HttpClient) {
     this.loginPage = 'true';
 
-    this.localURI = 'https://localhost:3000/php/';
+    this.localURI = 'https://localhost/php/';
     this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
   }
 

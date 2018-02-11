@@ -1,15 +1,25 @@
 <?php
     // Allowing access
-    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Origin: *");
 
-    // Connection parameters
-    $dsn = 'mysql:host=localhost;port=8889;unix_socket=tmp/mysql/mysql.sock;dbname=compgc06_group30;charset=utf8;';
-    $username = 'root';
-    $password = 'root';
-    $options = array(
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-    ); 
+    // Defining database connection parameters
+    $hn      = 'localhost';
+    $un      = 'root';
+    $pwd     = 'root';
+    $db      = 'compgc06_group30';
+    $cs      = 'utf8';
 
-    // Creating the PDO
-    $pdo = new PDO($dsn, $username, $password, $options);
+    // Setting up the PDO parameters
+    $dsn 	= "mysql:host=" . $hn . ";port=3306;dbname=" . $db . ";charset=" . $cs;
+    $opt 	= array(
+                        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                        PDO::ATTR_EMULATE_PREPARES   => false,
+                    );
+    try {
+        // Creating a PDO instance (connecting to the database)
+        $pdo 	= new PDO($dsn, $un, $pwd, $opt);   
+    } catch (PDOException $e){
+        echo "Error: " . $e->getMessage();
+    }
 ?>

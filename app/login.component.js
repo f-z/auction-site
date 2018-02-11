@@ -14,7 +14,7 @@ var LoginComponent = (function () {
     function LoginComponent(http) {
         this.http = http;
         this.loginPage = 'true';
-        this.localURI = 'https://localhost:3000/php/';
+        this.localURI = 'https://localhost/php/';
         this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
     }
     LoginComponent.prototype.register = function () {

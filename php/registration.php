@@ -52,9 +52,9 @@
             $month = filter_var($obj->month, FILTER_SANITIZE_NUMBER_INT);
             $year = filter_var($obj->year, FILTER_SANITIZE_NUMBER_INT);
 
-            // Convertin to date format
-            $olddate = '28/01/2008';
-            $DOB = date('Y-m-d', strtotime(str_replace('-', '/', $olddate)));
+            // Converting to date format
+            $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
+
             $sql = 'INSERT INTO buyer(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
 
             $insert = $pdo->prepare($sql);

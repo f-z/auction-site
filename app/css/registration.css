@@ -217,3 +217,9 @@ select:last-of-type {
 .col-third:last-of-type {
   padding-right: 0;
 }
+
+.cancel {
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+}
