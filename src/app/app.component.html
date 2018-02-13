@@ -1,0 +1,33 @@
+<router-outlet></router-outlet>
+
+<!-- card login / registration -->
+<div class="card login">
+  <button class="button" routerLink="/registration">
+    <span>Register </span>
+  </button>
+  <button class="button" routerLink="/login">
+    <span>Login </span>
+  </button>
+</div>
+
+<div class="home page">
+  <br>
+  <h1 class="headline">UCL Bay</h1>
+</div>
+
+<!-- card search -->
+<div class="card search">
+  <h2 class="search-headline">Item Directory</h2>
+  <label class="search-label">search
+    <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
+  </label>
+  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here">
+
+  <!-- item list -->
+  <ul class="itemlist cf" *ngIf="term">
+    <li class="itemlist-item cf"  *ngFor="let item of items | search : term | sortBy: 'itemID'">
+      <item class="content" [item]="item" [routerLink]="['/items', item.id]">
+      </item>
+    </li>
+  </ul>
+</div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('local_dbConnection.php');
+require_once('connect_azure_db.php');
 
 if (isset($_POST['login'])) {
 

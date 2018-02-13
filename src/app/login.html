@@ -1,0 +1,46 @@
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up Form</title>
+  <!-- Normalize stylesheet from https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css. -->
+</head>
+
+<div class="input-group">
+  <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
+  <label for="login-button">Login</label>
+  <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/registration" />
+  <label for="register-button">Register</label>
+</div>
+
+<br>
+
+<div class="container">
+
+  <form id="register-form">
+
+    <div class="space-bot text-center">
+      <h1>Login</h1>
+    </div>
+
+    <div class="row">
+      <h4>Account</h4>
+      <br>
+      <div class="col-half">
+        <div class="input">
+          <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
+        </div>
+      </div>
+      <div class="col-half">
+        <div class="input">
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <input type="submit" name=register (click)="register()">
+    </div>
+
+  </form>
+</div>
