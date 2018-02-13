@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
   getItems(): void {
       this.http
-        .get('https://ucl-group30.azurewebsites.net/php/retrieve_auctioned_items.php')
+        .get('https://php-group30.azurewebsites.net/retrieve_auctioned_items.php')
         .subscribe((data: any) => {
          this.items = data;
          console.dir(this.items);

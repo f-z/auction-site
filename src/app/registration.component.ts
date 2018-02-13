@@ -32,7 +32,7 @@ export class RegistrationComponent {
     this.loginPage = 'false';
 
     this.localURI = 'http://localhost:3000/php/';
-    this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
+    this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
   register(): void {

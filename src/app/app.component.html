@@ -26,8 +26,8 @@
   <!-- item list -->
   <ul class="itemlist cf" *ngIf="term">
     <li class="itemlist-item cf"  *ngFor="let item of items | search : term | sortBy: 'itemID'">
-      <item class="content" [item]="item" [routerLink]="['/items', item.id]">
-      </item>
+      <app-item class="content" [item]="item" [routerLink]="['/items', item.id]">
+      </app-item>
     </li>
   </ul>
 </div>

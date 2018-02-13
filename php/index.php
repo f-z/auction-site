@@ -1,6 +1,8 @@
 <?php
     // default page script
     echo "COMPGC06 Databases Project";
-    echo "\nGroup 30";
-    echo "\nDefault PHP Page";
+    echo "<br>";
+    echo "Group 30";
+    echo "<br>";
+    echo "Default PHP Page";
 ?>

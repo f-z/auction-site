@@ -20,7 +20,7 @@ export class LoginComponent {
     this.loginPage = 'true';
 
     this.localURI = 'https://localhost/php/';
-    this.remoteURI = 'https://ucl-group30.azurewebsites.net/php/';
+    this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
   register(): void {
