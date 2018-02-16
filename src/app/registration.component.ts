@@ -87,11 +87,15 @@ export class RegistrationComponent {
         || this.postcode.trim().length === 0 || this.username.trim().length === 0
         || this.email.trim().length === 0
         || this.password.trim().length === 0 || this.confirmedPassword.trim().length === 0
-        || this.phone === 0 || this.phone.toString().length < 9
+        || this.phone === 0 || this.phone.toString().length < 8 || this.phone.toString().length > 10
         || this.day < 1 || this.day > 31 || this.month < 1 || this.month > 12
         || this.year < 1900 || this.year > 2000) {
           // If there are any incorrect details entered, notify the user.
           this.openDialog('Please fill in the correct details!', '', false);
+          return false;
+    } else if (this.password !== this.confirmedPassword) {
+          // If passwords do not match, notify the user.
+          this.openDialog('Passwords need to match!', '', false);
           return false;
     }
 
@@ -102,7 +106,7 @@ export class RegistrationComponent {
       const dialogRef = this.dialog.open(DialogComponent, {
         data: {
           message: message,
-          username: this.username
+          username: username
         }
       });
 
