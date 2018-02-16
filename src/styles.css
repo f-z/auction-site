@@ -435,7 +435,7 @@ textarea {
 [type=checkbox],
 [type=radio] {
     box-sizing: border-box;
-    padding: 0
+    padding: 0.5em;
 }
 
 [type=number]::-webkit-inner-spin-button,
@@ -651,6 +651,10 @@ select:last-of-type {
 
 .row {
   zoom: 1;
+}
+.fullrow{
+  width:  100%;
+  padding: 0.5em;
 }
 
 .row:before,

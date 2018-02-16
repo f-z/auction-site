@@ -4,6 +4,8 @@
   <!-- Normalize stylesheet from https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css. -->
 </head>
 
+<div class="container">
+
 <div class="input-group">
   <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
   <label for="login-button">Login</label>
@@ -13,7 +15,7 @@
 
 <br>
 
-<div class="container">
+
 
   <form id="register-form">
 
@@ -23,20 +25,17 @@
 
     <br>
 
-    <div class="row">
-      <h4>Account</h4>
-      <br>
-      <div class="col-half">
-        <div class="input">
+<div class="fullrow">
+
           <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
-        </div>
+
       </div>
-      <div class="col-half">
-        <div class="input">
+<div class="fullrow">
+
           <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
-        </div>
+
       </div>
-    </div>
+
 
     <br>
 
