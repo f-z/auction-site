@@ -7,16 +7,23 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ItemComponent } from './item.component';
 import { ItemDetailsComponent } from './item-details.component';
-import { RegistrationComponent } from './registration.component';
+import { RegistrationComponent, DialogComponent } from './registration.component';
 import { LoginComponent } from './login.component';
 
 import { SearchPipe, SortByPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './shared/services/item/item.service';
+import { MatDialogModule } from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule ],
+  imports: [BrowserModule,
+            FormsModule,
+            AppRoutingModule,
+            HttpClientModule,
+            MatDialogModule,
+            BrowserAnimationsModule ],
   declarations: [
     HomeComponent,
     AppComponent,
@@ -25,10 +32,14 @@ import { ItemService } from './shared/services/item/item.service';
     ItemComponent,
     ItemDetailsComponent,
     SearchPipe,
-    SortByPipe
+    SortByPipe,
+    DialogComponent
   ],
   bootstrap: [HomeComponent],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' }, ItemService ],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [ NO_ERRORS_SCHEMA ],
+  entryComponents: [
+    DialogComponent
+]
 })
 export class AppModule {}

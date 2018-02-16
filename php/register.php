@@ -6,14 +6,24 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values
+    $userRole = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $email	  = filter_var($obj->email, FILTER_SANITIZE_EMAIL);
 
     // Attempting to query database table
     // and check if user already exists in database
    try {
-        $stmnt = $pdo->prepare('SELECT username, email FROM buyer WHERE username = :username OR email = :email LIMIT 1');
-
+        if ($userRole == 'buyer') {
+            $stmnt = $pdo->prepare('SELECT username, email FROM buyer WHERE username = :username OR email = :email LIMIT 1');
+        }
+        else if ($userRole == 'seller') {
+            $stmnt = $pdo->prepare('SELECT username, email FROM seller WHERE username = :username OR email = :email LIMIT 1');
+        }
+        else {
+            trigger_error("Incorrect user role, closing connection!", E_USER_ERROR);
+            die();
+        }
+        
         // Binding the provided username to our prepared statement
         $stmnt->bindParam(':username', $username, PDO::PARAM_STR);
 
@@ -31,10 +41,12 @@
      }
      catch(PDOException $e) {
         echo $e->getMessage();
+        die();
      }
 
     if($data != null) {
         trigger_error("User with the specified username or email already exists!", E_USER_ERROR);
+        die();
     }
     else {
         try {
@@ -55,10 +67,16 @@
             // Converting to date format
             $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
 
-            $sql = 'INSERT INTO buyer(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
+            if ($userRole == 'buyer') {
+                $sql = 'INSERT INTO buyer(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
+            }
+            else if ($userRole == 'seller') {
+                $sql = 'INSERT INTO seller(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
+            }
 
             $insert = $pdo->prepare($sql);
 
+            // Binding parameter values to prepared statement
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
             $insert->bindParam(':password', $passwordHash, PDO::PARAM_STR);
