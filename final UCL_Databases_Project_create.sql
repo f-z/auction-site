@@ -153,4 +153,27 @@ ALTER TABLE item ADD CONSTRAINT item_seller FOREIGN KEY item_seller (sellerID)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT;
 
+-- Index: username_UNIQUE (table: buyer)
+ALTER TABLE `buyer` 
+ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC);
+
+-- Index: email_UNIQUE (table: buyer)
+ALTER TABLE `buyer` 
+ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC);
+
+-- Index: username_UNIQUE (table: seller)
+ALTER TABLE `seller` 
+ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC);
+
+-- Index: email_UNIQUE (table: seller)
+ALTER TABLE `seller` 
+ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC);
+
+-- Index: username_UNIQUE (table: administrator)
+ALTER TABLE `administrator` 
+ADD UNIQUE INDEX `username_UNIQUE` (`username` ASC);
+
+-- Index: email_UNIQUE (table: administrator)
+ALTER TABLE `administrator` 
+ADD UNIQUE INDEX `email_UNIQUE` (`email` ASC);
 -- End.

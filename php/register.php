@@ -20,8 +20,7 @@
             $stmnt = $pdo->prepare('SELECT username, email FROM seller WHERE username = :username OR email = :email LIMIT 1');
         }
         else {
-            trigger_error("Incorrect user role, closing connection!", E_USER_ERROR);
-            die();
+            die('Incorrect user role, closing connection!');
         }
         
         // Binding the provided username to our prepared statement.
@@ -45,13 +44,11 @@
      }
 
     if($data != null) {
-        trigger_error("User with the specified username or email already exists!", E_USER_ERROR);
-        die();
+        die('User with the specified username or email already exists!');
     }
     else {
         try {
             $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $passwordHash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 12));
             $firstName = filter_var($obj->firstName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $lastName = filter_var($obj->lastName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $street = filter_var($obj->street, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
@@ -79,7 +76,7 @@
             // Binding parameter values to prepared statement.
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
-            $insert->bindParam(':password', $passwordHash, PDO::PARAM_STR);
+            $insert->bindParam(':password', $password, PDO::PARAM_STR);
             $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
             $insert->bindParam(':firstname', $firstName, PDO::PARAM_STR);
             $insert->bindParam(':lastname', $lastName, PDO::PARAM_STR);

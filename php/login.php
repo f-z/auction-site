@@ -1,44 +1,41 @@
 <?php
-session_start();
+    require_once('connect_azure_db.php');
 
-require_once('connect_azure_db.php');
+    // Retrieving the posted data.
+    $json    =  file_get_contents('php://input');
+    $obj     =  json_decode($json);
 
-if (isset($_POST['login'])) {
+    // Sanitising URL supplied values.
+    $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    
+    $query = 'SELECT * FROM buyer WHERE username = :username LIMIT 1';
+    $checkCredentials = $pdo->prepare($query);
 
-    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
-    $password = !empty($_POST['password']) ? trim($_POST['password']) : null;
+    // Binding the provided username to our prepared statement.
+    $checkCredentials->bindParam(':username', $username, PDO::PARAM_STR);
 
-    $sql = "SELECT * FROM buyer WHERE username=:username";
-    $check = $db->prepare($sql);
+    $checkCredentials->execute();
+ 
+    $row = $checkCredentials->fetch(PDO::FETCH_OBJ);
 
-    // Bind parameter to username 
-    $select->bindParam(':username',htmlspecialchars($username));
-
-    // Execute sql statement
-    $select->execute();
-
-    // Fetch the row.
-    $row = $select->fetch(PDO::FETCH_ASSOC);
-
-    if ($row['num'] == 0){
-        die ('User with these details does not exist');
+    // Checking if $data is empty.
+    if ($row === false) {
+        // Could not find a user with that username!
+        // PS: You might want to handle this error in a more user-friendly manner!
+        die ('User does not exist!');
     } else {
-        echo 'User Exists';
+        // Checking to see if the given password matches the hash stored in the user table.
+        // Comparing the passwords.
+        $storedPass = $row->password;
 
-        if (password_verify($_POST['password'], $user['password'])) {
-
-            // Assign values to session variables
-            $_SESSION['user_id'] = $_POST['buyerID'];
-            $_SESSION['logged_in'] = true;
-
-            // Destroy db connection object
-            $db = null;
-            header("location: mainpage.php");
+        // If password is verified as true, then the user can successfully log in.
+        if ($password === $storedPass) {
+            echo json_encode('Successful login!');
+            exit;
         } else {
-            // Prompt to error page in case of wrong password
-            $_SESSION['message'] = "You have entered wrong password, try again!";
-            header("location: error.php");
+            // incorrect password
+            die ('Incorrect password!');
         }
-    }
 }
 ?>

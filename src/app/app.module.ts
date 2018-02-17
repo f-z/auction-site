@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ItemComponent } from './item.component';
 import { ItemDetailsComponent } from './item-details.component';
-import { RegistrationComponent, DialogComponent } from './registration.component';
+import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
+import { DialogComponent} from './dialog.component';
 
 import { SearchPipe, SortByPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';

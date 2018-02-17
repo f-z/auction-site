@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-registration',
@@ -103,29 +104,21 @@ export class RegistrationComponent {
   }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          message: message,
-          username: username
-        }
-      });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (succeeded) {
-          this.router.navigate(['/login']);
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (succeeded) {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 
   goBack(): void {
     this.router.navigate(['/app']);
   }
-}
-
-@Component({
-  selector: 'app-dialog',
-  templateUrl: 'registration.dialog.html',
-})
-export class DialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }
