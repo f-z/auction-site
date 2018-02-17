@@ -1,21 +1,13 @@
-<head>
-  <meta charset="UTF-8">
-  <title>Sign Up Form</title>
-  <!-- Normalize stylesheet from https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css. -->
-</head>
-
 <div class="container">
 
-<div class="input-group">
-  <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
-  <label for="login-button">Login</label>
-  <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/registration" />
-  <label for="register-button">Register</label>
-</div>
+  <div class="input-group">
+    <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
+    <label for="login-button">Login</label>
+    <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/registration" />
+    <label for="register-button">Register</label>
+  </div>
 
-<br>
-
-
+  <br>
 
   <form id="register-form">
 
@@ -25,16 +17,16 @@
 
     <br>
 
-<div class="fullrow">
+    <div class="fullrow">
 
-          <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
 
-      </div>
-<div class="fullrow">
+    </div>
+    <div class="fullrow">
 
-          <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
 
-      </div>
+    </div>
 
 
     <br>

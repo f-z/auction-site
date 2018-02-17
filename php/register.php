@@ -1,17 +1,17 @@
 <?php
     require_once('connect_azure_db.php');
 
-    // Retrieving the posted data
+    // Retrieving the posted data.
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
 
-    // Sanitising URL supplied values
+    // Sanitising URL supplied values.
     $userRole = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $email	  = filter_var($obj->email, FILTER_SANITIZE_EMAIL);
 
     // Attempting to query database table
-    // and check if user already exists in database
+    // and check if user already exists in database.
    try {
         if ($userRole == 'buyer') {
             $stmnt = $pdo->prepare('SELECT username, email FROM buyer WHERE username = :username OR email = :email LIMIT 1');
@@ -24,18 +24,18 @@
             die();
         }
         
-        // Binding the provided username to our prepared statement
+        // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':username', $username, PDO::PARAM_STR);
 
-        // Binding the provided email to our prepared statement
+        // Binding the provided email to our prepared statement.
         $stmnt->bindParam(':email', $email, PDO::PARAM_STR);
 
         $stmnt->execute();
         
-        // Fetching the row
+        // Fetching the row.
         while($row  = $stmnt->fetch(PDO::FETCH_OBJ))
         {
-           // Assigning each row of data to an associative array
+           // Assigning each row of data to an associative array.
            $data[] = $row;
         }
      }
@@ -64,7 +64,7 @@
             $month = filter_var($obj->month, FILTER_SANITIZE_NUMBER_INT);
             $year = filter_var($obj->year, FILTER_SANITIZE_NUMBER_INT);
 
-            // Converting to date format
+            // Converting to date format.
             $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
 
             if ($userRole == 'buyer') {
@@ -76,7 +76,7 @@
 
             $insert = $pdo->prepare($sql);
 
-            // Binding parameter values to prepared statement
+            // Binding parameter values to prepared statement.
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
             $insert->bindParam(':password', $passwordHash, PDO::PARAM_STR);
@@ -92,7 +92,7 @@
             $insert->execute();
             echo json_encode(array('message' => 'Congratulations, the record ' . $username . ' was added to the database!'));
         }
-        // Catching any errors in running the prepared statement
+        // Catching any errors in running the prepared statement.
         catch(PDOException $ex) {
            echo $ex->getMessage();
         }

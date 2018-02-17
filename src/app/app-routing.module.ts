@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'app', component: AppComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'add-item', component: LoginComponent },
   { path: 'items/:itemId', component: ItemDetailsComponent }
 ];
 
