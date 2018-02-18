@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Item, ItemService } from './shared/services/item/item.service';
+import { Item, ItemService } from './shared/services/item.service';
 import 'rxjs/add/operator/switchMap';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  private loggedIn: string;
   item: Item;
   items: Observable<Item[]> = null;
   category: string;
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private http: HttpClient) {
-
+                this.loggedIn = 'false';
   // this.items = this.route.params
    //  .switchMap(({category}) => {
    //    return this.category === 'all' ?
@@ -44,5 +45,9 @@ export class AppComponent implements OnInit {
       (error: any) => {
          console.dir(error);
       });
+  }
+
+  setItem(item: Item): void {
+    this.itemService.setItem(item);
   }
 }

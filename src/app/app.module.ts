@@ -14,7 +14,8 @@ import { DialogComponent} from './dialog.component';
 import { SearchPipe, SortByPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ItemService } from './shared/services/item/item.service';
+import { UserService } from './shared/services/user.service';
+import { ItemService } from './shared/services/item.service';
 import { MatDialogModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -37,7 +38,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     DialogComponent
   ],
   bootstrap: [HomeComponent],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, ItemService ],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, UserService, ItemService ],
   schemas: [ NO_ERRORS_SCHEMA ],
   entryComponents: [
     DialogComponent
