@@ -11,10 +11,10 @@
     $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     
     if ($userRole == 'buyer') {
-        $query = 'SELECT * FROM buyer WHERE username = :username LIMIT 1';
+        $query = 'SELECT buyerID, username, password, email, firstName, lastName FROM buyer WHERE username = :username LIMIT 1';
     }
     else if ($userRole == 'seller') {
-        $query = 'SELECT * FROM seller WHERE username = :username LIMIT 1';
+        $query = 'SELECT sellerID, username, password, email, firstName, lastName FROM seller WHERE username = :username LIMIT 1';
     }
     else {
         die('Incorrect user role, closing connection!');
@@ -41,7 +41,17 @@
 
         // If password is verified as true, then the user can successfully log in.
         if ($password === $storedPass) {
-            echo json_encode('Successful login!');
+            if ($userRole == 'buyer') {
+                $row->ID = $row->buyerID;
+                unset($row->buyerID);
+            }
+            else if ($userRole == 'seller') {
+                $row->ID = $row->sellerID;
+                unset($row->sellerID);
+            }
+
+            // Returning data as JSON.
+            echo json_encode($row);
             exit;
         } else {
             // incorrect password

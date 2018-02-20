@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { DialogComponent } from './dialog.component';
+import { User, UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,9 +20,12 @@ export class LoginComponent {
   private localURI: string;
   private remoteURI: string;
 
+  private user: User;
+
   constructor(public http: HttpClient,
               public dialog: MatDialog,
-              private router: Router) {
+              private router: Router,
+              private userService: UserService) {
                 this.loginPage = 'true';
                 this.userRole = 'buyer';
 
@@ -36,13 +40,19 @@ export class LoginComponent {
 
       this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
-        // If the request was successful, notify the user.
+        // console.dir(data);
+        // If the request was successful, set the current user and notify him/her.
+        this.user = data;
         this.openDialog('Congratulations, logging in...', '', true);
       },
       (error: any) => {
         // If the supplied username and password do not match, notify the user.
         this.openDialog('The supplied username and password are incorrect!', '', false);
       });
+    }
+
+    setUser(user: User): void {
+      this.userService.setUser(user);
     }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
@@ -55,6 +65,7 @@ export class LoginComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (succeeded) {
+          this.setUser(this.user);
           this.router.navigate(['/app']);
         }
       });

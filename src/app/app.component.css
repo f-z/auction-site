@@ -44,6 +44,21 @@
   .login .button:hover span:after {
     opacity: 1;
   }
+
+  .login .welcome-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: left;
+    font-family: inherit;
+    color: rgb(255, 255, 255);
+  }
   
   /* -------------- */
   
