@@ -16,7 +16,17 @@
     </div>
 
     <br>
+    
+    <div class="buyer-or-seller">
+      <input type="radio" name="role" value="buyer" id="role-buyer" [(ngModel)]="userRole" />
+      <label for="role-buyer">Buyer</label>
+      <input type="radio" name="role" value="seller" id="role-seller" [(ngModel)]="userRole" />
+      <label for="role-seller">Seller</label>
+    </div>
 
+    <br>
+    <br>
+    <br>
     <div class="fullrow">
       <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
     </div>
@@ -26,10 +36,14 @@
     </div>
 
     <br>
-
     <div class="row">
+    <div class="col-half">
+      <input type="button" id="cancel-button" value="Cancel" routerLink="/app" />
+    </div>
+    <div class="col-half">
       <input type="submit" value=Login (click)="register()">
     </div>
+  </div>
 
   </form>
 </div>

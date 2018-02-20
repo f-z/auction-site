@@ -12,6 +12,7 @@ import { DialogComponent } from './dialog.component';
 export class LoginComponent {
   loginPage: string;
 
+  userRole: string;
   username: string;
   password: string;
 
@@ -22,6 +23,7 @@ export class LoginComponent {
               public dialog: MatDialog,
               private router: Router) {
                 this.loginPage = 'true';
+                this.userRole = 'buyer';
 
                 this.localURI = 'http://localhost:3000/php/';
                 this.remoteURI = 'https://php-group30.azurewebsites.net/';
@@ -29,7 +31,7 @@ export class LoginComponent {
 
   register(): void {
     const headers: any  = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any		  = { 'username': this.username, 'password': this.password },
+      options: any		  = { 'userRole': this.userRole, 'username': this.username, 'password': this.password },
       url: any      	  = this.remoteURI + 'login.php';
 
       this.http.post(url, JSON.stringify(options), headers)

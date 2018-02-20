@@ -6,10 +6,20 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values.
+    $userRole = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     
-    $query = 'SELECT * FROM buyer WHERE username = :username LIMIT 1';
+    if ($userRole == 'buyer') {
+        $query = 'SELECT * FROM buyer WHERE username = :username LIMIT 1';
+    }
+    else if ($userRole == 'seller') {
+        $query = 'SELECT * FROM seller WHERE username = :username LIMIT 1';
+    }
+    else {
+        die('Incorrect user role, closing connection!');
+    }
+
     $checkCredentials = $pdo->prepare($query);
 
     // Binding the provided username to our prepared statement.
