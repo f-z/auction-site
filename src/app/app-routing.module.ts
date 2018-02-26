@@ -7,15 +7,20 @@ import { LoginComponent } from './login.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { SellerComponent } from './seller.component';
 
-const routes: Routes = [
-  { path: '', redirectTo: '/app', pathMatch: 'full' },
-  { path: 'app', component: AppComponent },
-  { path: 'registration', component: RegistrationComponent },
+export const routes: Routes = [
+  { path: '', redirectTo: '/search', pathMatch: 'full' },
+  { path: 'search', component: AppComponent },
+  { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'add-item', component: LoginComponent },
-  { path: 'items/:itemId', component: ItemDetailsComponent },
+  { path: 'items/:itemID', component: ItemDetailsComponent },
   { path: 'sell', component: SellerComponent },
 ];
+
+export const appRoutingProviders: any[] = [
+];
+
+export const routing = RouterModule.forRoot(routes);
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { enableTracing: false })],

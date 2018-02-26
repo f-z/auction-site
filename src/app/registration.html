@@ -2,7 +2,7 @@
   <div class="input-group">
     <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
     <label for="login-button">Login</label>
-    <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/registration" />
+    <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/register" />
     <label for="register-button">Register</label>
   </div>
 
@@ -112,7 +112,7 @@
       </div>
       <br>
       <div class="col-half">
-        <input type="button" id="cancel-button" value="Cancel" routerLink="/app" />
+        <input type="button" id="cancel-button" value="Cancel" routerLink="/search" />
       </div>
       <div class="col-half">
         <input type="submit" value=Register (click)="register()">

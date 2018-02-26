@@ -1,14 +1,13 @@
 .item-details {
   position: relative;
   background: white;
-  width: 100%;
   max-width: 850px;
-  height: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 60px;
   padding: 30px 40px;
-  position: relative;
+  min-height: 100px;
+  overflow: hidden;
   opacity: 1;
   border: 1px solid #e8e8e8;
   box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
@@ -20,12 +19,21 @@
   margin-bottom: 3px;
 }
 
-.item-details .item-reknown {
+.item-details .item-right {
   font-size: 1.2rem;
   font-weight: 400;
+  position: relative;
+  float: right;
 }
 
-.item-details .item-img {
+.item-details .item-leftt {
+  font-size: 1.2rem;
+  font-weight: 400;
+  position: relative;
+  float: left;
+}
+
+.item-details .item-picture {
   width: 40%;
   max-width: 130px;
   float: left;
@@ -33,7 +41,11 @@
   border-radius: 10px;
 }
 
-.item-details .item-longbio {
+.item-details .item-description {
   font-size: 1rem;
   line-height: 160%;
+}
+
+.item-details .monitoring {
+  float: right;
 }

@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/mergeMap';
 
 import { Item, ItemService } from './shared/services/item.service';
 
@@ -9,14 +8,29 @@ import { Item, ItemService } from './shared/services/item.service';
   templateUrl: './item-details.html',
   styleUrls: ['./item-details.css']
 })
-export class ItemDetailsComponent {
+export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
+  itemID: number;
+  private sub: any;
 
-  constructor(private itemService: ItemService) {
-    this.item = this.getItem();
-  }
+  constructor(
+    private itemService: ItemService,
+    private route: ActivatedRoute
+  ) {}
 
   getItem(): Item {
     return this.itemService.getItem();
+  }
+
+  ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.itemID = +params['itemID']; // (+) converts string 'id' to a number
+
+      this.item = this.getItem();
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

@@ -53,6 +53,6 @@ export class SellerComponent implements OnInit {
 
   logout(): void {
     this.setUser(null);
-    this.router.navigate(['/app']);
+    this.router.navigate(['/search']);
   }
 }
