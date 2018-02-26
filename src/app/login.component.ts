@@ -66,7 +66,11 @@ export class LoginComponent {
       dialogRef.afterClosed().subscribe(result => {
         if (succeeded) {
           this.setUser(this.user);
-          this.router.navigate(['/app']);
+          if (this.userRole === 'seller') {
+            this.router.navigate(['/sell']);
+          } else {
+            this.router.navigate(['/app']);
+          }
         }
       });
     }

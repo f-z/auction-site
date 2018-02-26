@@ -7,14 +7,12 @@ import 'rxjs/add/operator/switchMap';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-seller',
+  templateUrl: './seller.html'
 })
-export class AppComponent implements OnInit {
+export class SellerComponent implements OnInit {
   item: Item;
-  items: Observable<Item[]> = null;
-  category: string;
+  sellerItems: Observable<Item[]> = null;
   private user: User;
 
   constructor(private itemService: ItemService,
@@ -25,19 +23,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.category = 'all';
-
-    this.getItems();
+    // this.getSellerItems();
 
     this.user = this.getUser();
 }
 
-  getItems(): void {
+  getSellerItems(): void {
       this.http
-        .get('https://php-group30.azurewebsites.net/retrieve_auctioned_items.php')
+        .get('https://php-group30.azurewebsites.net/retrieve_seller_items.php')
         .subscribe((data: any) => {
-         this.items = data;
-         // console.dir(this.items);
+         this.sellerItems = data;
       },
       (error: any) => {
          console.dir(error);
@@ -57,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.user = null;
     this.setUser(null);
+    this.router.navigate(['/app']);
   }
 }

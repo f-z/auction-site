@@ -1,0 +1,103 @@
+<head>
+  <meta charset="UTF-8">
+  <title>New Item</title>
+</head>
+
+<form id="register-form">
+
+  <div class="space-bot text-center">
+    <h2>Add New Item</h2>
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div class="row">
+    <h4>Name</h4>
+      <div class="input">
+        <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name" />
+      </div>
+  </div>
+
+  <div class="row">
+    <h4>Description</h4>
+    <div class="col-half">
+      <div class="input">
+        <input type="text" [(ngModel)]="street" name="street" placeholder="Street" />
+      </div>
+    </div>
+    <div class="col-half">
+      <div class="input">
+        <input type="text" [(ngModel)]="city" name="city" placeholder="City" />
+      </div>
+    </div>
+    <div class="col-half">
+      <div class="input">
+        <input type="text" [(ngModel)]="postcode" name="postcode" placeholder="Postcode" />
+      </div>
+    </div>
+    <div class="col-half">
+      <div class="input">
+        <input type="number" [(ngModel)]="phone" name="phone" placeholder="Phone Number" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h4>Account</h4>
+    <div class="col-half">
+      <div class="input">
+        <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
+      </div>
+    </div>
+    <div class="col-half">
+      <div class="input">
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Email Address" />
+      </div>
+    </div>
+    <div class="col-half">
+      <div class="input">
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
+      </div>
+    </div>
+    <div class="input">
+      <input type="password" [(ngModel)]="confirmedPassword" name="confirmedPassword" placeholder="Confirm Password" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-half">
+      <h4>Date of Birth</h4>
+      <div class="input-group">
+        <div class="col-third">
+          <input type="number" [(ngModel)]="day" name="day" placeholder="DD" />
+        </div>
+        <div class="col-third">
+          <input type="number" [(ngModel)]="month" name="month" placeholder="MM" />
+        </div>
+        <div class="col-third">
+          <input type="number" [(ngModel)]="year" name="year" placeholder="YYYY" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h4>Terms and Conditions</h4>
+    <div class="input-group">
+      <input type="checkbox" id="terms" name="checkbox" [(ngModel)]="termsAccepted" />
+      <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
+    </div>
+    <br>
+    <div class="col-half">
+      <input type="button" id="cancel-button" value="Cancel" routerLink="/home" />
+
+    </div>
+    <div class="col-half">
+      <input type="submit" value=Register (click)="register()">
+    </div>
+  </div>
+
+</form>
+</div>
