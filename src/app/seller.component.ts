@@ -29,7 +29,7 @@ export class SellerComponent implements OnInit {
 
   getSellerItems(): void {
     const headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-    options: any = { 'sellerID': this.user.ID },
+    options: any = { 'sellerID': this.user.userID },
     url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_items.php';
 
     this.http.post(url, JSON.stringify(options), headers)

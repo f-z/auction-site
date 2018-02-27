@@ -13,15 +13,7 @@
     // Attempting to query database table
     // and check if user already exists in database.
    try {
-        if ($userRole == 'buyer') {
-            $stmnt = $pdo->prepare('SELECT username, email FROM buyer WHERE username = :username OR email = :email LIMIT 1');
-        }
-        else if ($userRole == 'seller') {
-            $stmnt = $pdo->prepare('SELECT username, email FROM seller WHERE username = :username OR email = :email LIMIT 1');
-        }
-        else {
-            die('Incorrect user role, closing connection!');
-        }
+        $stmnt = $pdo->prepare('SELECT username, email FROM user WHERE username = :username OR email = :email LIMIT 1');
         
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -63,12 +55,7 @@
             // Converting to date format.
             $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
 
-            if ($userRole == 'buyer') {
-                $sql = 'INSERT INTO buyer(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
-            }
-            else if ($userRole == 'seller') {
-                $sql = 'INSERT INTO seller(username, password, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
-            }
+            $sql = 'INSERT INTO user(username, password, role, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :role, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
 
             $insert = $pdo->prepare($sql);
 
@@ -76,6 +63,7 @@
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
             $insert->bindParam(':password', $password, PDO::PARAM_STR);
+            $insert->bindParam(':role', $userRole, PDO::PARAM_STR);
             $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
             $insert->bindParam(':firstname', $firstName, PDO::PARAM_STR);
             $insert->bindParam(':lastname', $lastName, PDO::PARAM_STR);

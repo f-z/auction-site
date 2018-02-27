@@ -6,19 +6,10 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values.
-    $userRole = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     
-    if ($userRole == 'buyer') {
-        $query = 'SELECT buyerID, username, password, email, firstName, lastName FROM buyer WHERE username = :username LIMIT 1';
-    }
-    else if ($userRole == 'seller') {
-        $query = 'SELECT sellerID, username, password, email, firstName, lastName FROM seller WHERE username = :username LIMIT 1';
-    }
-    else {
-        die('Incorrect user role, closing connection!');
-    }
+    $query = 'SELECT userID, username, password, role, email, firstName, lastName FROM user WHERE username = :username LIMIT 1';
 
     $checkCredentials = $pdo->prepare($query);
 
@@ -41,17 +32,6 @@
 
         // If password is verified as true, then the user can successfully log in.
         if ($password === $storedPass) {
-            if ($userRole == 'buyer') {
-                $row->ID = $row->buyerID;
-                unset($row->buyerID);
-                $row->role = 'buyer';
-            }
-            else if ($userRole == 'seller') {
-                $row->ID = $row->sellerID;
-                unset($row->sellerID);
-                $row->role = 'seller';
-            }
-
             // Returning data as JSON.
             echo json_encode($row);
             exit;
