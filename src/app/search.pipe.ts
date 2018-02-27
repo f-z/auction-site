@@ -7,6 +7,10 @@ import { Item } from './shared/services/item.service';
 })
 export class SearchPipe implements PipeTransform {
   transform(items: Item[], term: string): Item[] {
+    if (term === '*') {
+      return items;
+    }
+
     term = term.toLowerCase();
     return term
       ? items.filter(

@@ -18,8 +18,9 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './shared/services/user.service';
 import { ItemService } from './shared/services/item.service';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   imports: [BrowserModule,
@@ -27,7 +28,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
             AppRoutingModule,
             HttpClientModule,
             MatDialogModule,
-            BrowserAnimationsModule ],
+            BrowserAnimationsModule,
+            MatButtonToggleModule,
+            MatIconModule
+          ],
   declarations: [
     HomeComponent,
     AppComponent,

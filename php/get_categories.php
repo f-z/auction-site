@@ -1,5 +1,4 @@
-<?php 
-
+<?php
     require_once('connect_azure_db.php');
 
    // Declaring an empty array to store the data we retrieve from the database in.
@@ -7,7 +6,7 @@
 
     // Attempting to query database table and retrieve data.
     try {
-       $results = $pdo->query('SELECT * FROM category
+       $results = $pdo->query('SELECT categoryName FROM category
         ORDER BY description');
        
        while($row = $results->fetch(PDO::FETCH_OBJ)) {

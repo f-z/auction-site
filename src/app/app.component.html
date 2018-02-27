@@ -7,7 +7,7 @@
     <span>Login</span>
   </button>
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!
-    </label>
+  </label>
   <button class="button" (click)="logout()" *ngIf="user!=null">
     <span>Logout</span>
   </button>
@@ -24,6 +24,36 @@
 <!-- card search -->
 <div class="card search">
   <h2 class="search-headline">Item Directory</h2>
+  <mat-button-toggle-group #category="matButtonToggleGroup">
+    <mat-button-toggle value="All">
+      <mat-icon>check box</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Electronics">
+      <mat-icon>devices</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Books">
+      <mat-icon svgIcon="book"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Fashion">
+      <mat-icon svgIcon="fashion"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Sports">
+      <mat-icon svgIcon="sports"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Home">
+      <mat-icon svgIcon="home"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Motors">
+      <mat-icon svgIcon="car"></mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="Collectables">
+      <mat-icon svgIcon="collectables"></mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <br>
+  <br>
+
   <label class="search-label">search
     <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
   </label>
@@ -37,3 +67,4 @@
     </li>
   </ul>
 </div>
+

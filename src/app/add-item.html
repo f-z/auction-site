@@ -45,8 +45,8 @@
     <div class="row">
       <div class="col-half">
         <label for="category">Category: </label>
-          <select type="text" [(ngModel)]="category" name="category" id="category">
-            <option *ngFor="let category of categories" [value]="category.categoryID">
+          <select type="text" [(ngModel)]="selectedCategory" name="category" id="category">
+            <option *ngFor="let category of categories">
               {{ category.description }}
             </option>
           </select>
