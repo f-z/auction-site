@@ -9,13 +9,12 @@
     try {
        $results = $pdo->query('SELECT * FROM category
         ORDER BY description');
-
-
        
        while($row = $results->fetch(PDO::FETCH_OBJ)) {
           // Assigning each row of data to associative array.
           $data[] = $row;
       }
+
       // Returning data as JSON.
       echo json_encode($data);
     }
@@ -24,3 +23,4 @@
        echo $e->getMessage();
     }
 ?>
+
