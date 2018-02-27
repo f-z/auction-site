@@ -47,3 +47,8 @@ export interface Item {
   categoryID: string;
   sellerID: number;
 }
+
+export interface Category {
+  categoryName: string;
+  description: string;
+}

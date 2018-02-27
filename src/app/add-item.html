@@ -1,25 +1,26 @@
 <div class="container">
-<div class="card login">
-  <button class="button" routerLink="/register" *ngIf="user==null">
-    <span>Register</span>
-  </button>
-  <button class="button" routerLink="/login" *ngIf="user==null">
-    <span>Login</span>
-  </button>
-  <button class="button" (click)="logout()" *ngIf="user!=null">
-    <span>Logout</span>
-  </button>
-  <button class="button" routerLink="/search" *ngIf="user!=null">
-    <span>Main Page</span>
-  </button>
-</div>
+  <div class="card login">
+    <button class="button" routerLink="/register" *ngIf="user==null">
+      <span>Register</span>
+    </button>
+    <button class="button" routerLink="/login" *ngIf="user==null">
+      <span>Login</span>
+    </button>
+    <button class="button" (click)="logout()" *ngIf="user!=null">
+      <span>Logout</span>
+    </button>
+    <button class="button" routerLink="/search" *ngIf="user!=null">
+      <span>Main Page</span>
+    </button>
+  </div>
 
   <br>
 
   <form id="add-item-form">
+    <br>
 
     <div class="space-bot text-center">
-      <h2>Add item</h2>
+      <h2>Add Item</h2>
     </div>
 
     <br>
@@ -45,32 +46,30 @@
     <div class="row">
       <div class="col-half">
         <label for="category">Category: </label>
-          <select type="text" [(ngModel)]="selectedCategory" name="category" id="category">
-            <option *ngFor="let category of categories">
-              {{ category.description }}
-            </option>
-          </select>
+        <select [(ngModel)]="selectedCategory" name="category">
+          <option *ngFor="let category of categories" [ngValue]="category.categoryName">{{category.categoryName}}</option>
+        </select>
       </div>
       <div class="col-half">
         <label for="condition">Condition: </label>
-          <select type="text" [(ngModel)]="condition" name="condition" id="condition">
-                <option value='new'>New</option>
-                <option value='used'>Used</option>
-          </select>
+        <select type="text" [(ngModel)]="condition" name="condition" id="condition">
+          <option value='new'>New</option>
+          <option value='used'>Used</option>
+        </select>
       </div>
     </div>
 
     <div class="row">
       <div class="col-half">
-          <label for="quantity">Quantity: </label>
-          <input type="number" [(ngModel)]="quantity" name="quantity" id="quantity">
+        <label for="quantity">Quantity: </label>
+        <input type="number" [(ngModel)]="quantity" name="quantity" id="quantity">
       </div>
     </div>
 
     <div class="row">
       <div class="col-half">
-          <label for="endDate">End Date: </label>
-          <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate">
+        <label for="endDate">End Date: </label>
+        <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate">
       </div>
       <div class="col-half">
         <label for="endTime">End Time: </label>
@@ -102,7 +101,7 @@
           <input type="number" [(ngModel)]="buyNowPrice" name="buyNowPrice" placeholder="Buy-it-now Price" />
         </div>
       </div>
-    
+
     </div>
 
 

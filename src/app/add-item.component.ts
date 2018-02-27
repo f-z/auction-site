@@ -7,6 +7,7 @@ import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
 
 import { User, UserService } from './shared/services/user.service';
+import { Category } from './shared/services/item.service';
 
 @Component({
   selector: 'app-add-item',
@@ -28,7 +29,7 @@ export class AddItemComponent implements OnInit {
   reservePrice: number;
   buyNowPrice: number;
 
-  categories: Observable<string[]> = null;
+  categories: Observable<Category[]> = null;
   selectedCategory: string;
 
   private localURI: string;
@@ -100,7 +101,6 @@ export class AddItemComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.categories = data;
-          console.dir(this.categories);
         },
         (error: any) => {
           console.dir(error);
@@ -169,6 +169,12 @@ export class AddItemComponent implements OnInit {
   }
 
   goBack(): void {
+    this.router.navigate(['/search']);
+  }
+
+  logout(): void {
+    this.user = null;
+    this.setUser(null);
     this.router.navigate(['/search']);
   }
 }
