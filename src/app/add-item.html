@@ -1,121 +1,118 @@
 <div class="container">
-  <div class="input-group">
-    <input type="radio" name="role" value="true" [(ngModel)]="loginPage" id="login-button" routerLink="/login" />
-    <label for="login-button">Login</label>
-    <input type="radio" name="role" value="false" [(ngModel)]="loginPage" id="register-button" routerLink="/register" />
-    <label for="register-button">Register</label>
-  </div>
+<div class="card login">
+  <button class="button" routerLink="/register" *ngIf="user==null">
+    <span>Register</span>
+  </button>
+  <button class="button" routerLink="/login" *ngIf="user==null">
+    <span>Login</span>
+  </button>
+  <button class="button" (click)="logout()" *ngIf="user!=null">
+    <span>Logout</span>
+  </button>
+  <button class="button" routerLink="/search" *ngIf="user!=null">
+    <span>Main Page</span>
+  </button>
+</div>
 
   <br>
 
-  <form id="register-form">
+  <form id="add-item-form">
 
     <div class="space-bot text-center">
-      <h2>Registration</h2>
+      <h2>Add item</h2>
     </div>
 
     <br>
 
-    <div class="buyer-or-seller">
-      <input type="radio" name="role" value="buyer" id="role-buyer" [(ngModel)]="userRole" />
-      <label for="role-buyer">Buyer</label>
-      <input type="radio" name="role" value="seller" id="role-seller" [(ngModel)]="userRole" />
-      <label for="role-seller">Seller</label>
+    <div class="row">
+      <h4>Item name</h4>
+      <div class="col">
+        <div class="input">
+          <input type="text" [(ngModel)]="name" name="name" placeholder="Name of item" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="input">
+          <input type="text" [(ngModel)]="description" name="description" placeholder="Add description of item" />
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-half">
+        <label for="category">Category: </label>
+          <select type="text" [(ngModel)]="category" name="category" id="category">
+            <option *ngFor="let category of categories" [value]="category.categoryID">
+              {{ category.description }}
+            </option>
+          </select>
+      </div>
+      <div class="col-half">
+        <label for="condition">Condition: </label>
+          <select type="text" [(ngModel)]="condition" name="condition" id="condition">
+                <option value='new'>New</option>
+                <option value='used'>Used</option>
+          </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-half">
+          <label for="quantity">Quantity: </label>
+          <input type="number" [(ngModel)]="quantity" name="quantity" id="quantity">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-half">
+          <label for="endDate">End Date: </label>
+          <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate">
+      </div>
+      <div class="col-half">
+        <label for="endTime">End Time: </label>
+        <input type="time" name="endTime" id="endTime">
+      </div>
+
     </div>
 
     <br>
-    <br>
-    <br>
+
+
 
     <div class="row">
-      <h4>Name</h4>
       <div class="col-half">
         <div class="input">
-          <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name" />
+          <label for="startPrice">Start Price £: </label>
+          <input type="number" [(ngModel)]="startPrice" name="startPrice" placeholder="Enter start Price" />
         </div>
       </div>
       <div class="col-half">
         <div class="input">
-          <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Last Name" />
+          <label for="reservePrice">Reserve Price £: </label>
+          <input type="number" [(ngModel)]="reservePrice" name="reservePrice" placeholder="Reserve Price" />
         </div>
       </div>
+      <div class="col-half">
+        <div class="input">
+          <label for="buyNowPrice">Buy-it-now price £: </label>
+          <input type="number" [(ngModel)]="buyNowPrice" name="buyNowPrice" placeholder="Buy-it-now Price" />
+        </div>
+      </div>
+    
     </div>
 
-    <div class="row">
-      <h4>Address</h4>
-      <div class="col-half">
-        <div class="input">
-          <input type="text" [(ngModel)]="street" name="street" placeholder="Street" />
-        </div>
-      </div>
-      <div class="col-half">
-        <div class="input">
-          <input type="text" [(ngModel)]="city" name="city" placeholder="City" />
-        </div>
-      </div>
-      <div class="col-half">
-        <div class="input">
-          <input type="text" [(ngModel)]="postcode" name="postcode" placeholder="Postcode" />
-        </div>
-      </div>
-      <div class="col-half">
-        <div class="input">
-          <input type="number" [(ngModel)]="phone" name="phone" placeholder="Phone Number" />
-        </div>
-      </div>
-    </div>
 
     <div class="row">
-      <h4>Account</h4>
-      <div class="col-half">
-        <div class="input">
-          <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
-        </div>
-      </div>
-      <div class="col-half">
-        <div class="input">
-          <input type="email" [(ngModel)]="email" name="email" placeholder="Email Address" />
-        </div>
-      </div>
-      <div class="col-half">
-        <div class="input">
-          <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
-        </div>
-      </div>
-      <div class="input">
-        <input type="password" [(ngModel)]="confirmedPassword" name="confirmedPassword" placeholder="Confirm Password" />
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-half">
-        <h4>Date of Birth</h4>
-        <div class="input-group">
-          <div class="col-third">
-            <input type="number" [(ngModel)]="day" name="day" placeholder="DD" />
-          </div>
-          <div class="col-third">
-            <input type="number" [(ngModel)]="month" name="month" placeholder="MM" />
-          </div>
-          <div class="col-third">
-            <input type="number" [(ngModel)]="year" name="year" placeholder="YYYY" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <h4>Terms and Conditions</h4>
-      <div class="input-group">
-        <input type="checkbox" id="terms" name="checkbox" [(ngModel)]="termsAccepted" />
-        <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
-      </div>
       <br>
       <div class="col-half">
-        <input type="button" id="cancel-button" value="Cancel" routerLink="/search" />
+        <input type="button" id="cancel-button" value="Cancel" routerLink="/sell" />
       </div>
       <div class="col-half">
-        <input type="submit" value=Register (click)="register()">
+        <input type="submit" value="add auction" (click)="addItem()">
       </div>
     </div>
 
