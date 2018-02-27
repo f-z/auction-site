@@ -504,14 +504,6 @@ input[type="radio"] {
   display: none;
 }
 
-input[type="radio"]+label,
-select {
-  width: 50%;
-  text-align: center;
-  float: left;
-  border-radius: 0;
-}
-
 input[type="radio"]+label:first-of-type {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;

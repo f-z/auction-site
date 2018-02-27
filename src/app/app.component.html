@@ -14,6 +14,9 @@
   <button class="button" routerLink="/sell" *ngIf="user!=null && user.role=='seller'">
     <span>My Items</span>
   </button>
+  <button class="button" routerLink="/add-item" *ngIf="user!=null && user.role=='buyer'">
+    <span>Sell</span>
+  </button>
 </div>
 
 <div class="home page">

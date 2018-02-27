@@ -75,7 +75,6 @@
         <label for="endTime">End Time: </label>
         <input type="time" name="endTime" id="endTime">
       </div>
-
     </div>
 
     <br>
@@ -97,7 +96,7 @@
       </div>
       <div class="col-half">
         <div class="input">
-          <label for="buyNowPrice">Buy-it-now price £: </label>
+          <label for="buyNowPrice">Buy-it-now Price £: </label>
           <input type="number" [(ngModel)]="buyNowPrice" name="buyNowPrice" placeholder="Buy-it-now Price" />
         </div>
       </div>
@@ -111,7 +110,7 @@
         <input type="button" id="cancel-button" value="Cancel" routerLink="/sell" />
       </div>
       <div class="col-half">
-        <input type="submit" value="add auction" (click)="addItem()">
+        <input type="submit" value="Create Auction" (click)="addItem()">
       </div>
     </div>
 
