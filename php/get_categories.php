@@ -7,10 +7,12 @@
 
     // Attempting to query database table and retrieve data.
     try {
-       $stmt = $pdo->query('SELECT * FROM category
+       $results = $pdo->query('SELECT * FROM category
         ORDER BY description');
+
+
        
-       while($row = $stmnt->fetch(PDO::FETCH_OBJ)) {
+       while($row = $results->fetch(PDO::FETCH_OBJ)) {
           // Assigning each row of data to associative array.
           $data[] = $row;
       }
