@@ -13,7 +13,6 @@ import { User, UserService } from './shared/services/user.service';
 export class LoginComponent {
   loginPage: string;
 
-  userRole: string;
   username: string;
   password: string;
 
@@ -27,7 +26,6 @@ export class LoginComponent {
               private router: Router,
               private userService: UserService) {
                 this.loginPage = 'true';
-                this.userRole = 'buyer';
 
                 this.localURI = 'http://localhost:3000/php/';
                 this.remoteURI = 'https://php-group30.azurewebsites.net/';
@@ -35,7 +33,7 @@ export class LoginComponent {
 
   register(): void {
     const headers: any  = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any		  = { 'userRole': this.userRole, 'username': this.username, 'password': this.password },
+      options: any		  = { 'username': this.username, 'password': this.password },
       url: any      	  = this.remoteURI + 'login.php';
 
       this.http.post(url, JSON.stringify(options), headers)
@@ -66,7 +64,7 @@ export class LoginComponent {
       dialogRef.afterClosed().subscribe(result => {
         if (succeeded) {
           this.setUser(this.user);
-          if (this.userRole === 'seller') {
+          if (this.user.role === 'seller') {
             this.router.navigate(['/sell']);
           } else {
             this.router.navigate(['/search']);

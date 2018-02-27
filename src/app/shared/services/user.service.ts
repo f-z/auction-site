@@ -43,12 +43,12 @@ export class UserService {
 }
 
 export interface User {
-  ID: number;
+  userID: number;
   username: string;
   password: string;
+  role: string;
   photo: Blob;
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
 }
