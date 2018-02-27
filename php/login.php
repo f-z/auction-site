@@ -44,10 +44,12 @@
             if ($userRole == 'buyer') {
                 $row->ID = $row->buyerID;
                 unset($row->buyerID);
+                $row->role = 'buyer';
             }
             else if ($userRole == 'seller') {
                 $row->ID = $row->sellerID;
                 unset($row->sellerID);
+                $row->role = 'seller';
             }
 
             // Returning data as JSON.

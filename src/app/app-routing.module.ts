@@ -6,13 +6,14 @@ import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { SellerComponent } from './seller.component';
+import { AddItemComponent } from './add-item.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/search', pathMatch: 'full' },
   { path: 'search', component: AppComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'add-item', component: LoginComponent },
+  { path: 'add-item', component: AddItemComponent },
   { path: 'items/:itemID', component: ItemDetailsComponent },
   { path: 'sell', component: SellerComponent },
 ];

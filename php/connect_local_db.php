@@ -19,7 +19,7 @@
     try {
         // Creating a PDO instance (connecting to the database).
         $pdo 	= new PDO($dsn, $un, $pwd, $opt);   
-    } catch (PDOException $e){
+    } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 ?>

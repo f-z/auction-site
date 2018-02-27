@@ -1,7 +1,18 @@
+<router-outlet></router-outlet>
+
 <!-- card logout -->
 <div class="card login">
-  <button class="button" (click)="logout()">
-    <span>Logout </span>
+  <button class="button" routerLink="/register" *ngIf="user==null">
+    <span>Register</span>
+  </button>
+  <button class="button" routerLink="/login" *ngIf="user==null">
+    <span>Login</span>
+  </button>
+  <button class="button" (click)="logout()" *ngIf="user!=null">
+    <span>Logout</span>
+  </button>
+  <button class="button" routerLink="/search" *ngIf="user!=null">
+    <span>Main Page</span>
   </button>
 </div>
 
@@ -12,9 +23,22 @@
 
 <div class="container">
   <div class="space-bot text-center">
-    <h2>Items and Auctions</h2>
+    <h2>My Items</h2>
   </div>
-
   <br>
-
+  <button class="add-item-button" routerLink="/add-item" *ngIf="user!=null">
+    <span>Add New Item</span>
+  </button>
+  <br>
 </div>
+
+<!--itemdetails-->
+<section class="card item-details">
+  <!-- item list -->
+  <ul class="itemlist cf">
+    <li class="itemlist-item cf" *ngFor="let item of sellerItems">
+      <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+      </app-item>
+    </li>
+  </ul>
+</section>

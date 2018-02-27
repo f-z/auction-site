@@ -7,7 +7,8 @@ import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-add-item',
-  templateUrl: './add-item.html'
+  templateUrl: './add-item.html',
+  styleUrls: ['./add-item.css']
 })
 export class AddItemComponent {
   userRole: string;

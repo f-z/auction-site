@@ -1,42 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Item, ItemService } from './shared/services/item.service';
 import { User, UserService } from './shared/services/user.service';
-import 'rxjs/add/operator/switchMap';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-seller',
-  templateUrl: './seller.html'
+  templateUrl: './seller.html',
+  styleUrls: ['./seller.css']
 })
 export class SellerComponent implements OnInit {
   item: Item;
   sellerItems: Observable<Item[]> = null;
   private user: User;
 
-  constructor(private itemService: ItemService,
-              private userService: UserService,
-              private route: ActivatedRoute,
+  constructor(private userService: UserService,
+              private itemService: ItemService,
               private router: Router,
               private http: HttpClient) {
   }
 
   ngOnInit(): void {
-    // this.getSellerItems();
-
     this.user = this.getUser();
-}
+
+    this.getSellerItems();
+  }
 
   getSellerItems(): void {
-      this.http
-        .get('https://php-group30.azurewebsites.net/retrieve_seller_items.php')
-        .subscribe((data: any) => {
-         this.sellerItems = data;
-      },
-      (error: any) => {
-         console.dir(error);
-      });
+    const headers: any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+    options: any = { 'sellerID': this.user.ID },
+    url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_items.php';
+
+    this.http.post(url, JSON.stringify(options), headers)
+    .subscribe((data: any) => {
+      this.sellerItems = data;
+    },
+    (error: any) => {
+      // If there is unauthorised / improper access, log out and return to Login page.
+      this.user = null;
+      this.setUser(null);
+      this.router.navigate(['/login']);
+    });
   }
 
   setItem(item: Item): void {
@@ -52,6 +57,7 @@ export class SellerComponent implements OnInit {
   }
 
   logout(): void {
+    this.user = null;
     this.setUser(null);
     this.router.navigate(['/search']);
   }

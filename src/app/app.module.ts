@@ -10,6 +10,7 @@ import { ItemDetailsComponent } from './item-details.component';
 import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
 import { SellerComponent } from './seller.component';
+import { AddItemComponent } from './add-item.component';
 import { DialogComponent} from './dialog.component';
 
 import { SearchPipe, SortByPipe } from './search.pipe';
@@ -33,6 +34,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RegistrationComponent,
     LoginComponent,
     SellerComponent,
+    AddItemComponent,
     ItemComponent,
     ItemDetailsComponent,
     SearchPipe,

@@ -1,15 +1,18 @@
 <!-- card login / registration -->
 <div class="card login">
   <button class="button" routerLink="/register" *ngIf="user==null">
-    <span>Register </span>
+    <span>Register</span>
   </button>
   <button class="button" routerLink="/login" *ngIf="user==null">
-    <span>Login </span>
+    <span>Login</span>
   </button>
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!
     </label>
   <button class="button" (click)="logout()" *ngIf="user!=null">
-    <span>Logout </span>
+    <span>Logout</span>
+  </button>
+  <button class="button" routerLink="/sell" *ngIf="user!=null && user.role=='seller'">
+    <span>My Items</span>
   </button>
 </div>
 

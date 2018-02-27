@@ -1,5 +1,26 @@
 <router-outlet></router-outlet>
 
+<!-- card logout -->
+<div class="card login">
+  <button class="button" routerLink="/register" *ngIf="user==null">
+    <span>Register</span>
+  </button>
+  <button class="button" routerLink="/login" *ngIf="user==null">
+    <span>Login</span>
+  </button>
+  <button class="button" (click)="logout()" *ngIf="user!=null">
+    <span>Logout</span>
+  </button>
+  <button class="button" routerLink="/sell" *ngIf="user!=null">
+    <span>Go Back</span>
+  </button>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
 <!--itemdetails-->
 <section class="card item-details">
   <h1 class="item-name">{{item?.name}}</h1>

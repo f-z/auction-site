@@ -71,7 +71,7 @@ export class RegistrationComponent {
     } else {
         // If the terms have not been accepted, notify the user.
         this.openDialog('Please accept the terms to proceed!', '', false);
-}
+    }
   }
 
   validate(): boolean {
@@ -119,6 +119,6 @@ export class RegistrationComponent {
   }
 
   goBack(): void {
-    this.router.navigate(['/app']);
+    this.router.navigate(['/search']);
   }
 }

@@ -32,8 +32,7 @@
         $stmnt->execute();
         
         // Fetching the row.
-        while($row  = $stmnt->fetch(PDO::FETCH_OBJ))
-        {
+        while($row = $stmnt->fetch(PDO::FETCH_OBJ)) {
            // Assigning each row of data to an associative array.
            $data[] = $row;
         }

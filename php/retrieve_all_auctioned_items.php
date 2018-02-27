@@ -8,8 +8,7 @@
     try {
        $stmt = $pdo->query('SELECT * FROM item, auction WHERE item.itemID = auction.itemID');
        
-       while($row = $stmt->fetch(PDO::FETCH_OBJ))
-       {
+       while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
           // Assigning each row of data to associative array.
           $data[] = $row;
        }
@@ -18,8 +17,7 @@
        echo json_encode($data);
     }
     // Catching potential exceptions being thrown.
-    catch(PDOException $e)
-    {
+    catch(PDOException $e) {
        echo $e->getMessage();
     }
 ?>
