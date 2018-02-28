@@ -22,8 +22,14 @@
   margin-top: 0;
 }
 
-.item-info .item-reknown {
+.item-info .item-quantity {
   font-size: 1.1rem;
   font-weight: 400;
-  margin-top: 0;
+  float: right;
+}
+
+.item-info .item-category {
+  font-size: 0.9rem;
+  font-weight: 400;
+  float: left;
 }

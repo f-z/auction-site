@@ -52,3 +52,14 @@ export interface Category {
   categoryName: string;
   description: string;
 }
+
+export interface Auction {
+  auctionID: number;
+  startPrice: number;
+  reservePrice: number;
+  buyNowPrice: number;
+  startTime: string;
+  endTime: string;
+  viewings: number;
+  itemID: number;
+}

@@ -96,7 +96,7 @@ export class AddItemComponent implements OnInit {
   getCategories(): void {
     this.http
       .get(
-        'https://php-group30.azurewebsites.net/get_categories.php'
+        'https://php-group30.azurewebsites.net/retrieve_categories.php'
       )
       .subscribe(
         (data: any) => {
