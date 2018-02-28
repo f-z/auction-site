@@ -44,7 +44,7 @@ export interface Item {
   description: string;
   condition: string;
   quantity: number;
-  categoryID: string;
+  categoryName: string;
   sellerID: number;
 }
 

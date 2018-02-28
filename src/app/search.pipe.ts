@@ -7,28 +7,25 @@ import { Item } from './shared/services/item.service';
 })
 export class SearchPipe implements PipeTransform {
   transform(items: Item[], term: string): Item[] {
-    if (term === '*') {
+    if (term === 'All') {
       return items;
     }
 
     term = term.toLowerCase();
-    return term
-      ? items.filter(
-          item =>
-            item.name.toLowerCase().includes(term) ||
-            item.categoryID.toLowerCase().includes(term)
-        )
-      : items;
-  }
-}
 
-@Pipe({
-  name: 'sortBy'
-})
-export class SortByPipe implements PipeTransform {
-  transform(items: any[], sortedBy: string): any {
-    return items.sort((a, b) => {
-      return b[sortedBy] - a[sortedBy];
-    });
+    const filteredItems: Item[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].name.toLowerCase().includes(term)) {
+        filteredItems.push(items[i]);
+      } else if (
+        items[i].categoryName != null &&
+        items[i].categoryName.toLowerCase().includes(term)
+      ) {
+        filteredItems.push(items[i]);
+      }
+    }
+
+    return filteredItems;
   }
 }

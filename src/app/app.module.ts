@@ -13,7 +13,7 @@ import { SellerComponent } from './seller.component';
 import { AddItemComponent } from './add-item.component';
 import { DialogComponent} from './dialog.component';
 
-import { SearchPipe, SortByPipe } from './search.pipe';
+import { SearchPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './shared/services/user.service';
@@ -42,7 +42,6 @@ import {MatIconModule} from '@angular/material/icon';
     ItemComponent,
     ItemDetailsComponent,
     SearchPipe,
-    SortByPipe,
     DialogComponent
   ],
   bootstrap: [HomeComponent],

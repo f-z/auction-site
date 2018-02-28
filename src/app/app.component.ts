@@ -17,8 +17,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
   item: Item;
   items: Observable<Item[]> = null;
-  category: string;
+  public selectedCategory: string;
   private user: User;
+  private term: string;
+  categories: any;
 
   constructor(
     private itemService: ItemService,
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.category = 'all';
+    this.term = 'All';
 
     this.getItems();
 
@@ -82,7 +84,6 @@ export class AppComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.items = data;
-          // console.dir(this.items);
         },
         (error: any) => {
           console.dir(error);
@@ -92,6 +93,10 @@ export class AppComponent implements OnInit {
 
   setItem(item: Item): void {
     this.itemService.setItem(item);
+  }
+
+  selectCategory(category): void {
+    this.term = category;
   }
 
   getUser(): User {

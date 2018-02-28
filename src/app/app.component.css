@@ -60,6 +60,11 @@
     outline: 0;
   }
 
+  .search .categories {
+    margin: auto;
+    width: 100%;
+  }
+
   /* ------------------ */
   
   /* Item List Styles */

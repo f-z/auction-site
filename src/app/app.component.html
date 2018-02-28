@@ -27,8 +27,8 @@
 <!-- card search -->
 <div class="card search">
   <h2 class="search-headline">Item Directory</h2>
-  <mat-button-toggle-group #category="matButtonToggleGroup">
-    <mat-button-toggle value="All">
+  <mat-button-toggle-group #categories="matButtonToggleGroup" class="categories" (change)="selectCategory(categories.value);">
+    <mat-button-toggle value="All" checked=true>
       <mat-icon>check box</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="Electronics">
@@ -60,11 +60,11 @@
   <label class="search-label">search
     <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
   </label>
-  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here">
+  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}">
 
   <!-- item list -->
   <ul class="itemlist cf" *ngIf="term">
-    <li class="itemlist-item cf" *ngFor="let item of items | search : term | sortBy: 'itemID'">
+    <li class="itemlist-item cf" *ngFor="let item of items | search : term">
       <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
       </app-item>
     </li>
