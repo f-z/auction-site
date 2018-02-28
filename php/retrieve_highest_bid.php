@@ -5,11 +5,11 @@
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
 
-    $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_INT);
 
       try {
 
-      	$sql = 'SELECT MAX(price) 
+      	$sql = 'SELECT MAX(price) as price
         FROM `bid` 
         WHERE auctionID = :auctionID';
 

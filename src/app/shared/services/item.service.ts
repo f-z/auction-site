@@ -53,6 +53,12 @@ export interface Category {
   description: string;
 }
 
+export interface Bid{
+  bidID: number;
+  price: number;
+  buyerID: number;
+}
+
 export interface Auction {
   auctionID: number;
   startPrice: number;

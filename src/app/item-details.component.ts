@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User, UserService } from './shared/services/user.service';
-import { Item, ItemService, Auction } from './shared/services/item.service';
+import { Item, ItemService, Auction, Bid } from './shared/services/item.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog.component';
@@ -15,7 +15,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
-  private auction: Auction = null;
+  private auction: Auction;
+  private highestBid: Bid;
   itemID: number;
   private sub: any;
   private user: User;
@@ -43,6 +44,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.getAuctionInformation();
+    this.getHighestBid();
   }
 
   ngOnDestroy() {
@@ -52,6 +54,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   getUser(): User {
     return this.userService.getUser();
   }
+
 
   setUser(user: User): void {
     this.userService.setUser(user);
@@ -80,6 +83,25 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     return null;
   }
+
+
+  getHighestBid(): void {
+        const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options: any    = { 'auctionID': this.auction.auctionID },
+         url: any        = 'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
+
+        this.http.post(url, JSON.stringify(options), headers)
+        .subscribe((data: any) => {
+        this.highestBid = data;
+      },
+      (error: any) => {
+        // If the supplied username or email already exist in the database, notify the user.
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+      }
+    );
+    return null;
+  }
+
 
   openDialog(message: string, username: string, succeeded: boolean): void {
     const dialogRef = this.dialog.open(DialogComponent, {
