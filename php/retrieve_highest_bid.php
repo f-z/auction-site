@@ -6,7 +6,7 @@
   $obj     =  json_decode($json);
 
   // Sanitising URL supplied values.
-  $endTime = filter_var($obj->endTime, FILTER_SANITIZE_STRING);
+  $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING);
 
   try {
     $sql = 'SELECT * FROM bid WHERE auctionID = ? AND price IN (SELECT MAX(price) FROM bid WHERE auctionID = ?);';
