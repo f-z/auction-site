@@ -24,7 +24,6 @@
       	$insertItem->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
       	$insertBid->execute();
-        
 
       }
        catch (Exception $e) {
