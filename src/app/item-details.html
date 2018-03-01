@@ -31,7 +31,7 @@
     <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
     <div class="item-description">{{item?.description}}</div>
     <br>
-    <h3 class="item-right">Highest bid: {{highestBid.price}} </h3>
+    <h3 class="item-right" *ngIf="highestBid != null">Highest bid: {{highestBid.price}} </h3>
     <br>
     <br>
     <h3 class="item-right">Buyers monitoring: </h3>

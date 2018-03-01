@@ -44,7 +44,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.getAuctionInformation();
-    this.getHighestBid();
   }
 
   ngOnDestroy() {
@@ -74,9 +73,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
         this.auction = data[0];
+        this.getHighestBid(data[0].auctionID);
       },
       (error: any) => {
-        // If the supplied username or email already exist in the database, notify the user.
+        // If there is an error, return to main search page.
         this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
       }
     );
@@ -84,24 +84,25 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  getHighestBid(auctionID): void {
+    const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any    = { 'auctionID': auctionID },
+          url: any        = 'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
 
-  getHighestBid(): void {
-        const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any    = { 'auctionID': this.auction.auctionID },
-         url: any        = 'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
-
-        this.http.post(url, JSON.stringify(options), headers)
-        .subscribe((data: any) => {
-        this.highestBid = data;
+    this.http.post(url, JSON.stringify(options), headers)
+      .subscribe((data: any) => {
+        if (data != null) {
+          this.highestBid = data[0];
+        }
       },
       (error: any) => {
-        // If the supplied username or email already exist in the database, notify the user.
+        // If there is an error, return to main search page.
         this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
       }
     );
+
     return null;
   }
-
 
   openDialog(message: string, username: string, succeeded: boolean): void {
     const dialogRef = this.dialog.open(DialogComponent, {
