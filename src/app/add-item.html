@@ -26,7 +26,7 @@
     <br>
 
     <div class="row">
-      <h4>Item name</h4>
+      <h4>Item Name</h4>
       <div class="col">
         <div class="input">
           <input type="text" [(ngModel)]="name" name="name" placeholder="Name of item" />
@@ -42,7 +42,6 @@
       </div>
     </div>
 
-
     <div class="row">
       <div class="col-half">
         <label for="category">Category: </label>
@@ -53,8 +52,8 @@
       <div class="col-half">
         <label for="condition">Condition: </label>
         <select type="text" [(ngModel)]="condition" name="condition" id="condition">
-          <option value='new'>New</option>
-          <option value='used'>Used</option>
+          <option value='New'>New</option>
+          <option value='Used'>Used</option>
         </select>
       </div>
     </div>
@@ -68,18 +67,29 @@
 
     <div class="row">
       <div class="col-half">
-        <label for="endDate">End Date: </label>
-        <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate">
+        <label for="startDate">Start Date: </label>
+        <input type="date" [(ngModel)]="startDate" name="startDate" id="startDate">
       </div>
       <div class="col-half">
-        <label for="endTime">End Time: </label>
-        <input type="time" name="endTime" id="endTime">
+        <label for="startTime">Start Time: </label>
+        <input type="time" [(ngModel)]="startTime" name="startTime" id="startTime">
       </div>
     </div>
 
     <br>
 
+    <div class="row">
+      <div class="col-half">
+        <label for="endDate">End Date: </label>
+        <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate">
+      </div>
+      <div class="col-half">
+        <label for="endTime">End Time: </label>
+        <input type="time" [(ngModel)]="endTime" name="endTime" id="endTime">
+      </div>
+    </div>
 
+    <br>
 
     <div class="row">
       <div class="col-half">

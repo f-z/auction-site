@@ -7,68 +7,68 @@
 
     // Sanitising URL supplied values.
     $name = filter_var($obj->name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    // $picture = addslashes(file_get_contents($_FILES['picture']['tmp_name']));
+    $picture = filter_var($obj->picture, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $description = filter_var($obj->description, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $condition = filter_var($obj->condition, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    $quantity = filter_var($obj->quantity, FILTER_SANITIZE_INT);
-    $categoryID = filter_var($obj->categoryID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-
-    $picture = addslashes(file_get_contents($_FILES['picture']['tmp_name']));
+    $quantity = filter_var($obj->quantity, FILTER_SANITIZE_NUMBER_INT);
+    $categoryName = filter_var($obj->categoryName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        // Retrieving the categoryID to store in the items table.
-        // $q = $pdo->query("SELECT categoryID FROM `category` WHERE categoryID='$categoryID'");
-        // $categoryID = $q->fetchColumn();
-
-        // TODO: Need to retrieve the sellerID when they log in
-        $sellerID = 1;
-
-        $itemQuery = 'INSERT INTO `item` (name, picture, description, `condition`, quantity, categoryID, sellerID) 
-        VALUES (:name, :picture, :description, :condition, :quantity, :categoryID, :sellerID)';
+        $itemQuery = "INSERT INTO `compgc06_group30`.`item` (`name`, `picture`, `description`, `condition`, `quantity`, `categoryName`, `sellerID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $insertItem = $pdo->prepare($itemQuery);
 
-        $insertItem->bindParam(':name', $name, PDO::PARAM_STR);
-        $insertItem->bindParam(':picture', $picture, PDO::PARAM_LOB); // BLOB for picture
-        $insertItem->bindParam(':description', $description, PDO::PARAM_LOB); // and long description
-        $insertItem->bindParam(':condition', $condition, PDO::PARAM_STR);
-        $insertItem->bindParam(':quantity', $quantity,  PDO::PARAM_INT);
-        $insertItem->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
-        $insertItem->bindParam(':sellerID', $sellerID, PDO::PARAM_INT);
+        $insertItem->bindParam(1, $name, PDO::PARAM_STR);
+        
+        $insertItem->bindParam(2, $picture, PDO::PARAM_STR);
+        $insertItem->bindParam(3, $description, PDO::PARAM_STR);
+        $insertItem->bindParam(4, $condition, PDO::PARAM_STR);
+        $insertItem->bindParam(5, $quantity,  PDO::PARAM_INT);
+        $insertItem->bindParam(6, $categoryName, PDO::PARAM_STR);
+        $insertItem->bindParam(7, $sellerID, PDO::PARAM_INT);
 
         $insertItem->execute();
-        
-        // Adding new auction to database:
+
+        // Adding new auction to database.
+
+        /*
+        // Getting current date and time (in London, UK, timezone).
         $itemID = $pdo->lastInsertId();
-        $startTime = date('Y-m-d H:i:s'); // auction start time is when form is submitted
-        $endDate = $_POST['endDate'];
-        $endDate = date("Y-m-d", strtotime($endDate));
-        $endTime = $_POST['endTime'];
-        $day = filter_var($obj->day, FILTER_SANITIZE_NUMBER_INT);
-        $month = filter_var($obj->month, FILTER_SANITIZE_NUMBER_INT);
-        $year = filter_var($obj->year, FILTER_SANITIZE_NUMBER_INT);
+        $timezone = 'Europe/London';
+        $timestamp = time();
+        $currentDate = new DateTime("now", new DateTimeZone($timezone));
+        $currentDate->setTimestamp($timestamp);
+        $startTime = $currentDate->format('Y-m-d H:i:s');
+        */
 
-        // Converting to date format.
-        $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
+        $startDate = filter_var($obj->startDate, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $startTime = filter_var($obj->startTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $startTime = $startDate . " " . $startTime;
 
-        $startPrice = filter_var($obj->startPrice, FILTER_SANITIZE_INT);
-        $reservePrice = filter_var($obj->reservePrice, FILTER_SANITIZE_INT);
-        $buyNowPrice = filter_var($obj->buyNowPrice, FILTER_SANITIZE_INT);
+        $endDate = filter_var($obj->endDate, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $endTime = filter_var($obj->endTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $endTime = $endDate . " " . $endTime;
 
-        $auctionQuery = 'INSERT INTO `auction` (startPrice, reservePrice, buyNowPrice, startTime, endTime, itemID)
-        VALUES (:startPrice, :reservePrice, :buyNowPrice, :startTime, :endTime, :itemID)';
+        $startPrice = filter_var($obj->startPrice, FILTER_SANITIZE_NUMBER_FLOAT);
+        $reservePrice = filter_var($obj->reservePrice, FILTER_SANITIZE_NUMBER_FLOAT);
+        $buyNowPrice = filter_var($obj->buyNowPrice, FILTER_SANITIZE_NUMBER_FLOAT);
+
+        $auctionQuery = "INSERT INTO `auction` (startPrice, reservePrice, buyNowPrice, startTime, endTime, itemID) VALUES (?, ?, ?, ?, ?, ?)";
 
         $insertAuction = $pdo->prepare($auctionQuery);
         
-        $insertAuction->bindParam(':startPrice', $startPrice, PDO::PARAM_STR);
-        $insertAuction->bindParam(':reservePrice', $reservePrice, PDO::PARAM_STR);
-        $insertAuction->bindParam(':buyNowPrice', $buyNowPrice, PDO::PARAM_STR);
-        $insertAuction->bindParam(':startTime', $startTime, PDO::PARAM_STR);
-        $insertAuction->bindParam(':endTime', $combinedEndTime, PDO::PARAM_STR);
-        $insertAuction->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+        $insertAuction->bindParam(1, $startPrice, PDO::PARAM_STR);
+        $insertAuction->bindParam(2, $reservePrice, PDO::PARAM_STR);
+        $insertAuction->bindParam(3, $buyNowPrice, PDO::PARAM_STR);
+        $insertAuction->bindParam(4, $startTime, PDO::PARAM_STR);
+        $insertAuction->bindParam(5, $endTime, PDO::PARAM_STR);
+        $insertAuction->bindParam(6, $itemID, PDO::PARAM_INT);
 
         $insertAuction->execute();
     }
     catch (Exception $e) {
-    $error = $e->getMessage();
+        $error = $e->getMessage();
     }
 ?>

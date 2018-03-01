@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Category } from './shared/services/item.service';
   templateUrl: './add-item.html',
   styleUrls: ['./add-item.css']
 })
-export class AddItemComponent implements OnInit {
+export class AddItemComponent implements OnInit, OnDestroy {
   private user: User;
 
   name: string;
@@ -22,7 +22,9 @@ export class AddItemComponent implements OnInit {
   condition: string;
   quantity: number;
   category: string;
-  // picture: binary?
+  picture: string = null;
+  startDate: string;
+  startTime: string;
   endDate: string;
   endTime: string;
   startPrice: number;
@@ -50,6 +52,10 @@ export class AddItemComponent implements OnInit {
     this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
+  ngOnDestroy(): void {
+    console.log('destroyed page');
+  }
+
   addItem(): void {
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (!this.validate()) {
@@ -64,12 +70,16 @@ export class AddItemComponent implements OnInit {
         description: this.description,
         condition: this.condition,
         quantity: this.quantity,
-        category: this.selectedCategory,
+        categoryName: this.selectedCategory,
+        startDate: this.startDate,
+        startTime: this.startTime,
         endDate: this.endDate,
         endTime: this.endTime,
         startPrice: this.startPrice,
         reservePrice: this.reservePrice,
-        buyNowPrice: this.buyNowPrice /*'picture': this.picture,*/
+        buyNowPrice: this.buyNowPrice,
+        picture: this.picture,
+        sellerID: this.user.userID
       },
       url: any = this.remoteURI + 'insert_item_create_auction.php';
 
@@ -83,9 +93,9 @@ export class AddItemComponent implements OnInit {
         );
       },
       (error: any) => {
-        // If the supplied username or email already exist in the database, notify the user.
+        // If there is an error, notify the user.
         this.openDialog(
-          'The supplied username/email already exists!',
+          'Something went wrong, please try again!',
           '',
           false
         );
@@ -113,18 +123,31 @@ export class AddItemComponent implements OnInit {
   }
 
   validate(): boolean {
+
+    console.dir(this.name);
+    console.dir(this.description);
+    console.dir(this.condition);
+    console.dir(this.quantity);
+    console.dir(this.selectedCategory);
+    console.dir(this.endDate);
+    console.dir(this.endTime);
+    console.dir(this.startPrice);
+    console.dir(this.reservePrice);
+    console.dir(this.buyNowPrice);
+
+
     if (
       this.name == null ||
       this.description == null ||
       this.condition == null ||
       this.quantity == null ||
-      this.category == null ||
+      this.selectedCategory == null ||
       this.endDate == null ||
       this.endTime == null ||
       this.startPrice == null ||
-      this.reservePrice == null
-      // || this.buyitnowprice == null
-      /*  || this.picture == null*/
+      this.reservePrice == null ||
+      this.buyNowPrice == null
+      /* || this.picture == null */
     ) {
       // If there are any empty fields, notify the user.
       this.openDialog('Please fill in all the fields!', '', false);
@@ -159,7 +182,7 @@ export class AddItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (succeeded) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/sell']);
       }
     });
   }
