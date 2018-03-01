@@ -31,16 +31,20 @@
     <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
     <div class="item-description">{{item?.description}}</div>
     <br>
-    <h3 class="item-right" *ngIf="highestBid != null">Highest bid: {{highestBid.price}} </h3>
+    <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid.price }} </h3>
+    <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
     <br>
     <br>
     <h3 class="item-right">Buyers monitoring: </h3>
     <br>
     <br>
-    <h3 class="item-right" *ngIf="auction != null">Start price: {{ auction.startPrice }}</h3>
-    <br>
-    <br>
     <h3 class="item-right"  id="countdown" *ngIf="auction != null"></h3>
+    <br>
+    <br>
+    <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" *ngIf="user!=null" >
+    <button class="button" (click)="bid()" *ngIf="user!=null">
+      <span>Bid</span>
+    </button>
   </div>
 
 </section>

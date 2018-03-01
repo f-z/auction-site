@@ -20,6 +20,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   itemID: number;
   private sub: any;
   private user: User;
+  private newBid: number;
 
   constructor(
     private userService: UserService,
@@ -85,6 +86,95 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+
+  getHighestBid(auctionID): void {
+    const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
+          options: any    = { 'auctionID': auctionID },
+          url: any        = 'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
+
+    this.http.post(url, JSON.stringify(options), headers)
+      .subscribe((data: any) =>  // Set the date we're counting down to
+       {
+        if (data != null) {
+          this.highestBid = data[0];
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        //this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+      }
+    );
+
+    return null;
+  }
+
+  bid(): void{
+    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
+     if (!this.validateBid()) {
+      return;
+     }
+          
+      const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
+      options: any    = { 'buyerID': this.user.userID ,
+                          'auctionID': this.auction.auctionID,
+                          'price': this.newBid},
+      url: any        = 'https://php-group30.azurewebsites.net/insert_bid.php';
+
+    this.http.post(url, JSON.stringify(options), headers)
+      .subscribe((data: any) =>  {// Set the date we're counting down to
+            // If the request was successful, notify the user.
+            this.openDialog('Congratulations, you have successfully placed your bid', "", true);
+        
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        //this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+      }
+    );
+
+    return null;
+
+  }
+
+  validateBid(): boolean {
+    if(this.newBid == null){
+      this.openDialog("Please enter your bid amount", "", true); 
+      return false;
+    }
+    else if(this.highestBid == null && this.newBid < this.auction.startPrice){
+       this.openDialog("Please enter more than start price", "", true);   
+       return false
+    }
+
+    else if(this.newBid < this.highestBid.price){
+      this.openDialog("Please enter more than current bid", "", true);
+      return false;
+    }
+    else{ //bid entry is valid
+      return true;
+    }
+  }
+
+  openDialog(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!succeeded) {
+        this.router.navigate(['/search']);
+      }
+    });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/search']);
+  }
+
+  //Displays time remaining on auction
   countDown(auction_endTime):void{
      // Set the date we're counting down to
     var countDownDate = new Date(auction_endTime).getTime();
@@ -125,63 +215,5 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }, 1000);
   }
 
-  getHighestBid(auctionID): void {
-    const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
-          options: any    = { 'auctionID': auctionID },
-          url: any        = 'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
 
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) =>  // Set the date we're counting down to
-       {
-        if (data != null) {
-          this.highestBid = data[0];
-        }
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
-      }
-    );
-
-    return null;
-  }
-
- /* calculateTimeRemaining(auction_endTime): void{
-          const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
-          options: any    = { 'endTime': auction_endTime },
-          url: any        = 'https://php-group30.azurewebsites.net/calculate_time_remaining.php';
-
-          this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
-        if (data != null) {
-          this.timeRemaining = data;
-        }
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        //this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
-      }
-    );
-
-    return null;
-  }*/
-
-  openDialog(message: string, username: string, succeeded: boolean): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        message: message,
-        username: username
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!succeeded) {
-        this.router.navigate(['/search']);
-      }
-    });
-  }
-
-  goBack(): void {
-    this.router.navigate(['/search']);
-  }
 }

@@ -7,7 +7,7 @@
 
     $buyerID =  filter_var($obj->buyerID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    $price = filter_var($obj->price, FILTER_SANITIZE_INT);
+    $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_INT);
 
       try {
 
@@ -24,6 +24,8 @@
       	$insertItem->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
       	$insertBid->execute();
+
+        echo json_encode(array('message' => 'Congratulations, your bid has been placed!'));
 
       }
        catch (Exception $e) {
