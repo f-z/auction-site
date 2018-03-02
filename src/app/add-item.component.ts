@@ -22,7 +22,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   condition: string;
   quantity: number;
   category: string;
-  picture: string = null;
+  picture = '';
   startDate: string;
   startTime: string;
   endDate: string;
@@ -123,31 +123,20 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   validate(): boolean {
-
-    console.dir(this.name);
-    console.dir(this.description);
-    console.dir(this.condition);
-    console.dir(this.quantity);
-    console.dir(this.selectedCategory);
-    console.dir(this.endDate);
-    console.dir(this.endTime);
-    console.dir(this.startPrice);
-    console.dir(this.reservePrice);
-    console.dir(this.buyNowPrice);
-
-
     if (
       this.name == null ||
       this.description == null ||
       this.condition == null ||
       this.quantity == null ||
       this.selectedCategory == null ||
+      this.startDate == null ||
+      this.startTime == null ||
       this.endDate == null ||
       this.endTime == null ||
       this.startPrice == null ||
       this.reservePrice == null ||
-      this.buyNowPrice == null
-      /* || this.picture == null */
+      this.buyNowPrice == null ||
+      this.picture == null
     ) {
       // If there are any empty fields, notify the user.
       this.openDialog('Please fill in all the fields!', '', false);
@@ -156,15 +145,17 @@ export class AddItemComponent implements OnInit, OnDestroy {
       this.name.trim().length === 0 ||
       this.description.trim().length === 0 ||
       this.condition.trim().length === 0 ||
+      this.startDate.trim().length === 0 ||
+      this.startTime.trim().length === 0 ||
       this.endDate.trim().length === 0 ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
       this.startPrice < 0 ||
-      this.reservePrice < this.startPrice
-      // || this.buyitnowprice < this.reserveprice || this.day > 31 || this.month < 1 || this.month > 12
+      this.reservePrice < this.startPrice ||
+      this.buyNowPrice < this.reservePrice
+    ) {
       // TODO:
       // need checks to make sure end date of auction is in future
-    ) {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
       return false;
@@ -172,11 +163,11 @@ export class AddItemComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  openDialog(message: string, username: string, succeeded: boolean): void {
+  openDialog(message: string, name: string, succeeded: boolean): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         message: message,
-        username: username
+        username: name
       }
     });
 

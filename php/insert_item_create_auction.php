@@ -34,6 +34,11 @@
         // Adding new auction to database.
 
         /*
+        $startDate = filter_var($obj->startDate, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $startTime = filter_var($obj->startTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $startTime = $startDate . " " . $startTime;
+        */
+
         // Getting current date and time (in London, UK, timezone).
         $itemID = $pdo->lastInsertId();
         $timezone = 'Europe/London';
@@ -41,11 +46,6 @@
         $currentDate = new DateTime("now", new DateTimeZone($timezone));
         $currentDate->setTimestamp($timestamp);
         $startTime = $currentDate->format('Y-m-d H:i:s');
-        */
-
-        $startDate = filter_var($obj->startDate, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-        $startTime = filter_var($obj->startTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-        $startTime = $startDate . " " . $startTime;
 
         $endDate = filter_var($obj->endDate, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $endTime = filter_var($obj->endTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
@@ -67,6 +67,7 @@
         $insertAuction->bindParam(6, $itemID, PDO::PARAM_INT);
 
         $insertAuction->execute();
+        echo json_encode('success');
     }
     catch (Exception $e) {
         $error = $e->getMessage();
