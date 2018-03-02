@@ -53,9 +53,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.sub.unsubscribe();
-    let countdownText = document.getElementById('countdown');
-    countdownText = null;
+    this.sub.unsubscribe();
   }
 
   getUser(): User {
@@ -108,15 +106,20 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        // Set the date we're counting down to.
+      (
+        data: any // Set the date we're counting down to
+      ) => {
         if (data != null) {
           this.highestBid = data[0];
         }
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        // this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
 
@@ -144,14 +147,18 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         // Set the date we're counting down to
         // If the request was successful, notify the user.
         this.openDialog(
-          'Congratulations, you have successfully placed your bid',
+          'Congratulations, you have successfully placed your bid!',
           '',
           true
         );
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        // this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
 
@@ -193,62 +200,60 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    if (this.user.role === 'buyer') {
     this.router.navigate(['/search']);
-    } else {
-      this.router.navigate(['sell']);
-    }
   }
 
   // Displays time remaining on auction.
   countDown(auction_endTime): void {
-    // Set the date we're counting down to
-    var countDownDate = new Date(auction_endTime).getTime();
+    // Set the date we're counting down to.
+    let countDownDate = new Date(auction_endTime).getTime();
 
     // Update the count down every 1 second.
-    var x = setInterval(function() {
-      // Get todays date and time
-      var now = new Date().getTime();
+    let x = setInterval(function() {
+      if (document.getElementById('countdown') != null) {
+        // Get todays date and time
+        let now = new Date().getTime();
 
-      // Find the distance between now an the count down date
-      var distance = countDownDate - now;
+        // Find the distance between now an the count down date.
+        let distance = countDownDate - now;
 
-      // Time calculations for days, hours, minutes and seconds
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Time calculations for days, hours, minutes and seconds.
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Display the result in the element with id='countdown'
-      if (days >= 1) {
-        document.getElementById('countdown').innerHTML =
-          'Time remaining: ' +
-          days +
-          'd ' +
-          hours +
-          'h ' +
-          minutes +
-          'm ' +
-          seconds +
-          's ';
-      } else if (hours >= 1) {
-        document.getElementById('countdown').innerHTML =
-          'Time remaining: ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
-      } else if (minutes >= 1) {
-        document.getElementById('countdown').innerHTML =
-          'Time remaining: ' + minutes + 'm ' + seconds + 's ';
-      } else if (seconds >= 1) {
-        document.getElementById('countdown').innerHTML =
-          'Time remaining: ' + seconds + 's ';
-      }
+        // Display the result in the element with id='countdown'
+        if (days >= 1) {
+          document.getElementById('countdown').innerHTML =
+            'Time remaining: ' +
+            days +
+            'd ' +
+            hours +
+            'h ' +
+            minutes +
+            'm ' +
+            seconds +
+            's ';
+        } else if (hours >= 1) {
+          document.getElementById('countdown').innerHTML =
+            'Time remaining: ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        } else if (minutes >= 1) {
+          document.getElementById('countdown').innerHTML =
+            'Time remaining: ' + minutes + 'm ' + seconds + 's ';
+        } else if (seconds >= 1) {
+          document.getElementById('countdown').innerHTML =
+            'Time remaining: ' + seconds + 's ';
+        }
 
-      // If the count down is finished, write some text
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById('countdown').innerHTML =
-          'Time remaining: EXPIRED';
+        // If the count down is finished, notify the user.
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById('countdown').innerHTML =
+            'Time remaining: EXPIRED';
+        }
       }
     }, 1000);
   }
