@@ -1,1 +1,0 @@
-<!-- class that creates an auction -->

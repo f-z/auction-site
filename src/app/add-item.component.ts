@@ -81,21 +81,54 @@ export class AddItemComponent implements OnInit, OnDestroy {
         picture: this.picture,
         sellerID: this.user.userID
       },
-      url: any = this.remoteURI + 'insert_item_create_auction.php';
+      url: any = this.remoteURI + 'insert_item.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        console.dir(data);
+        this.addAuction(data);
+      },
+      (error: any) => {
+        // If there is an error, notify the user.
+        this.openDialog(
+          'Something went wrong when adding the item, please try again!',
+          '',
+          false
+        );
+      }
+    );
+  }
+
+  addAuction(itemID): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        itemID: itemID,
+        startDate: this.startDate,
+        startTime: this.startTime,
+        endDate: this.endDate,
+        endTime: this.endTime,
+        startPrice: this.startPrice,
+        reservePrice: this.reservePrice,
+        buyNowPrice: this.buyNowPrice,
+        sellerID: this.user.userID
+      },
+      url: any = this.remoteURI + 'create_auction.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         // If the request was successful, notify the user.
         this.openDialog(
-          'Congratulations, the following item was added: ',
-          this.name,
+          'Congratulations, the item was added and the auction was created!',
+          '',
           true
         );
       },
       (error: any) => {
         // If there is an error, notify the user.
         this.openDialog(
-          'Something went wrong, please try again!',
+          'Something went wrong when creating the auction, please try again!',
           '',
           false
         );

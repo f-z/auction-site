@@ -11,7 +11,7 @@
   <button class="button" (click)="logout()" *ngIf="user!=null">
     <span>Logout</span>
   </button>
-  <button class="button" routerLink="/sell" *ngIf="user!=null">
+  <button class="button" (click)="goBack()" *ngIf="user!=null">
     <span>Go Back</span>
   </button>
 </div>
@@ -21,11 +21,11 @@
 <br>
 <br>
 
-<!--itemdetails-->
+<!-- item details -->
 <section class="card item-details">
   <h1 class="item-name">{{item?.name}}</h1>
   <br>
-  <!--info-->
+  <!-- info -->
   <div class="info">
     <h3 class="item-right">Quantity: {{item?.quantity}}</h3>
     <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
@@ -38,14 +38,13 @@
     <h3 class="item-right">Buyers monitoring: </h3>
     <br>
     <br>
-    <h3 class="item-right"  id="countdown" *ngIf="auction != null"></h3>
+    <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
     <br>
     <br>
-    <form id="bid-form">
+    <form *ngIf="item.sellerID != user.userID" id="bid-form">
       <input type="number" *ngIf="user!=null"  [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
       <input type="submit" value=Bid *ngIf="user!=null" (click)="bid()">  
     </form>
   </div>
 
 </section>
-
