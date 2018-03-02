@@ -41,10 +41,10 @@
     <h3 class="item-right"  id="countdown" *ngIf="auction != null"></h3>
     <br>
     <br>
-    <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" *ngIf="user!=null" >
-    <button class="button" (click)="bid()" *ngIf="user!=null">
-      <span>Bid</span>
-    </button>
+    <form id="bid-form">
+      <input type="number" *ngIf="user!=null"  [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
+      <input type="submit" value=Bid *ngIf="user!=null" (click)="bid()">  
+    </form>
   </div>
 
 </section>

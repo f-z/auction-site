@@ -108,32 +108,31 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  bid(): void{
+  bid(): void {
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
-     if (!this.validateBid()) {
-      return;
-     }
+    if (this.validateBid()) {
+
+
+
+        const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options: any    = { 'buyerID': this.user.userID ,
+                            'auctionID': this.auction.auctionID,
+                            'price': this.newBid},
+        url: any        = 'https://php-group30.azurewebsites.net/insert_bid.php';
+
+      this.http.post(url, JSON.stringify(options), headers)
+        .subscribe((data: any) =>  {
+
+              this.openDialog('Congratulations, you have successfully placed your bid', "", true);
           
-      const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any    = { 'buyerID': this.user.userID ,
-                          'auctionID': this.auction.auctionID,
-                          'price': this.newBid},
-      url: any        = 'https://php-group30.azurewebsites.net/insert_bid.php';
-
-    this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) =>  {// Set the date we're counting down to
-            // If the request was successful, notify the user.
-            this.openDialog('Congratulations, you have successfully placed your bid', "", true);
-        
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        //this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
-      }
-    );
-
+        },
+        (error: any) => {
+          // If there is an error, return to main search page.
+          this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', true);
+        }
+      );
+    }
     return null;
-
   }
 
   validateBid(): boolean {
@@ -141,18 +140,17 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.openDialog("Please enter your bid amount", "", true); 
       return false;
     }
-    else if(this.highestBid == null && this.newBid < this.auction.startPrice){
-       this.openDialog("Please enter more than start price", "", true);   
-       return false
+    else if(this.highestBid == null){
+      if( this.newBid < this.auction.startPrice){
+         this.openDialog("Please enter more than start price", "", true);   
+         return false;
+        }
     }
-
     else if(this.newBid < this.highestBid.price){
       this.openDialog("Please enter more than current bid", "", true);
       return false;
     }
-    else{ //bid entry is valid
-      return true;
-    }
+      return true;//if bid is valid 
   }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
@@ -213,6 +211,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
             clearInterval(counter);
             document.getElementById("countdown").innerHTML = "Time remaining: EXPIRED";
           }
+        }else{
+          clearInterval(counter);
         }
     }, 1000);
   }
