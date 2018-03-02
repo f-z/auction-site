@@ -17,11 +17,11 @@
 
         $insertBid = $pdo->prepare($sql);
 
-        $insertItem->bindParam(':price', $price, PDO::PARAM_STR);//Needs to be string if number is float
-      	$insertItem->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
+        $insertBid->bindParam(':price', $price, PDO::PARAM_STR);//Needs to be string if number is float
+      	$insertBid->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
       	$time = date('Y-m-d H:i:s');
-      	$insertItem->bindParam(':tim', $time, PDO::PARAM_STR);  
-      	$insertItem->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+      	$insertBid->bindParam(':tim', $time, PDO::PARAM_STR);  
+      	$insertBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
       	$insertBid->execute();
 
