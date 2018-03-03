@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Category } from './shared/services/item.service';
   templateUrl: './add-item.html',
   styleUrls: ['./add-item.css']
 })
-export class AddItemComponent implements OnInit, OnDestroy {
+export class AddItemComponent implements OnInit {
   private user: User;
 
   name: string;
@@ -52,10 +52,6 @@ export class AddItemComponent implements OnInit, OnDestroy {
     this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
-  ngOnDestroy(): void {
-    console.log('destroyed page');
-  }
-
   addItem(): void {
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (!this.validate()) {
@@ -85,7 +81,6 @@ export class AddItemComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.dir(data);
         this.addAuction(data);
       },
       (error: any) => {
@@ -178,17 +173,15 @@ export class AddItemComponent implements OnInit, OnDestroy {
       this.name.trim().length === 0 ||
       this.description.trim().length === 0 ||
       this.condition.trim().length === 0 ||
-      this.startDate.trim().length === 0 ||
+      this.startDate.trim().length === 0 || new Date(this.startDate + 'T' + this.startTime) < new Date(Date.now()) ||
       this.startTime.trim().length === 0 ||
-      this.endDate.trim().length === 0 ||
+      this.endDate.trim().length === 0 || new Date(this.endDate + 'T' + this.endTime) <= new Date(this.startDate + 'T' + this.startTime) ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
-      this.startPrice < 0 ||
+      this.startPrice <= 0 ||
       this.reservePrice < this.startPrice ||
       this.buyNowPrice < this.reservePrice
     ) {
-      // TODO:
-      // need checks to make sure end date of auction is in future
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
       return false;

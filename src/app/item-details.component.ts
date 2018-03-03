@@ -171,11 +171,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.notifyPreviousBidders(this.auction.auctionID);
-          this.openDialog(
-            'Congratulations, you have successfully placed your bid!',
-            '',
-            true
-          );
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -212,12 +207,18 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         'Content-Type': 'application/json'
       }),
       options: any = {
-        auctionID: this.auction.auctionID
+        auctionID: this.auction.auctionID,
+        buyerID: this.user.userID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_buyers.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        this.openDialog(
+          'Congratulations, you have successfully placed your bid!',
+          '',
+          true
+        );
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -243,6 +244,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (!succeeded) {
         this.router.navigate(['/search']);
+      } else {
+        window.location.reload();
       }
     });
   }
