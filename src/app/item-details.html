@@ -37,7 +37,7 @@
     <h3 class="item-right" *ngIf="auction != null">Start price: £{{ auction.startPrice }}</h3>
     <br>
     <br>
-    <h3 class="item-right" *ngIf="viewings != null">Viewings: {{ viewings }}</h3>
+    <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
     <br>
     <br>
     <h3 class="item-right" *ngIf="viewings != null">Buyers watching: </h3>
@@ -46,9 +46,9 @@
     <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
     <br>
     <br>
-    <form *ngIf="item.sellerID != user.userID" id="bid-form">
-      <input type="number" *ngIf="user!=null"  [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
-      <input type="submit" value=Bid *ngIf="user!=null" (click)="bid()">  
+    <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
+      <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
+      <input type="submit" value=Bid (click)="bid()">  
     </form>
   </div>
 

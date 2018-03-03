@@ -54,7 +54,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.sub.unsubscribe();
     let countdownText = document.getElementById('countdown');
     countdownText = null;
   }
@@ -106,8 +105,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         'Content-Type': 'application/json'
       }),
       options: any = { auctionID: auctionID },
-      url: any =
-        'https://php-group30.azurewebsites.net/increment_viewings.php';
+      url: any = 'https://php-group30.azurewebsites.net/increment_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -118,7 +116,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
 
@@ -142,7 +144,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
 
@@ -152,19 +158,32 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   bid(): void {
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (this.validateBid()) {
-        const headers: any    = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options: any    = { 'buyerID': this.user.userID ,
-                            'auctionID': this.auction.auctionID,
-                            'price': this.newBid},
-        url: any        = 'https://php-group30.azurewebsites.net/insert_bid.php';
+      const headers: any = new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        options: any = {
+          buyerID: this.user.userID,
+          auctionID: this.auction.auctionID,
+          price: this.newBid
+        },
+        url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
 
-      this.http.post(url, JSON.stringify(options), headers)
-        .subscribe((data: any) =>  {
-          this.openDialog('Congratulations, you have successfully placed your bid', '', true);
+      this.http.post(url, JSON.stringify(options), headers).subscribe(
+        (data: any) => {
+          this.notifyPreviousBidders(this.auction.auctionID);
+          this.openDialog(
+            'Congratulations, you have successfully placed your bid!',
+            '',
+            true
+          );
         },
         (error: any) => {
           // If there is an error, return to main search page.
-          this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', true);
+          this.openDialog(
+            'Oops! Something went wrong; redirecting you to safety...',
+            '',
+            true
+          );
         }
       );
     }
@@ -173,18 +192,44 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   validateBid(): boolean {
     if (this.newBid == null) {
-      this.openDialog('Please enter your bid amount', '', true);
+      this.openDialog('Please enter your bid amount!', '', true);
       return false;
     } else if (this.highestBid == null) {
-      if ( this.newBid < this.auction.startPrice) {
-         this.openDialog('Please enter more than start price', '', true);
-         return false;
-        }
-    } else if (this.newBid < this.highestBid.price) {
-      this.openDialog('Please enter more than current bid', '', true);
+      if (this.newBid < this.auction.startPrice) {
+        this.openDialog('Please enter more than the start price!', '', true);
+        return false;
+      }
+    } else if (this.newBid <= this.highestBid.price) {
+      this.openDialog('Please enter more than the current bid!', '', true);
       return false;
     }
-      return true; // if bid is valid
+
+    return true; // if bid is valid
+  }
+
+  notifyPreviousBidders(auctionID): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        auctionID: this.auction.auctionID
+      },
+      url: any = 'https://php-group30.azurewebsites.net/notify_buyers.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          true
+        );
+      }
+    );
+
+    return null;
   }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
@@ -204,7 +249,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     if (this.user.role === 'buyer') {
-    this.router.navigate(['/search']);
+      this.router.navigate(['/search']);
     } else {
       this.router.navigate(['sell']);
     }
@@ -212,45 +257,66 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   // Displays time remaining on auction.
   countDown(auction_endTime: string): void {
-     // Set the date we're counting down to
-    var countDownDate = new Date(auction_endTime).getTime();
+    // Set the date we're counting down to
+    const countDownDate = new Date(auction_endTime).getTime();
 
     // Update the count down every 1 second
-    var counter = setInterval(window.onload = function() {
-
+    const counter = setInterval(
+      (window.onload = function() {
         // Get todays date and time
-        var now = new Date().getTime();
+        const now = new Date().getTime();
 
         // Find the distance between now an the count down date
-        var distance = countDownDate - now;
+        const distance = countDownDate - now;
 
         // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Display the result in the element with id='countdown'
         if (document.getElementById('countdown') != null) {
-            if (days >= 1) {
-              document.getElementById('countdown').innerHTML = 'Time remaining: ' + days + 'd ' + hours + 'h '
-              + minutes + 'm ' + seconds + 's '; }
-            else if (hours >= 1) {
-                document.getElementById('countdown').innerHTML = 'Time remaining: ' + hours + 'h '
-                + minutes + 'm ' + seconds + 's '; }
-            else if (minutes >= 1) {
-                  document.getElementById('countdown').innerHTML = 'Time remaining: ' + minutes + 'm ' + seconds + 's ';}
-            else if (seconds >= 1) {
-                  document.getElementById('countdown').innerHTML = 'Time remaining: ' + seconds + 's ';
+          if (days >= 1) {
+            document.getElementById('countdown').innerHTML =
+              'Time remaining: ' +
+              days +
+              'd ' +
+              hours +
+              'h ' +
+              minutes +
+              'm ' +
+              seconds +
+              's ';
+          } else if (hours >= 1) {
+            document.getElementById('countdown').innerHTML =
+              'Time remaining: ' +
+              hours +
+              'h ' +
+              minutes +
+              'm ' +
+              seconds +
+              's ';
+          } else if (minutes >= 1) {
+            document.getElementById('countdown').innerHTML =
+              'Time remaining: ' + minutes + 'm ' + seconds + 's ';
+          } else if (seconds >= 1) {
+            document.getElementById('countdown').innerHTML =
+              'Time remaining: ' + seconds + 's ';
           }
           // If the count down is finished, display a notification text message.
           if (distance < 0) {
             clearInterval(counter);
-            document.getElementById('countdown').innerHTML = 'Time remaining: EXPIRED';
+            document.getElementById('countdown').innerHTML =
+              'Time remaining: EXPIRED';
           }
         } else {
           clearInterval(counter);
         }
-    }, 1000);
+      }),
+      1000
+    );
   }
 }
