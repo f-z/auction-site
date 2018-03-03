@@ -29,13 +29,18 @@
   <div class="info">
     <h3 class="item-right">Quantity: {{item?.quantity}}</h3>
     <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
-    <div class="item-description">{{item?.description}}</div>
+    <h3 class="item-description">{{ item?.description }}</h3>
     <br>
     <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid.price }} </h3>
-    <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
     <br>
     <br>
-    <h3 class="item-right">Buyers monitoring: </h3>
+    <h3 class="item-right" *ngIf="auction != null">Start price: £{{ auction.startPrice }}</h3>
+    <br>
+    <br>
+    <h3 class="item-right" *ngIf="viewings != null">Viewings: {{ viewings }}</h3>
+    <br>
+    <br>
+    <h3 class="item-right" *ngIf="viewings != null">Buyers watching: </h3>
     <br>
     <br>
     <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>

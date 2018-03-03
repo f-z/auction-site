@@ -802,11 +802,6 @@ select:last-of-type {
   border-radius: 10px;
 }
 
-.item-details .item-description {
-  font-size: 1rem;
-  line-height: 160%;
-}
-
 .item-details .monitoring {
   float: right;
 }

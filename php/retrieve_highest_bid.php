@@ -19,10 +19,7 @@
     // Declaring an empty array to store the data we retrieve from the database in.
     $data = array();
 
-    while($row = $retrieveBid->fetch(PDO::FETCH_OBJ)) {
-      // Assigning each row of data to associative array.
-      $data[] = $row;
-    }
+    $data = $retrieveBid->fetch(PDO::FETCH_OBJ);
 
     // Returning data as JSON.
     echo json_encode($data);

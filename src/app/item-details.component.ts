@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
   private auction: Auction;
+  private viewings: number;
   private highestBid: Bid;
   itemID: number;
   private sub: any;
@@ -83,6 +84,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.auction = data[0];
+        this.incrementViewings(data[0].auctionID);
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
       },
@@ -93,6 +95,30 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           '',
           false
         );
+      }
+    );
+
+    return null;
+  }
+
+  incrementViewings(auctionID): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { auctionID: auctionID },
+      url: any =
+        'https://php-group30.azurewebsites.net/increment_viewings.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.viewings = data.viewings;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...', '', false);
       }
     );
 
@@ -111,7 +137,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data[0];
+          this.highestBid = data;
         }
       },
       (error: any) => {
