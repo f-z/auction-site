@@ -47,13 +47,7 @@
             $postcode = filter_var($obj->postcode, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
             $photo = null;
-
-            $day = filter_var($obj->day, FILTER_SANITIZE_NUMBER_INT);
-            $month = filter_var($obj->month, FILTER_SANITIZE_NUMBER_INT);
-            $year = filter_var($obj->year, FILTER_SANITIZE_NUMBER_INT);
-
-            // Converting to date format.
-            $DOB = date(DATE_ATOM, mktime(0, 0, 0, $day, $month, $year));            
+            $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);         
 
             $sql = 'INSERT INTO user(username, password, role, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :role, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';
 

@@ -90,19 +90,11 @@
     <div class="row">
       <div class="col-half">
         <h4>Date of Birth</h4>
-        <div class="input-group">
-          <div class="col-third">
-            <input type="number" [(ngModel)]="day" name="day" placeholder="DD" />
-          </div>
-          <div class="col-third">
-            <input type="number" [(ngModel)]="month" name="month" placeholder="MM" />
-          </div>
-          <div class="col-third">
-            <input type="number" [(ngModel)]="year" name="year" placeholder="YYYY" />
-          </div>
-        </div>
+        <input type="date" [(ngModel)]="DOB" name="dateOfBirth" />
       </div>
     </div>
+
+    <br>
 
     <div class="row">
       <h4>Terms and Conditions</h4>

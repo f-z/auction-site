@@ -23,8 +23,6 @@ export class AddItemComponent implements OnInit {
   quantity: number;
   category: string;
   picture = '';
-  startDate: string;
-  startTime: string;
   endDate: string;
   endTime: string;
   startPrice: number;
@@ -67,8 +65,6 @@ export class AddItemComponent implements OnInit {
         condition: this.condition,
         quantity: this.quantity,
         categoryName: this.selectedCategory,
-        startDate: this.startDate,
-        startTime: this.startTime,
         endDate: this.endDate,
         endTime: this.endTime,
         startPrice: this.startPrice,
@@ -100,8 +96,6 @@ export class AddItemComponent implements OnInit {
       }),
       options: any = {
         itemID: itemID,
-        startDate: this.startDate,
-        startTime: this.startTime,
         endDate: this.endDate,
         endTime: this.endTime,
         startPrice: this.startPrice,
@@ -157,8 +151,6 @@ export class AddItemComponent implements OnInit {
       this.condition == null ||
       this.quantity == null ||
       this.selectedCategory == null ||
-      this.startDate == null ||
-      this.startTime == null ||
       this.endDate == null ||
       this.endTime == null ||
       this.startPrice == null ||
@@ -173,9 +165,7 @@ export class AddItemComponent implements OnInit {
       this.name.trim().length === 0 ||
       this.description.trim().length === 0 ||
       this.condition.trim().length === 0 ||
-      this.startDate.trim().length === 0 || new Date(this.startDate + 'T' + this.startTime) < new Date(Date.now()) ||
-      this.startTime.trim().length === 0 ||
-      this.endDate.trim().length === 0 || new Date(this.endDate + 'T' + this.endTime) <= new Date(this.startDate + 'T' + this.startTime) ||
+      this.endDate.trim().length === 0 || new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
       this.startPrice <= 0 ||
