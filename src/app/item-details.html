@@ -27,11 +27,18 @@
   <br>
   <!-- info -->
   <div class="info">
-    <h3 class="item-right">Quantity: {{item?.quantity}}</h3>
-    <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
-    <h3 class="item-description">{{ item?.description }}</h3>
     <br>
-    <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid.price }} </h3>
+    <img class="item-picture" src="{{item?.picture}}" alt="{{item?.itemID}}">
+    <p class="item-description">{{ item?.description }}</p>
+    <br>
+    <br>
+    <h3 class="item-right">Quantity: {{item?.quantity}}</h3>
+    <br>
+    <br>
+    <h3 class="item-right" *ngIf="viewings != null">Total bids: {{ numberBids }}</h3>
+    <br>
+    <br>
+    <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
     <br>
     <br>
     <h3 class="item-right" *ngIf="auction != null">Start price: £{{ auction.startPrice }}</h3>
@@ -40,7 +47,7 @@
     <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
     <br>
     <br>
-    <h3 class="item-right" *ngIf="viewings != null">Buyers watching: </h3>
+    <h3 class="item-right" *ngIf="viewings != null">Buyers watching: Need to do</h3>
     <br>
     <br>
     <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
@@ -48,7 +55,11 @@
     <br>
     <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
       <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
-      <input type="submit" value=Bid (click)="bid()">  
+      <input type="submit" value="Bid" (click)="bid()">  
+
+      <br>
+      <br>
+      <input type="submit" value="Watch Auction" (click)="watchAuction()">  
     </form>
   </div>
 

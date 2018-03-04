@@ -7,15 +7,18 @@
 
     // Sanitising URL supplied values.
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
+    $isViewerBuyer = filter_var($obj->isViewerBuyer, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 
     try {
-        $incrementQuery = "UPDATE `compgc06_group30`.`auction` SET viewings = viewings + 1 WHERE auctionID = ?";
+        if ($isViewerBuyer == "true") {
+            $incrementQuery = "UPDATE `compgc06_group30`.`auction` SET viewings = viewings + 1 WHERE auctionID = ?";
 
-        $incrementViewings = $pdo->prepare($incrementQuery);
+            $incrementViewings = $pdo->prepare($incrementQuery);
 
-        $incrementViewings->bindParam(1, $auctionID, PDO::PARAM_INT);
+            $incrementViewings->bindParam(1, $auctionID, PDO::PARAM_INT);
 
-        $incrementViewings->execute();
+            $incrementViewings->execute();
+        }
 
         $returnQuery = "SELECT viewings FROM auction WHERE auctionID = ?";
 

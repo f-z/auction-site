@@ -22,7 +22,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
   private auction: Auction;
   private viewings: number;
-  private highestBid: Bid;
+  private numberBids: number;
+  private highestBid: number;
   itemID: number;
   private sub: any;
   private user: User;
@@ -83,7 +84,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.auction = data[0];
-        this.incrementViewings(data[0].auctionID);
+        if (this.item.sellerID === this.user.userID) {
+          this.incrementViewings(data[0].auctionID, 'false');
+        } else {
+          this.incrementViewings(data[0].auctionID, 'true');
+        }
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
       },
@@ -100,11 +105,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  incrementViewings(auctionID): void {
+  incrementViewings(auctionID, isViewerBuyer): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { auctionID: auctionID },
+      options: any = { auctionID: auctionID, isViewerBuyer: isViewerBuyer },
       url: any = 'https://php-group30.azurewebsites.net/increment_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
@@ -133,13 +138,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }),
       options: any = { auctionID: auctionID },
       url: any =
-        'https://php-group30.azurewebsites.net/retrieve_highest_bid.php';
+        'https://php-group30.azurewebsites.net/retrieve_bid_information.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data;
+          this.highestBid = data.highest;
+          this.numberBids = data.count;
         }
       },
       (error: any) => {
@@ -175,7 +181,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         (error: any) => {
           // If there is an error, return to main search page.
           this.openDialog(
-            'Oops! Something went wrong; redirecting you to safety...',
+            'Oops, something went wrong... Please try again!',
             '',
             true
           );
@@ -194,7 +200,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.openDialog('Please enter more than the start price!', '', true);
         return false;
       }
-    } else if (this.newBid <= this.highestBid.price) {
+    } else if (this.newBid <= this.highestBid) {
       this.openDialog('Please enter more than the current bid!', '', true);
       return false;
     }
@@ -221,9 +227,31 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         );
       },
       (error: any) => {
+      }
+    );
+
+    return null;
+  }
+
+  watchAuction(): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        buyerID: this.user.userID,
+        auctionID: this.auction.auctionID,
+        price: 0
+      },
+      url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        this.openDialog('You are now watching the auction!', '', true);
+      },
+      (error: any) => {
         // If there is an error, return to main search page.
         this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
+          'Oops, something went wrong... Please try again!',
           '',
           true
         );

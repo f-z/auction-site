@@ -9,11 +9,10 @@
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING);
 
   try {
-    $sql = 'SELECT * FROM bid WHERE auctionID = ? AND price IN (SELECT MAX(price) FROM bid WHERE auctionID = ?);';
-
+    // $sql = 'SELECT * FROM bid WHERE auctionID = ? AND price IN (SELECT MAX(price) FROM bid WHERE auctionID = ?);';
+    $sql = 'SELECT COUNT(bidID) AS count, MAX(price) AS highest FROM bid WHERE auctionID = ?;';
     $retrieveBid = $pdo->prepare($sql);
     $retrieveBid->bindParam(1, $auctionID, PDO::PARAM_INT);
-    $retrieveBid->bindParam(2, $auctionID, PDO::PARAM_INT);
     $retrieveBid->execute();
 
     // Declaring an empty array to store the data we retrieve from the database in.
