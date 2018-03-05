@@ -199,7 +199,11 @@ export class AddItemComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/search']);
+    if (this.user.role === 'seller') {
+      this.router.navigate(['/sell']);
+    } else {
+      this.router.navigate(['/search']);
+    }
   }
 
   logout(): void {

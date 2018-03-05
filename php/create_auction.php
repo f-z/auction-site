@@ -25,7 +25,7 @@
         $reservePrice = filter_var($obj->reservePrice, FILTER_SANITIZE_NUMBER_FLOAT);
         $buyNowPrice = filter_var($obj->buyNowPrice, FILTER_SANITIZE_NUMBER_FLOAT);
 
-        $auctionQuery = "INSERT INTO `auction` (`startPrice`, `reservePrice`, `buyNowPrice`, `startTime`, `endTime`, `itemID`) VALUES (?, ?, ?, ?, ?, ?)";
+        $auctionQuery = "INSERT INTO `auction` (`startPrice`, `reservePrice`, `buyNowPrice`, `startTime`, `endTime`, `itemID`) VALUES (?, ?, ?, ?, ?, ?);";
 
         $insertAuction = $pdo->prepare($auctionQuery);
         $insertAuction->bindParam(1, $startPrice, PDO::PARAM_STR);

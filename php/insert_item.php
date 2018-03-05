@@ -30,7 +30,13 @@
         $insertItem->bindParam(7, $sellerID, PDO::PARAM_INT);
 
         $insertItem->execute();
+
         echo json_encode($pdo->lastInsertId());
+
+        $buyerToSellerQuery = "UPDATE `user` SET role='seller' WHERE userID = ?";
+        $buyerToSeller = $pdo->prepare($buyerToSellerQuery);
+        $buyerToSeller->bindParam(1, $sellerID, PDO::PARAM_INT);
+        $buyerToSeller->execute();
       }
     catch (Exception $e) {
         $error = $e->getMessage();
