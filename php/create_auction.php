@@ -8,8 +8,9 @@
     try {
         // Adding new auction to database.
 
-        // Getting current date and time (in London, UK, timezone).
         $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT);
+
+        // Getting current date and time (in London, UK, timezone).
         $timezone = 'Europe/London';
         $timestamp = time();
         $currentDate = new DateTime("now", new DateTimeZone($timezone));

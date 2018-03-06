@@ -47,7 +47,7 @@ export interface User {
   username: string;
   password: string;
   role: string;
-  photo: Blob;
+  photo: any;
   firstName: string;
   lastName: string;
   email: string;
