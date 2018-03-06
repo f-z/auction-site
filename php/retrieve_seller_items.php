@@ -9,7 +9,18 @@
     $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 
     try {
-        $stmnt = $pdo->prepare('SELECT * FROM item AS i, auction as a WHERE sellerID = :sellerID AND i.itemID = a.itemID');
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.picture, i.description, i.condition, i.quantity, i.categoryName,
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+            b.bidID, b.buyerID, MAX(b.price) 
+            AS highest FROM item AS i, auction as a 
+            LEFT JOIN bid AS b 
+                ON a.auctionID = b.auctionID 
+                AND b.price = (SELECT MAX(price) FROM bid 
+                    WHERE auctionID = a.auctionID
+            )
+            WHERE sellerID = :sellerID 
+            AND i.itemID = a.itemID
+            GROUP BY a.auctionID');
 
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':sellerID', $sellerID, PDO::PARAM_STR);
