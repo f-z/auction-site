@@ -38,7 +38,6 @@ export class LoginComponent {
 
       this.http.post(url, JSON.stringify(options), headers)
       .subscribe((data: any) => {
-        // console.dir(data);
         // If the request was successful, set the current user and notify him/her.
         this.user = data;
         this.openDialog('Congratulations, logging in...', '', true);

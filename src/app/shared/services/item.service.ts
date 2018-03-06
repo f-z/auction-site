@@ -46,6 +46,7 @@ export interface Item {
   quantity: number;
   categoryName: string;
   sellerID: number;
+  endTime: string;
 }
 
 export interface Category {
@@ -58,6 +59,7 @@ export interface Bid {
   price: number;
   time: string;
   buyerID: number;
+  highest: number;
 }
 
 export interface Auction {

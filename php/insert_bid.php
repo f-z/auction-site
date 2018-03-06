@@ -10,14 +10,21 @@
   $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_FLOAT);
 
   try {
-    $sql = 'INSERT INTO `bid` (price, `time`, buyerID, auctionID) VALUES (:price, :tim, :buyerID, :auctionID)';
+    $sql = 'INSERT INTO `bid` (price, `time`, buyerID, auctionID) VALUES (:price, :time, :buyerID, :auctionID)';
 
     $insertBid = $pdo->prepare($sql);
 
     $insertBid->bindParam(':price', $price, PDO::PARAM_STR); // Needs to be string, if number is float.
     $insertBid->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
-    $time = date('Y-m-d H:i:s');
-    $insertBid->bindParam(':tim', $time, PDO::PARAM_STR);  
+
+    // Getting current date and time (in London, UK, timezone).
+    $timezone = 'Europe/London';
+    $timestamp = time();
+    $currentTime = new DateTime("now", new DateTimeZone($timezone));
+    $currentTime->setTimestamp($timestamp);
+    $time = $currentTime->format('Y-m-d H:i:s');
+
+    $insertBid->bindParam(':time', $time, PDO::PARAM_STR);  
     $insertBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
     $insertBid->execute();
