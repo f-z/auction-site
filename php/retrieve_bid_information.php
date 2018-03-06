@@ -10,9 +10,9 @@
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING);
 
   try {
-    $sql = 'SELECT COUNT(bidID) AS count, MAX(price) as highest FROM bid WHERE auctionID = :auctionID;';
+    // $sql = 'SELECT COUNT(bidID) AS count, MAX(price) as highest FROM bid WHERE auctionID = :auctionID;';
 
-    // $sql = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = :auctionID;';
+    $sql = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = :auctionID;';
     $retrieveCount = $pdo->prepare($sql);
     $retrieveCount->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
     $retrieveCount->execute();
@@ -20,18 +20,18 @@
     // Declaring an empty array to store the data we retrieve from the database in.
     $data = array();
 
-    $data['bid'] = $retrieveCount->fetch(PDO::FETCH_OBJ);
+    $data['count'] = $retrieveCount->fetch(PDO::FETCH_OBJ);
 
-    // $sql2 = 'SELECT price AS highest, buyerID FROM bid
-    //       WHERE auctionID= :auctionID
-    //       AND price= (select MAX(price) FROM bid where auctionID = :auctionID)
-    //   $retrieveBid = $pdo->prepare($sql2);';
+    $sql2 = 'SELECT price AS highest, buyerID FROM bid
+          WHERE `auctionID`= :auctionID
+          AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
-    // $retrieveBid = $pdo->prepare($sql2);
-    // $retrieveBid->bindParam(:auctionID, $auctionID, PDO::PARAM_INT);
-    // $retrieveBid->execute();
+    $retrieveBid = $pdo->prepare($sql2);
+    $retrieveBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+    $retrieveBid->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
+    $retrieveBid->execute();
 
-    // $data = $retrieveBid->fetch(PDO::FETCH_OBJ);
+    $data['bid'] = $retrieveBid->fetch(PDO::FETCH_OBJ);
 
     // Returning data as JSON.
     echo json_encode($data);
