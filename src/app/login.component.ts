@@ -64,7 +64,7 @@ export class LoginComponent {
         if (succeeded) {
           this.setUser(this.user);
           if (this.user.role === 'seller') {
-            this.router.navigate(['/sell']);
+            this.router.navigate(['/myitems']);
           } else {
             this.router.navigate(['/search']);
           }

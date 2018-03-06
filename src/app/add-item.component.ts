@@ -189,7 +189,7 @@ export class AddItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (succeeded) {
-        this.router.navigate(['/sell']);
+        this.router.navigate(['/myitems']);
       }
     });
   }
@@ -200,7 +200,7 @@ export class AddItemComponent implements OnInit {
 
   goBack(): void {
     if (this.user.role === 'seller') {
-      this.router.navigate(['/sell']);
+      this.router.navigate(['/myitems']);
     } else {
       this.router.navigate(['/search']);
     }
