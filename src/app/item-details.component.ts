@@ -24,6 +24,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private viewings: number;
   private numberBids: number;
   private highestBid: number;
+  private highestBidder: number;
   itemID: number;
   private sub: any;
   private user: User;
@@ -142,10 +143,12 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data)
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data.highest;
-          this.numberBids = data.count;
+          this.highestBid = data.bid.highest;
+          this.numberBids = data.count.count;
+          this.highestBidder = data.bid.buyerID;
         }
       },
       (error: any) => {

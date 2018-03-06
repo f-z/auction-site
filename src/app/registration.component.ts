@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-registration',
@@ -25,10 +26,12 @@ export class RegistrationComponent {
   confirmedPassword: string;
   DOB: string;
   phone: number;
+  photo: string;
   termsAccepted: boolean;
 
   private localURI: string;
   private remoteURI: string;
+  files: FileList;
 
   constructor(
     public http: HttpClient,
@@ -43,7 +46,7 @@ export class RegistrationComponent {
   }
 
   register(): void {
-    // If the details supplied are incompconste/incorrect, do not proceed with the transaction.
+    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (!this.validate()) {
       return;
     }
@@ -64,7 +67,8 @@ export class RegistrationComponent {
           password: this.password,
           confirmedPassword: this.confirmedPassword,
           phone: this.phone,
-          DOB: this.DOB
+          DOB: this.DOB,
+          photo: this.photo
         },
         url: any = this.remoteURI + 'register.php';
 
@@ -86,9 +90,6 @@ export class RegistrationComponent {
           );
         }
       );
-    } else {
-      // If the terms have not been accepted, notify the user.
-      this.openDialog('Please accept the terms to proceed!', '', false);
     }
   }
 
@@ -132,12 +133,13 @@ export class RegistrationComponent {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
       return false;
-    } else if (
-      this.DOB.trim().length === 0 ||
-      maxBirthDate > new Date()
-    ) {
+    } else if (this.DOB.trim().length === 0 || maxBirthDate > new Date()) {
       // If the user is underage, do not allow registration.
-      this.openDialog('Our minimum age requirement is 18! Please view our terms and conditions for details on our policies.', '', false);
+      this.openDialog(
+        'Our minimum age requirement is 18! Please view our terms and conditions for details on our policies.',
+        '',
+        false
+      );
       return false;
     } else if (this.password !== this.confirmedPassword) {
       // If passwords do not match, notify the user.

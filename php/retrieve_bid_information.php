@@ -1,4 +1,5 @@
 <?php
+
   require_once('connect_azure_db.php');
 
   // Retrieving the posted data.
@@ -9,10 +10,11 @@
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_STRING);
 
   try {
-    // $sql = 'SELECT * FROM bid WHERE auctionID = ? AND price IN (SELECT MAX(price) FROM bid WHERE auctionID = ?);';
-    $sql1 = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = ?;';
-    $retrieveCount = $pdo->prepare($sql1);
-    $retrieveCount->bindParam(1, $auctionID, PDO::PARAM_INT);
+    // $sql = 'SELECT COUNT(bidID) AS count, MAX(price) as highest FROM bid WHERE auctionID = :auctionID;';
+
+    $sql = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = :auctionID;';
+    $retrieveCount = $pdo->prepare($sql);
+    $retrieveCount->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
     $retrieveCount->execute();
 
     // Declaring an empty array to store the data we retrieve from the database in.
@@ -21,12 +23,12 @@
     $data['count'] = $retrieveCount->fetch(PDO::FETCH_OBJ);
 
     $sql2 = 'SELECT price AS highest, buyerID FROM bid
-          WHERE auctionID= ?
-          AND price= (select MAX(price) FROM bid where auctionID = ?)
-      $retrieveBid = $pdo->prepare($sql);';
+          WHERE `auctionID`= :auctionID
+          AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
     $retrieveBid = $pdo->prepare($sql2);
-    $retrieveBid->bindParam(1, $auctionID, PDO::PARAM_INT);
+    $retrieveBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+    $retrieveBid->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
     $retrieveBid->execute();
 
     $data['bid'] = $retrieveBid->fetch(PDO::FETCH_OBJ);

@@ -9,7 +9,7 @@
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     
-    $query = 'SELECT userID, username, password, role, email, firstName, lastName FROM user WHERE username = :username LIMIT 1';
+    $query = 'SELECT userID, username, password, role, email, firstName, lastName, photo FROM user WHERE username = :username LIMIT 1';
 
     $checkCredentials = $pdo->prepare($query);
 
