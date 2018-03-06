@@ -36,7 +36,7 @@
 <section class="card item-details">
   <!-- item list -->
   <ul class="itemlist cf">
-    <li class="itemlist-item cf" *ngFor="let item of sellerItems">
+    <li class="itemlist-item cf" *ngFor="let item of userItems">
       <br>
       <br>
       <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">

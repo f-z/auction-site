@@ -28,8 +28,8 @@
   float: right;
 }
 
-.item-info .item-category {
+.item-info .item-category, .item-endTime, .item-highestbid {
   font-size: 0.9rem;
   font-weight: 400;
-  float: left;
+  float: right;
 }

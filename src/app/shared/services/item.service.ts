@@ -46,7 +46,13 @@ export interface Item {
   quantity: number;
   categoryName: string;
   sellerID: number;
+  auctionID: number;
+  startPrice: number;
+  reservePrice: number;
+  buyNowPrice: number;
+  startTime: string;
   endTime: string;
+  viewings: number;
 }
 
 export interface Category {

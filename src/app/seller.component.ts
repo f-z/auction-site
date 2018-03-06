@@ -13,7 +13,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SellerComponent implements OnInit {
   item: Item;
-  sellerItems: Observable<Item[]> = null;
+  userItems: Observable<Item[]> = null;
+
   private user: User;
 
   constructor(private userService: UserService,
@@ -40,7 +41,7 @@ export class SellerComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers)
     .subscribe((data: any) => {
-      this.sellerItems = data;
+      this.userItems = data;
     },
     (error: any) => {
       // If there is unauthorised / improper access, log out and return to Login page.
@@ -57,7 +58,7 @@ export class SellerComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers)
     .subscribe((data: any) => {
-      this.sellerItems = data;
+      this.userItems = data;
     },
     (error: any) => {
       // If there is unauthorised / improper access, log out and return to Login page.
@@ -84,4 +85,5 @@ export class SellerComponent implements OnInit {
     this.setUser(null);
     this.router.navigate(['/search']);
   }
+
 }
