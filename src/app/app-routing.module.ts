@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'add-item', component: AddItemComponent },
   { path: 'items/:itemID', component: ItemDetailsComponent },
-  { path: 'sell', component: SellerComponent },
+  { path: 'myitems', component: SellerComponent },
 ];
 
 export const appRoutingProviders: any[] = [
