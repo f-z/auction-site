@@ -44,6 +44,10 @@ export class MyItemsComponent implements OnInit {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.userItems = data;
+        for (let i = 0; i < data.length; i++) {
+          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
+        }
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.
@@ -65,6 +69,10 @@ export class MyItemsComponent implements OnInit {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.userItems = data;
+        for (let i = 0; i < data.length; i++) {
+          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
+        }
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.
