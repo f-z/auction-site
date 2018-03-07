@@ -54,6 +54,13 @@ $mail = new PHPMailer(true);
      $firstname = $stmtCur['firstName'];
      $emailCur = $stmtCur['email'];
      
+     // Getting current date and time (in London, UK, timezone).
+    $timezone = 'Europe/London';
+    $timestamp = time();
+    $currentTime = new DateTime("now", new DateTimeZone($timezone));
+    $currentTime->setTimestamp($timestamp);
+    $time = $currentTime->format('Y-m-d H:i:s');
+     
      //Server settings
 $mail->isSMTP();
 $mail->SMTPDebug = 2;
@@ -64,24 +71,25 @@ $mail->SMTPAuth = true;
 $mail->Username = 'uclbay.gc06@gmail.com';
 $mail->Password = 'uclbay_gc06';
 // walkaround to bypass server errors
-// $mail->SMTPOptions = array(
-// 'ssl' => array(
-//     'verify_peer' => false,
-//     'verify_peer_name' => false,
-//     'allow_self_signed' => true
-// )
-// );
+$mail->SMTPOptions = array(
+'ssl' => array(
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+    'allow_self_signed' => true
+)
+);
 $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
 $mail->addAddress($emailCur, $firstname);
 
 $mail->Subject = 'UCL Databases';
 $mail->Debugoutput = 'html';
-$mail->Body = 'Yeah';  
+$mail->Body = 'Hi '.$firstname.'
+                Your bid has been accepted! You are the highest bid now on '.$time.'!';  
     
 $mail->send();
     
-    //  echo json_encode('Message has been sent');
-    echo json_encode($mail);
+     echo json_encode('Message has been sent');
+    // echo json_encode($mail);
     } catch (Exception $e) {
        echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
        die();
