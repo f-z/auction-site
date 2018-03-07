@@ -54,12 +54,11 @@
     <br>
     <br>
     <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
-      <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)" >
-      <input type="submit" value="Bid" (click)="bid()">  
-
+      <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
+      <input type="submit" value="Bid" (click)="bid()">
       <br>
       <br>
-      <input type="submit" value="Watch Auction" (click)="watchAuction()">  
+      <input type="submit" value="Watch Auction" (click)="watchAuction()">
     </form>
   </div>
 

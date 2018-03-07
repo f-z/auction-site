@@ -45,10 +45,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.user = this.getUser();
-
     this.sub = this.route.params.subscribe(params => {
       this.itemID = +params['itemID']; // (+) converts string 'id' to a number
+
+      this.user = this.getUser();
 
       this.item = this.getItem();
     });
@@ -135,14 +135,15 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  getWatchers(auctionID): void{
-    const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-    options: any = { auctionID: auctionID },
-    url: any = 'https://php-group30.azurewebsites.net/retrieve_watchers.php';
+  getWatchers(auctionID): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { auctionID: auctionID },
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_watchers.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data)
         // Set the date we're counting down to.
         if (data != null) {
           this.watchers = data.watchers;
@@ -150,9 +151,13 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
-        }
-      );
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
     return null;
   }
 
@@ -166,7 +171,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data);
         // Set the date we're counting down to.
         if (data != null) {
           this.highestBid = data.bid.highest;
@@ -202,7 +206,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
-          console.log(data);
           this.notifyPreviousBidders(this.auction.auctionID, this.user.userID);
         },
         (error: any) => {
@@ -247,7 +250,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
-        console.log(data);
         this.openDialog(
           'Congratulations, you have successfully placed your bid!',
           '',
