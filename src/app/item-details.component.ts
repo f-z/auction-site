@@ -29,6 +29,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private sub: any;
   private user: User;
   private newBid: number;
+  private watchers: number;
 
   constructor(
     private userService: UserService,
@@ -92,6 +93,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         }
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
+        this.getWatchers(data[0].auctionID);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -130,6 +132,27 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }
     );
 
+    return null;
+  }
+
+  getWatchers(auctionID): void{
+    const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
+    options: any = { auctionID: auctionID },
+    url: any = 'https://php-group30.azurewebsites.net/retrieve_watchers.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        console.log(data)
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.watchers = data.watchers;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
+        }
+      );
     return null;
   }
 
@@ -179,6 +202,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
+          console.log(data);
           this.notifyPreviousBidders(this.auction.auctionID);
         },
         (error: any) => {
@@ -223,6 +247,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data);
         this.openDialog(
           'Congratulations, you have successfully placed your bid!',
           '',
