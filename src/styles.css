@@ -771,20 +771,52 @@ select:last-of-type {
   color: rgb(255, 255, 255);
 }
 
-/* -------------- */
+/* ------------------ */
 
-/* Item Details Card Styles */
+/* Item List Styles */
 
-/* -------------- */
+/* ------------------ */
+
+.itemlist {
+  position: relative;
+  width: 100%;
+  margin: auto;
+  background: white;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+  z-index: 3;
+}
+
+.itemlist-item {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  padding-right: 20px;
+  background: white;
+  padding: 10px 10px 0 10px;
+  border-bottom: 1px solid #999;
+  opacity: .9;
+  transition: all 0.3s ease-out;
+}
+
+.itemlist-item:hover {
+  cursor: pointer;
+  background: #FDF6E3;
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
 
 .item-details {
   position: relative;
-  background: white;
+  background: #ECECEA;
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;
-  padding: 30px 40px;
   min-height: 100px;
   overflow: hidden;
   opacity: 1;
@@ -812,7 +844,7 @@ select:last-of-type {
   float: left;
 }
 
-.item-details .item-picture {
+.item-details .item-photo {
   width: 100%;
   max-width: 300px;
   float: left;
@@ -823,4 +855,3 @@ select:last-of-type {
 .item-details .monitoring {
   float: right;
 }
-

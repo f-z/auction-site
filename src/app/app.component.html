@@ -74,7 +74,9 @@
     <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
   </label>
   <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}">
+</div>
 
+<section class="card item-details">
   <!-- item list -->
   <ul class="itemlist cf" *ngIf="term">
     <li class="itemlist-item cf" *ngFor="let item of items | search : term">
@@ -82,4 +84,4 @@
       </app-item>
     </li>
   </ul>
-</div>
+</section>
