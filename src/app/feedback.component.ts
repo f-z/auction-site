@@ -18,9 +18,9 @@ import {Item,
 
 export class FeedbackComponent implements OnInit {
   private user: User;
-  private subjectID: number;
   private buyerID: number;
-  private subject: User;
+  private subjectID: number;
+  private subject: string;
   private item: Item;
   private comment: string;
   private rating: number;
@@ -36,6 +36,7 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
   	this.user = this.getUser();
   	this.item = this.getItem();
+    this.setSubject();
   } 
 
    getUser(): User {
@@ -47,7 +48,6 @@ export class FeedbackComponent implements OnInit {
   }
 
   setSubject():void {
-
   	if(this.user.role === 'buyer'){
   		this.subjectID = this.item.sellerID; 
   	}
@@ -57,14 +57,14 @@ export class FeedbackComponent implements OnInit {
   	}
   	const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
     options: any = { 'userID': this.subjectID },
-    url: any = 'https://php-group30.azurewebsites.net/retrieve_feedback_subject.php';
+    url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         console.log(data)
         // Set the date we're counting down to.
         if (data != null) {
-          this.subject = data;
+          this.subject = data.username;
         }
       },
       (error: any) => {
