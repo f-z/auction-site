@@ -10,9 +10,11 @@
   $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_FLOAT);
 
   try {
-    $sql = 'INSERT INTO `bid` (price, `time`, buyerID, auctionID) VALUES (:price, :time, :buyerID, :auctionID)';
+                
+    // Inserting new bid
+    $sql3 = 'INSERT INTO `bid` (price, `time`, buyerID, auctionID) VALUES (:price, :time, :buyerID, :auctionID)';
 
-    $insertBid = $pdo->prepare($sql);
+    $insertBid = $pdo->prepare($sql3);
 
     $insertBid->bindParam(':price', $price, PDO::PARAM_STR); // Needs to be string, if number is float.
     $insertBid->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
@@ -28,9 +30,20 @@
     $insertBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
     $insertBid->execute();
+    
+    // // Sending email to current highest bidder
+    // $mail->addAddress($email, $firstname);
 
-    echo json_encode(array('message' => 'Congratulations, your bid has been placed!'));
-    } catch (Exception $e) {
-      $error = $e->getMessage();
-    }
+    // $mail->Subject = 'Risk Assessment Update (NHS Falls)';
+    
+    // $mail->Body    = '
+    // Hi '.$firstname.',
+
+    // Thanks for placing a bid. You are the highest bidder on '.$time;  
+
+    // $mail->send();
+    echo json_encode($mail);
+  } catch (Exception $e) {
+      $error = $e->getMessage(); 
+  }
 ?>

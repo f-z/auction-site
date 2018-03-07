@@ -179,6 +179,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
+          console.log(data);
           this.notifyPreviousBidders(this.auction.auctionID);
         },
         (error: any) => {
