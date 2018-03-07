@@ -37,8 +37,8 @@
     } 
     else{
       $sql = 'UPDATE `feedback` 
-      SET sellerRating = :sellerRating, sellerComment= :sellerComment
-      WHERE auctionID=:auctionID;'
+      SET sellerRating = :sellerRating, sellerComment = :sellerComment
+      WHERE auctionID=:auctionID';
 
       $insertFeedback = $pdo->prepare($sql);
       $insertFeedback->bindParam(':sellerRating', $sellerRating, PDO::PARAM_INT);
@@ -50,9 +50,9 @@
 
       echo json_encode(array('message' => 'Congratulations, your feedback has been recorded!'));
     }
-
-
   } catch (Exception $e) {
     $error = $e->getMessage();
   }
+
 ?>
+

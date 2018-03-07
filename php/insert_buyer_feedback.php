@@ -38,7 +38,7 @@
     else{
       $sql = 'UPDATE `feedback` 
       SET buyerRating = :buyerRating, buyerComment= :buyerComment
-      WHERE auctionID=:auctionID;'
+      WHERE auctionID=:auctionID';
 
       $insertFeedback = $pdo->prepare($sql);
       $insertFeedback->bindParam(':buyerRating', $buyerRating, PDO::PARAM_STR);
