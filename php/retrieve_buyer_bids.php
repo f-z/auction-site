@@ -9,7 +9,7 @@
     $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $stmnt = $pdo->prepare('SELECT b.bidID, b.time, b.buyerID, MAX(b.price) as price,
+        $stmnt = $pdo->prepare('SELECT b.bidID, b.time, MAX(b.price) as price,
         i.itemID, i.name, i.picture, i.description, i.`condition`, i.categoryName, i.sellerID, 
         a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, a.auctionID
         FROM bid AS b, item AS i, auction AS a  

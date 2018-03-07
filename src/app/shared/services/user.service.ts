@@ -22,13 +22,25 @@ export class UserService {
   }
 
   // Returning a copy of the stored user, if it is not null (if logged in).
-  getUser(): User {
+  getUser(): any {
     if (this.currentUser == null) {
       return null;
     }
 
     // Returning copy for added security.
+    /*
+    return new Promise(resolve => {
+      this.http
+        .get("http://ocaexerciseapp.azurewebsites.net/retrieve-users.php")
+        .map(res => res.json())
+        .subscribe(data => {
+          this.users = data;
+          resolve(this.users);
+        });
+    });
+    */
     return { ...this.currentUser };
+    // return Promise.resolve(this.currentUser);
   }
 
   setUser(user: User): void {
