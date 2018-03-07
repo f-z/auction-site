@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
 /* Master Styles */
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');
-
 html {
   box-sizing: border-box;
 }
@@ -240,34 +240,35 @@ a.small {
 }
 
 /* Normalize stylesheet from https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css. */
+
 button,
 hr,
 input {
-    overflow: visible
+  overflow: visible
 }
 
 audio,
 canvas,
 progress,
 video {
-    display: inline-block
+  display: inline-block
 }
 
 progress,
 sub,
 sup {
-    vertical-align: baseline
+  vertical-align: baseline
 }
 
 html {
-    font-family: sans-serif;
-    line-height: 1.15;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%
+  font-family: sans-serif;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
 }
 
 body {
-    margin: 0
+  margin: 0
 }
 
 menu,
@@ -278,97 +279,97 @@ footer,
 header,
 nav,
 section {
-    display: block
+  display: block
 }
 
 h2 {
-    font-size: 2em;
-    margin: .67em 0
+  font-size: 2em;
+  margin: .67em 0
 }
 
 figcaption,
 figure,
 main {
-    display: block
+  display: block
 }
 
 figure {
-    margin: 1em 40px
+  margin: 1em 40px
 }
 
 hr {
-    box-sizing: content-box;
-    height: 0
+  box-sizing: content-box;
+  height: 0
 }
 
 code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
-    font-size: 1em
+  font-family: monospace, monospace;
+  font-size: 1em
 }
 
 a {
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects
 }
 
 a:active,
 a:hover {
-    outline-width: 0
+  outline-width: 0
 }
 
 abbr[title] {
-    border-bottom: none;
-    text-decoration: underline;
-    text-decoration: underline dotted
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted
 }
 
 b,
 strong {
-    font-weight: bolder
+  font-weight: bolder
 }
 
 dfn {
-    font-style: italic
+  font-style: italic
 }
 
 mark {
-    background-color: #ff0;
-    color: #000
+  background-color: #ff0;
+  color: #000
 }
 
 small {
-    font-size: 80%
+  font-size: 80%
 }
 
 sub,
 sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative
+  font-size: 75%;
+  line-height: 0;
+  position: relative
 }
 
 sub {
-    bottom: -.25em
+  bottom: -.25em
 }
 
 sup {
-    top: -.5em
+  top: -.5em
 }
 
 audio:not([controls]) {
-    display: none;
-    height: 0
+  display: none;
+  height: 0
 }
 
 img {
-    border-style: none
+  border-style: none
 }
 
 svg:not(:root) {
-    overflow: hidden
+  overflow: hidden
 }
 
 button,
@@ -376,91 +377,91 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: sans-serif;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0
 }
 
 button,
 select {
-    text-transform: none
+  text-transform: none
 }
 
 [type=submit],
 [type=reset],
 button,
 html [type=button] {
-    -webkit-appearance: button
+  -webkit-appearance: button
 }
 
 [type=button]::-moz-focus-inner,
 [type=reset]::-moz-focus-inner,
 [type=submit]::-moz-focus-inner,
 button::-moz-focus-inner {
-    border-style: none;
-    padding: 0
+  border-style: none;
+  padding: 0
 }
 
 [type=button]:-moz-focusring,
 [type=reset]:-moz-focusring,
 [type=submit]:-moz-focusring,
 button:-moz-focusring {
-    outline: ButtonText dotted 1px
+  outline: ButtonText dotted 1px
 }
 
 fieldset {
-    border: 1px solid silver;
-    margin: 0 2px;
-    padding: .35em .625em .75em
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: .35em .625em .75em
 }
 
 legend {
-    box-sizing: border-box;
-    color: inherit;
-    display: table;
-    max-width: 100%;
-    padding: 0;
-    white-space: normal
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal
 }
 
 textarea {
-    overflow: auto
+  overflow: auto
 }
 
 [type=checkbox],
 [type=radio] {
-    box-sizing: border-box;
-    padding: 0.5em;
+  box-sizing: border-box;
+  padding: 0.5em;
 }
 
 [type=number]::-webkit-inner-spin-button,
 [type=number]::-webkit-outer-spin-button {
-    height: auto
+  height: auto
 }
 
 [type=search] {
-    -webkit-appearance: textfield;
-    outline-offset: -2px
+  -webkit-appearance: textfield;
+  outline-offset: -2px
 }
 
 [type=search]::-webkit-search-cancel-button,
 [type=search]::-webkit-search-decoration {
-    -webkit-appearance: none
+  -webkit-appearance: none
 }
 
 ::-webkit-file-upload-button {
-    -webkit-appearance: button;
-    font: inherit
+  -webkit-appearance: button;
+  font: inherit
 }
 
 summary {
-    display: list-item
+  display: list-item
 }
 
 [hidden],
 template {
-    display: none
+  display: none
 }
 
 /* Styles for Login and Registration */
@@ -640,8 +641,9 @@ select:last-of-type {
 .row {
   zoom: 1;
 }
-.fullrow{
-  width:  100%;
+
+.fullrow {
+  width: 100%;
   padding: 0.5em;
 }
 
@@ -689,6 +691,23 @@ select:last-of-type {
 
 /* -------------- */
 
+/* Headline Styles */
+
+/* -------------- */
+
+.login .headline {
+  position: absolute;
+  color: #C3073F;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/* -------------- */
+
 /* Login Card Styles */
 
 /* Inspired by: https://www.w3schools.com/css/css3_buttons.asp. */
@@ -707,7 +726,7 @@ select:last-of-type {
 
 .login .profilePhoto {
   float: left;
-  max-width:100%;
+  max-width: 100%;
   max-height: 50px;
 }
 
@@ -742,12 +761,9 @@ select:last-of-type {
 
 .login .welcome-label {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  top: 35%;
+  float: left;
+  left: 10%;
   font-weight: 400;
   font-size: 1rem;
   text-align: left;
@@ -807,3 +823,4 @@ select:last-of-type {
 .item-details .monitoring {
   float: right;
 }
+
