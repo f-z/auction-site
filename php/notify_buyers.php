@@ -8,61 +8,61 @@
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
   $currentBuyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
 
-  try {
+   try {
 
-    // Retrieving userID of previous highest bidder
-    $sql = 'SELECT buyerID FROM bid
-    WHERE `auctionID`= :auctionID
-    AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
+     // Retrieving userID of previous highest bidder
+     $sql = 'SELECT buyerID FROM bid
+     WHERE `auctionID`= :auctionID
+     AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
-    $retrieveBidder = $pdo->prepare($sql);
-    $retrieveBidder->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
-    $retrieveBidder->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
-    $retrieveBidder->execute();
+     $retrieveBidder = $pdo->prepare($sql);
+     $retrieveBidder->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+     $retrieveBidder->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
+     $retrieveBidder->execute();
 
-    $prevBidder = $retrieveBidder->fetch(PDO::FETCH_ASSOC);
+     $prevBidder = $retrieveBidder->fetch(PDO::FETCH_ASSOC);
 
-    // Retrieving email of previous highest bidder
-    $sql1 = 'SELECT email FROM user WHERE `userID`= :prevBidder';
+     // Retrieving email of previous highest bidder
+     $sql1 = 'SELECT email FROM user WHERE `userID`= :prevBidder';
     
-    $retrieveEmail = $pdo->prepare($sql1);
-    $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
-    $retrieveEmail->execute();
+     $retrieveEmail = $pdo->prepare($sql1);
+     $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
+     $retrieveEmail->execute();
     
-    $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
+     $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
     
-    $emailPrev = $stmt1['email'];
+     $emailPrev = $stmt1['email'];
 
-    // Retrieving contact details of new highest bidder
-    $sql2 = 'SELECT firstName, email FROM user WHERE `userID`= :buyerID';
+     // Retrieving contact details of new highest bidder
+     $sql2 = 'SELECT firstName, email FROM user WHERE `userID`= :buyerID';
 
-    $retrieveEmailCurr = $pdo->prepare($sql2);
-    $retrieveEmailCurr->bindParam(':buyerID', $currentBuyerID, PDO::PARAM_INT);
-    $retrieveEmailCurr->execute();
+     $retrieveEmailCurr = $pdo->prepare($sql2);
+     $retrieveEmailCurr->bindParam(':buyerID', $currentBuyerID, PDO::PARAM_INT);
+     $retrieveEmailCurr->execute();
 
-    $stmtCur = $retrieveEmailCurr->fetch(PDO::FETCH_ASSOC);
+     $stmtCur = $retrieveEmailCurr->fetch(PDO::FETCH_ASSOC);
 
-    $firstname = $row['firstName'];
-    $emailCur = $row['email'];
+     $firstname = $row['firstName'];
+     $emailCur = $row['email'];
 
-    // Sending email to current highest bidder
-    require 'email_server.php';
+     // Sending email to current highest bidder
+    //  require 'email_server.php';
     
-    $mail->addAddress($email, $firstname);
+    //  $mail->addAddress($email, $firstname);
     
-    $mail->Subject = 'Risk Assessment Update (NHS Falls)';
+    //  $mail->Subject = 'Risk Assessment Update (NHS Falls)';
     
-    $mail->Body = '
-    Hi '.$firstname.',
+    //  $mail->Body = '
+    //  Hi '.$firstname.',
     
-    Thanks for placing a bid. You are the highest bidder on '.$time.'!';  
+    //  Thanks for placing a bid. You are the highest bidder on '.$time.'!';  
     
-    $mail->send();
+    //  $mail->send();
     
-    json_encode($prevBidder);
-    } catch (Exception $e) {
-      $error = $e->getMessage();
-      json_encode($error);
-      die();
-  }
+     echo json_encode($mail);
+     } catch (Exception $e) {
+       $error = $e->getMessage();
+       json_encode($error);
+       die();
+   }
 ?>

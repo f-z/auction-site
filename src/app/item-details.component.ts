@@ -203,7 +203,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           console.log(data);
-          this.notifyPreviousBidders(this.auction.auctionID);
+          this.notifyPreviousBidders(this.auction.auctionID, this.user.userID);
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -235,17 +235,17 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return true; // if bid is valid
   }
 
-  notifyPreviousBidders(auctionID): void {
+  notifyPreviousBidders(auctionID, buyerID): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = {
-        auctionID: this.auction.auctionID,
-        buyerID: this.user.userID
+      options1: any = {
+        auctionID: auctionID,
+        buyerID: buyerID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_buyers.php';
 
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
+    this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
         console.log(data);
         this.openDialog(
