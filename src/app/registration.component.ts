@@ -1,10 +1,15 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploadModule } from 'primeng/fileupload';
+import { Message } from 'primeng/components/common/message';
+// const URL = 'http://localhost:3000/';
+// const URL = 'https://express-group30.azurewebsites.net/';
+// const URL = 'https://php-group30.azurewebsites.net/upload_image.php';
 
 @Component({
   selector: 'app-registration',
@@ -32,6 +37,13 @@ export class RegistrationComponent {
   private localURI: string;
   private remoteURI: string;
   files: FileList;
+  msgs: Message[];
+  uploadedFiles: any[] = [];
+
+  public uploader: FileUploader = new FileUploader({
+    url: 'https://php-group30.azurewebsites.net/upload_image.php',
+    itemAlias: 'photo'
+  });
 
   constructor(
     public http: HttpClient,
@@ -45,6 +57,24 @@ export class RegistrationComponent {
     this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
+  ngOnInit(): void {
+    this.uploader.onAfterAddingFile = file => {
+      file.withCredentials = false;
+    };
+    // overriding the default onCompleteItem property of the uploader, so we are
+    // able to deal with the server response.
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      this.photo = response;
+      this.register();
+      // console.log('ImageUpload:uploaded:', item, status, response);
+    };
+  }
+
   register(): void {
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (!this.validate()) {
@@ -52,6 +82,8 @@ export class RegistrationComponent {
     }
 
     if (this.termsAccepted) {
+      this.uploader.uploadAll();
+
       const headers: any = new HttpHeaders({
           'Content-Type': 'application/json'
         }),

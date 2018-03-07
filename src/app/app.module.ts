@@ -22,6 +22,8 @@ import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 
+import { FileSelectDirective } from 'ng2-file-upload';
+
 @NgModule({
   imports: [BrowserModule,
             FormsModule,
@@ -42,7 +44,8 @@ import {MatIconModule} from '@angular/material/icon';
     ItemComponent,
     ItemDetailsComponent,
     SearchPipe,
-    DialogComponent
+    DialogComponent,
+    FileSelectDirective
   ],
   bootstrap: [HomeComponent],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' }, UserService, ItemService ],

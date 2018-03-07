@@ -96,7 +96,10 @@
     <br>
 
     <h4>Profile Photo</h4>
-    <input id="photo" type="file" />
+    <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+    <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+      Upload with ng-2 file uploader
+    </button>
     <br>
     <br>
 
@@ -111,10 +114,11 @@
         <input type="button" id="cancel-button" value="Cancel" routerLink="/search" />
       </div>
       <div class="col-half">
-        <input type="submit" value=Register (click)="register()">
+        <input type="submit" value=Register (click)="uploader.uploadAll()">
       </div>
     </div>
 
   </form>
 
 </div>
+

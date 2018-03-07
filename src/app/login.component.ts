@@ -31,7 +31,7 @@ export class LoginComponent {
                 this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
-  register(): void {
+  login(): void {
     const headers: any  = new HttpHeaders({ 'Content-Type': 'application/json' }),
       options: any		  = { 'username': this.username, 'password': this.password },
       url: any      	  = this.remoteURI + 'login.php';
@@ -40,6 +40,8 @@ export class LoginComponent {
       .subscribe((data: any) => {
         // If the request was successful, set the current user and notify him/her.
         this.user = data;
+        this.user.photo = 'http://php-group30.azurewebsites.net/uploads/' + this.user.photo.substring(1, this.user.photo.length - 1);
+        console.log(this.user.photo);
         this.openDialog('Congratulations, logging in...', '', true);
       },
       (error: any) => {
