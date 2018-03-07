@@ -27,6 +27,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private highestBid: number;
   private highestBidderID: number;
   private highestBidder: string;
+  private seller: string;
   itemID: number;
   private sub: any;
   private user: User;
@@ -221,7 +222,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           this.highestBid = data.bid.highest;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
-          this.getUsernameOfHighestBidder(data.bid.buyerID);
+          this.getUsernames(data.bid.buyerID, this.item.sellerID);
         }
       },
       (error: any) => {
@@ -372,17 +373,19 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return;
   }
 
-  getUsernameOfHighestBidder(buyerID: number): void {
+  getUsernames(buyerID: number, sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { userID: buyerID },
+      options: any = { 'buyerID': buyerID,
+                     'sellerID': sellerID },
       url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          this.highestBidder = data.username;
+          this.highestBidder = data[0].username;
+          this.seller = data[1].username;
         }
       },
       (error: any) => {

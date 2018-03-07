@@ -6,18 +6,22 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values.
-    $userID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
+    $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
+    $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $stmnt = $pdo->prepare('SELECT username FROM user
-           WHERE userID = :userID');
-
--       // Binding the provided username to our prepared statement.
-        $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
+        $data = array();
+        $stmnt = $pdo->prepare('SELECT username FROM user WHERE userID = :buyerID'); 
+        $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
         $stmnt->execute();
+        $data[0] = $stmnt->fetch(PDO::FETCH_OBJ);
 
-        // Declaring an empty array to store the data we retrieve from the database in.
-        $data = $stmnt->fetch(PDO::FETCH_OBJ);
+        $stmnt = $pdo->prepare('SELECT username FROM user WHERE userID = :sellerID'); 
+        $stmnt->bindParam(':sellerID', $sellerID, PDO::PARAM_INT);
+        $stmnt->execute();
+        $data[0] = $stmnt->fetch(PDO::FETCH_OBJ);
+
+
         echo json_encode($data);
     }
     catch(PDOException $e) {
