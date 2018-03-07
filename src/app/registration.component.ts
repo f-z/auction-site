@@ -31,11 +31,7 @@ export class RegistrationComponent {
   phone: number;
   photo: string;
   termsAccepted: boolean;
-
-  private localURI: string;
-  private remoteURI: string;
-  files: FileList;
-  uploadedFiles: any[] = [];
+  imageAdded: boolean;
 
   public uploader: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
@@ -50,13 +46,14 @@ export class RegistrationComponent {
     this.loginPage = 'false';
     this.userRole = 'buyer';
 
-    this.localURI = 'http://localhost:3000/php/';
-    this.remoteURI = 'https://php-group30.azurewebsites.net/';
+    this.imageAdded = false;
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit(): void {
     this.uploader.onAfterAddingFile = file => {
       file.withCredentials = false;
+      this.imageAdded = true;
     };
     // overriding the default onCompleteItem property of the uploader, so we are
     // able to deal with the server response.
@@ -73,14 +70,6 @@ export class RegistrationComponent {
   }
 
   register(): void {
-    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
-    if (!this.validate()) {
-      return;
-    }
-
-    if (this.termsAccepted) {
-      this.uploader.uploadAll();
-
       const headers: any = new HttpHeaders({
           'Content-Type': 'application/json'
         }),
@@ -99,7 +88,7 @@ export class RegistrationComponent {
           DOB: this.DOB,
           photo: this.photo
         },
-        url: any = this.remoteURI + 'register.php';
+        url: any = 'https://php-group30.azurewebsites.net/register.php';
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
@@ -119,10 +108,10 @@ export class RegistrationComponent {
           );
         }
       );
-    }
   }
 
   validate(): boolean {
+    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     const date = new Date(this.DOB);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -174,8 +163,19 @@ export class RegistrationComponent {
       // If passwords do not match, notify the user.
       this.openDialog('Passwords need to match!', '', false);
       return false;
+    } else if (!this.termsAccepted) {
+      // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
+      this.openDialog('Please accept the terms and conditions to proceed!', '', false);
+      return false;
+    } else if (!this.imageAdded) {
+      // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
+      this.openDialog('Please add a profile photo!', '', false);
+      return false;
     }
 
+    // If all the checks have passed, then proceed with uploading the image
+    // and creating the registration record in the database.
+    this.uploader.uploadAll();
     return true;
   }
 

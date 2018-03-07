@@ -11,10 +11,10 @@
   <button class="button" (click)="logout()" *ngIf="user!=null">
     <span>Logout</span>
   </button>
-  <button class="button" routerLink="/myitems" *ngIf="user!=null && user.role=='seller'">
+  <button class="button" routerLink="/my-items" *ngIf="user!=null && user.role=='seller'">
     <span>My Auctions</span>
   </button>
-  <button class="button" routerLink="/myitems" *ngIf="user!=null && user.role=='buyer'">
+  <button class="button" routerLink="/my-items" *ngIf="user!=null && user.role=='buyer'">
     <span>My Bids</span>
   </button>
   <button class="button" *ngIf="user!=null && user.role=='admin'">

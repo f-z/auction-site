@@ -28,9 +28,6 @@ export class LoginComponent {
     private userService: UserService
   ) {
     this.loginPage = 'true';
-
-    this.localURI = 'http://localhost:3000/php/';
-    this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
   login(): void {
@@ -38,7 +35,7 @@ export class LoginComponent {
         'Content-Type': 'application/json'
       }),
       options: any = { username: this.username, password: this.password },
-      url: any = this.remoteURI + 'login.php';
+      url: any = 'https://php-group30.azurewebsites.net/login.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -78,7 +75,7 @@ export class LoginComponent {
       if (succeeded) {
         this.setUser(this.user);
         if (this.user.role === 'seller') {
-          this.router.navigate(['/myitems']);
+          this.router.navigate(['/my-items']);
         } else {
           this.router.navigate(['/search']);
         }

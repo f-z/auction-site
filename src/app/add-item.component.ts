@@ -8,6 +8,7 @@ import { DialogComponent } from './dialog.component';
 
 import { User, UserService } from './shared/services/user.service';
 import { Category } from './shared/services/item.service';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-add-item',
@@ -22,7 +23,7 @@ export class AddItemComponent implements OnInit {
   condition: string;
   quantity: number;
   category: string;
-  picture = '';
+  picture: string;
   endDate: string;
   endTime: string;
   startPrice: number;
@@ -32,22 +33,41 @@ export class AddItemComponent implements OnInit {
   categories: Observable<Category[]> = null;
   selectedCategory: string;
 
-  private localURI: string;
-  private remoteURI: string;
+  imageAdded: boolean;
+
+  public uploader: FileUploader = new FileUploader({
+    url: 'https://php-group30.azurewebsites.net/upload_image.php',
+    itemAlias: 'photo'
+  });
 
   constructor(
     private userService: UserService,
     public http: HttpClient,
     public dialog: MatDialog,
     private router: Router
-  ) {}
+  ) {
+    this.imageAdded = false;
+  }
 
   ngOnInit(): void {
     this.user = this.getUser();
     this.getCategories();
 
-    this.localURI = 'http://localhost:3000/php/';
-    this.remoteURI = 'https://php-group30.azurewebsites.net/';
+    this.uploader.onAfterAddingFile = file => {
+      file.withCredentials = false;
+      this.imageAdded = true;
+    };
+    // Overriding the default onCompleteItem property of the uploader,
+    // so we are able to deal with the server response.
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      this.picture = response;
+      this.addItem();
+    };
   }
 
   addItem(): void {
@@ -73,7 +93,7 @@ export class AddItemComponent implements OnInit {
         picture: this.picture,
         sellerID: this.user.userID
       },
-      url: any = this.remoteURI + 'insert_item.php';
+      url: any = 'https://php-group30.azurewebsites.net/insert_item.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -103,7 +123,7 @@ export class AddItemComponent implements OnInit {
         buyNowPrice: this.buyNowPrice,
         sellerID: this.user.userID
       },
-      url: any = this.remoteURI + 'create_auction.php';
+      url: any = 'https://php-group30.azurewebsites.net/create_auction.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -127,9 +147,7 @@ export class AddItemComponent implements OnInit {
 
   getCategories(): void {
     this.http
-      .get(
-        'https://php-group30.azurewebsites.net/retrieve_categories.php'
-      )
+      .get('https://php-group30.azurewebsites.net/retrieve_categories.php')
       .subscribe(
         (data: any) => {
           this.categories = data;
@@ -145,6 +163,7 @@ export class AddItemComponent implements OnInit {
   }
 
   validate(): boolean {
+    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (
       this.name == null ||
       this.description == null ||
@@ -165,7 +184,8 @@ export class AddItemComponent implements OnInit {
       this.name.trim().length === 0 ||
       this.description.trim().length === 0 ||
       this.condition.trim().length === 0 ||
-      this.endDate.trim().length === 0 || new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
+      this.endDate.trim().length === 0 ||
+      new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
       this.startPrice <= 0 ||
@@ -175,7 +195,15 @@ export class AddItemComponent implements OnInit {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
       return false;
+    } else if (!this.imageAdded) {
+      // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
+      this.openDialog('Please add an item picture!', '', false);
+      return false;
     }
+
+    // If all the checks have passed, then proceed with uploading the image
+    // and creating the registration record in the database.
+    this.uploader.uploadAll();
     return true;
   }
 
@@ -189,7 +217,7 @@ export class AddItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (succeeded) {
-        this.router.navigate(['/myitems']);
+        this.router.navigate(['/my-items']);
       }
     });
   }
@@ -200,7 +228,7 @@ export class AddItemComponent implements OnInit {
 
   goBack(): void {
     if (this.user.role === 'seller') {
-      this.router.navigate(['/myitems']);
+      this.router.navigate(['/my-items']);
     } else {
       this.router.navigate(['/search']);
     }

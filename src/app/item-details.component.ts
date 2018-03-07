@@ -143,7 +143,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data)
+        console.log(data);
         // Set the date we're counting down to.
         if (data != null) {
           this.highestBid = data.bid.highest;
@@ -229,8 +229,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           true
         );
       },
-      (error: any) => {
-      }
+      (error: any) => {}
     );
 
     return null;
@@ -285,7 +284,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     if (this.user.role === 'buyer') {
       this.router.navigate(['/search']);
     } else {
-      this.router.navigate(['sell']);
+      this.router.navigate(['my-items']);
     }
   }
 
@@ -313,7 +312,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
         // Display the result in the element with id='countdown'
         if (document.getElementById('countdown') != null) {
-          
           if (days >= 1) {
             document.getElementById('countdown').innerHTML =
               'Time remaining: ' +

@@ -6,11 +6,11 @@ import { User, UserService } from './shared/services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'app-seller',
-  templateUrl: './seller.html',
-  styleUrls: ['./seller.css']
+  selector: 'app-my-items',
+  templateUrl: './my-items.html',
+  styleUrls: ['./my-items.css']
 })
-export class SellerComponent implements OnInit {
+export class MyItemsComponent implements OnInit {
   item: Item;
   userItems: Observable<Item[]> = null;
 

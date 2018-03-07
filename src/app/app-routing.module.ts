@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
+import { MyItemsComponent } from './my-items.component';
 import { ItemDetailsComponent } from './item-details.component';
-import { SellerComponent } from './seller.component';
 import { AddItemComponent } from './add-item.component';
 
 export const routes: Routes = [
@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'add-item', component: AddItemComponent },
   { path: 'items/:itemID', component: ItemDetailsComponent },
-  { path: 'myitems', component: SellerComponent },
+  { path: 'my-items', component: MyItemsComponent },
 ];
 
 export const appRoutingProviders: any[] = [

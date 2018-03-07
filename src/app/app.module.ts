@@ -9,7 +9,7 @@ import { ItemComponent } from './item.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
-import { SellerComponent } from './seller.component';
+import { MyItemsComponent } from './my-items.component';
 import { AddItemComponent } from './add-item.component';
 import { DialogComponent} from './dialog.component';
 
@@ -39,7 +39,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    SellerComponent,
+    MyItemsComponent,
     AddItemComponent,
     ItemComponent,
     ItemDetailsComponent,
