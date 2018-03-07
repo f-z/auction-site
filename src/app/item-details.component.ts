@@ -32,8 +32,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private user: User;
   private newBid: number;
   private watchers: number;
+  
   private isExpired: boolean;
   private feedback: Feedback;
+  private sellerFeedbackGiven: boolean;
+  private buyerFeedbackGiven: boolean;
 
   constructor(
     private userService: UserService,
@@ -100,6 +103,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.countDown(data[0].endTime);
         this.setIsExpired(data[0].endTime);
         this.getWatchers(data[0].auctionID);
+        this.getFeedback(data[0].auctionID);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -138,6 +142,42 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }
     );
 
+    return null;
+  }
+
+  getFeedback(auctionID): void{
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { 'auctionID': auctionID },
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_feedback.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.feedback = data;
+          if(data.sellerComment != null || data.sellerRating != null){
+             this.sellerFeedbackGiven = true;
+          }else{
+            this.sellerFeedbackGiven = false;
+          }
+          if(data.buyerComment != null || data.buyerRating != null){
+             this.buyerFeedbackGiven = true;
+          }else{
+            this.buyerFeedbackGiven = false;
+          }
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
     return null;
   }
 

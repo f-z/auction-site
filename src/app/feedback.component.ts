@@ -17,11 +17,10 @@ import {Item,
 })
 
 export class FeedbackComponent implements OnInit {
-  private user: User;
-  private buyerID: number;
-  private subjectID: number;
-  private subject: string;
-  private item: Item;
+  @Input() user: User;
+  @Input() buyerID: number;
+  @Input() subject: string;
+  @Input() item: Item;
   private comment: string;
   private rating: number;
 
@@ -34,46 +33,8 @@ export class FeedbackComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  	this.user = this.getUser();
-  	this.item = this.getItem();
-    this.setSubject();
   } 
 
-   getUser(): User {
-    return this.userService.getUser();
-  }
-
-   getItem(): Item {
-    return this.itemService.getItem();
-  }
-
-  setSubject():void {
-  	if(this.user.role === 'buyer'){
-  		this.subjectID = this.item.sellerID; 
-  	}
-  	if(this.user.role === 'seller'){
-      //return the userID of the winner of the auction:
-  		this.getHighestBid(this.item.auctionID);
-  	}
-  	const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-    options: any = { 'userID': this.subjectID },
-    url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        console.log(data)
-        // Set the date we're counting down to.
-        if (data != null) {
-          this.subject = data.username;
-        }
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
-        }
-      );
-    return null;
-  }
 
   insertFeedback():void {
   	if(this.user.role ==='seller'){
@@ -95,11 +56,12 @@ export class FeedbackComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data)
-        // Set the date we're counting down to.
-        if (data != null) {
-          this.subject = data;
-        }
+        // If the request was successful, notify the user.
+        this.openDialog(
+          'Thank you for your feedback.',
+          '',
+          true
+        );
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -119,12 +81,14 @@ export class FeedbackComponent implements OnInit {
     url: any = 'https://php-group30.azurewebsites.net/insert_seller_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        console.log(data)
-        // Set the date we're counting down to.
-        if (data != null) {
-          this.subject = data;
-        }
+     (data: any) => {
+        // If the request was successful, notify the user.
+        this.openDialog(
+          'Thank you for your feedback.',
+          '',
+          true
+        );
+        document.getElementById("feedback-box").style.display = "none";
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -133,36 +97,6 @@ export class FeedbackComponent implements OnInit {
       );
     return null;
   }
-
-
-    getHighestBid(auctionID): void {
-    const headers: any = new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      options: any = { auctionID: auctionID },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_bid_information.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        console.log(data)
-        // Set the date we're counting down to.
-        if (data != null) {
-          this.subjectID = data.bid.buyerID;
-        }
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
-      }
-    );
-    return null;
-  }
-
 
    openDialog(message: string, username: string, succeeded: boolean): void {
     const dialogRef = this.dialog.open(DialogComponent, {

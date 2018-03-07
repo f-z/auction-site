@@ -5,7 +5,7 @@
   $json    =  file_get_contents('php://input');
   $obj     =  json_decode($json);
 
-  $sellerRating =  filter_var($obj->sellerRating, FILTER_SANITIZE_NUMBER_INT;
+  $sellerRating =  filter_var($obj->sellerRating, FILTER_SANITIZE_NUMBER_INT);
   $sellerComment =  filter_var($obj->sellerComment, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
   $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
   $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
@@ -14,7 +14,7 @@
   try {
     $query = 'SELECT auctionID FROM `feedback` WHERE auctionID=:auctionID';
     $findFeedback = $pdo->prepare($query);
-    $findFeedback->bindParam(':auction', $auction, PDO::PARAM_INT);
+    $findFeedback->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
     $findFeedback->execute();
 

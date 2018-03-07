@@ -14,7 +14,7 @@
   try {
     $query = 'SELECT auctionID FROM `feedback` WHERE auctionID=:auctionID';
     $findFeedback = $pdo->prepare($query);
-    $findFeedback->bindParam(':auction', $auction, PDO::PARAM_INT);
+    $findFeedback->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
     $findFeedback->execute();
 

@@ -1,11 +1,13 @@
 
-<div class="feedback-box">
-	<h3 class="feedback-title">Please enter your feedback to {{ subject.username }}:</h3>
+<div class="feedback-box" id="feedback-box">
+	<h3 class="feedback-title">Have you completed the transation with {{ subject}}?
+		<br>
+		<br>Give them some feedback: 
+	</h3>
 	<form>
-
 		<textarea [(ngModel)]="comment" name="comment" id="comment" placeholder="Enter your comments"></textarea>
 		<div class="text-centre">
-			<label for="rating" class="rating-label">Please rate your experience with {{ subject.username }}:</label>
+			<label for="rating" class="rating-label">Please rate your experience with {{ subject }} :</label>
 	        <div class="rating">
 	            <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" [(ngModel)]="rating" />
 		        <label for="star5">☆</label>
@@ -23,5 +25,4 @@
         </div>
     </form>
 
-	
 </div>
