@@ -95,6 +95,12 @@ export class AppComponent implements OnInit {
 
   setItem(item: Item): void {
     this.itemService.setItem(item);
+
+    if (this.user !== null) {
+    this.router.navigate(['/items', item.itemID]);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   selectCategory(category): void {
