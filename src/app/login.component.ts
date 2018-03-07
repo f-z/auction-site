@@ -21,56 +21,68 @@ export class LoginComponent {
 
   private user: User;
 
-  constructor(public http: HttpClient,
-              public dialog: MatDialog,
-              private router: Router,
-              private userService: UserService) {
-                this.loginPage = 'true';
+  constructor(
+    public http: HttpClient,
+    public dialog: MatDialog,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.loginPage = 'true';
 
-                this.localURI = 'http://localhost:3000/php/';
-                this.remoteURI = 'https://php-group30.azurewebsites.net/';
+    this.localURI = 'http://localhost:3000/php/';
+    this.remoteURI = 'https://php-group30.azurewebsites.net/';
   }
 
   login(): void {
-    const headers: any  = new HttpHeaders({ 'Content-Type': 'application/json' }),
-      options: any		  = { 'username': this.username, 'password': this.password },
-      url: any      	  = this.remoteURI + 'login.php';
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { username: this.username, password: this.password },
+      url: any = this.remoteURI + 'login.php';
 
-      this.http.post(url, JSON.stringify(options), headers)
-      .subscribe((data: any) => {
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
         // If the request was successful, set the current user and notify him/her.
         this.user = data;
-        this.user.photo = 'http://php-group30.azurewebsites.net/uploads/' + this.user.photo.substring(1, this.user.photo.length - 1);
-        console.log(this.user.photo);
+        if (this.user.photo != null) {
+          this.user.photo =
+            'http://php-group30.azurewebsites.net/uploads/' +
+            this.user.photo.substring(1, this.user.photo.length - 1);
+        }
         this.openDialog('Congratulations, logging in...', '', true);
       },
       (error: any) => {
         // If the supplied username and password do not match, notify the user.
-        this.openDialog('The supplied username and password are incorrect!', '', false);
-      });
-    }
+        this.openDialog(
+          'The supplied username and password are incorrect!',
+          '',
+          false
+        );
+      }
+    );
+  }
 
-    setUser(user: User): void {
-      this.userService.setUser(user);
-    }
+  setUser(user: User): void {
+    this.userService.setUser(user);
+  }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        data: {
-          message: message,
-          username: username
-        }
-      });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (succeeded) {
-          this.setUser(this.user);
-          if (this.user.role === 'seller') {
-            this.router.navigate(['/myitems']);
-          } else {
-            this.router.navigate(['/search']);
-          }
+    dialogRef.afterClosed().subscribe(result => {
+      if (succeeded) {
+        this.setUser(this.user);
+        if (this.user.role === 'seller') {
+          this.router.navigate(['/myitems']);
+        } else {
+          this.router.navigate(['/search']);
         }
-      });
-    }
+      }
+    });
+  }
 }

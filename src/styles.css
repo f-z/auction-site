@@ -705,6 +705,12 @@ select:last-of-type {
   border: none;
 }
 
+.login .profilePhoto {
+  float: left;
+  max-width:100%;
+  max-height: 50px;
+}
+
 .login .button {
   text-align: center;
   font-size: 16px;

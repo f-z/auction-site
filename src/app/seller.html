@@ -2,6 +2,7 @@
 
 <!-- card logout -->
 <div class="card login">
+  <img class="profilePhoto" src="{{this.user.photo}}">
   <button class="button" routerLink="/register" *ngIf="user==null">
     <span>Register</span>
   </button>
@@ -24,7 +25,6 @@
 <div class="container">
   <div class="space-bot text-center">
     <h2>My Items</h2>
-    <img class="profilePhoto" src="{{this.user.photo}}">
   </div>
   <br>
 
