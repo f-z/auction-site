@@ -19,7 +19,7 @@
         $stmnt = $pdo->prepare('SELECT username FROM user WHERE userID = :sellerID'); 
         $stmnt->bindParam(':sellerID', $sellerID, PDO::PARAM_INT);
         $stmnt->execute();
-        $data[0] = $stmnt->fetch(PDO::FETCH_OBJ);
+        $data[1] = $stmnt->fetch(PDO::FETCH_OBJ);
 
 
         echo json_encode($data);
