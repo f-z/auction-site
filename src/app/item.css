@@ -4,14 +4,22 @@
 
 /* ---------------------- */
 
-.item-box{
+.item-box {
   display: grid;
   grid-template-columns: 2fr 5fr;
-
 }
 
+.item-box:hover {
+  cursor: pointer;
+  background: #FDF6E3;
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
 
-.item-img {
+.item-photo {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -24,9 +32,9 @@
 }
 
 .item-info {
-  grid-column: 2/3; 
+  grid-column: 2/3;
   display: grid;
-  grid-template-rows: 2fr 1fr; 
+  grid-template-rows: 2fr 1fr;
   position: relative;
 }
 
@@ -40,24 +48,21 @@
   bottom: 20%;
 }
 
-.item-info .item-category{
+.item-info .item-category {
   font-size: 0.9rem;
   grid-row: 1/2;
   position: absolute;
   margin-bottom: 0;
   right: 10%;
-  bottom:20%;
+  bottom: 20%;
   grid-row: 1/2;
 }
-
 
 .item-highestbid {
   font-size: 1.2rem;
   font-weight: 400;
   grid-row: 2/3;
-  
 }
-
 
 .item-endTime {
   font-size: 1.2rem;
@@ -66,5 +71,4 @@
   position: absolute;
   right: 10%;
 }
-
 

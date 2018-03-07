@@ -1,12 +1,11 @@
-
 <div class="item-box">
-	<img class="item-img" src="{{item?.photo}}" alt="{{item?.itemID}} photo">
+	<img class="item-photo" src="{{item?.photo}}" alt="{{item?.itemID}} photo">
 	<div class="item-info">
-	  <h2 class="item-name" *ngIf="item.quantity <= 1">{{ item?.name }} </h2>
-	  <h3 class="item-name" *ngIf="item.quantity > 1">{{ item?.name }} &times; {{ item?.quantity }}</h3>
-	  <h3 class="item-category">{{ item?.categoryName }}</h3>
-	  <h3 class="item-highestbid" *ngIf="item.highest!=null"> £{{ item?.highest }}</h3>
-	  <h3 class="item-highestbid" *ngIf="item.highest==null"> £{{ item?.startPrice }}</h3>
-	  <h3 class="item-endTime"> {{ timeleft }}</h3>
+		<h2 class="item-name" *ngIf="item.quantity <= 1">{{ item?.name }} </h2>
+		<h3 class="item-name" *ngIf="item.quantity > 1">{{ item?.name }} &times; {{ item?.quantity }}</h3>
+		<h3 class="item-category">{{ item?.categoryName }}</h3>
+		<h3 class="item-highestbid" *ngIf="item.highest!=null"> £{{ item?.highest }}</h3>
+		<h3 class="item-highestbid" *ngIf="item.highest==null"> £{{ item?.startPrice }}</h3>
+		<h3 class="item-endTime"> {{ timeleft }}</h3>
 	</div>
 </div>

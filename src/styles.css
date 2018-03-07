@@ -575,7 +575,7 @@ select:last-of-type {
 .input-group {
   margin-bottom: 1em;
   zoom: 1;
-  z-index: 5;
+  z-index: 1;
 }
 
 .input-group:before,
@@ -719,7 +719,7 @@ select:last-of-type {
   top: 0;
   right: 0;
   font-weight: 300;
-  z-index: 100;
+  z-index: 5;
   background-color: #1A1A1D;
   border: none;
 }
@@ -815,10 +815,7 @@ select:last-of-type {
   position: relative;
   background: #ECECEA;
   max-width: 850px;
-  margin-left: auto;
-  margin-right: auto;
   min-height: 100px;
-  overflow: hidden;
   opacity: 1;
   border: 1px solid #e8e8e8;
   box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
@@ -837,7 +834,7 @@ select:last-of-type {
   float: right;
 }
 
-.item-details .item-leftt {
+.item-details .item-left {
   font-size: 1.2rem;
   font-weight: 400;
   position: relative;
