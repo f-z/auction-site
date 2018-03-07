@@ -1,5 +1,5 @@
-.container .add-item-button {
-  position: absolute;
+.item-details .add-item-button {
+  position: relative;
   text-align: center;
   font-size: 16px;
   width: 150px;
@@ -16,19 +16,19 @@
   transform: translate(-50%, -50%);
 }
 
-.container .add-item-button span {
+.item-details .add-item-button span {
   cursor: pointer;
   display: inline-block;
   transition: 0.5s;
 }
 
-.container .add-item-button span:after {
+.item-details .add-item-button span:after {
   content: '\00bb';
   opacity: 0;
   transition: 0.5s;
 }
 
-.container .add-item-button:hover span:after {
+.item-details .add-item-button:hover span:after {
   opacity: 1;
 }
 
