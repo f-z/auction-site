@@ -6,7 +6,8 @@ import {
   Item,
   ItemService,
   Auction,
-  Bid
+  Bid,
+  Feedback
 } from './shared/services/item.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
@@ -24,12 +25,15 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private viewings: number;
   private numberBids: number;
   private highestBid: number;
-  private highestBidder: number;
+  private highestBidderID: number;
+  private highestBidder: string;
   itemID: number;
   private sub: any;
   private user: User;
   private newBid: number;
   private watchers: number;
+  private isExpired: boolean;
+  private feedback: Feedback;
 
   constructor(
     private userService: UserService,
@@ -54,6 +58,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.getAuctionInformation();
+  
   }
 
   ngOnDestroy() {
@@ -93,6 +98,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         }
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
+        this.setIsExpired(data[0].endTime);
         this.getWatchers(data[0].auctionID);
       },
       (error: any) => {
@@ -175,7 +181,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         if (data != null) {
           this.highestBid = data.bid.highest;
           this.numberBids = data.count.count;
-          this.highestBidder = data.bid.buyerID;
+          this.highestBidderID = data.bid.buyerID;
+          this.getUsernameOfHighestBidder(data.bid.buyerID);
         }
       },
       (error: any) => {
@@ -315,6 +322,41 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  setIsExpired(auction_endTime: string):void{
+     // Set the date we're counting down to
+    const countDownDate = new Date(auction_endTime).getTime();
+    const now = new Date().getTime();
+
+    // Find the distance between now an the count down date
+    const distance = countDownDate - now;
+    if(distance <= 0){
+      this.isExpired = true;
+    }else{
+      this.isExpired = false;
+    }
+    return;
+  }
+
+   getUsernameOfHighestBidder(buyerID: number):void {
+  
+    const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
+    options: any = { 'userID': buyerID },
+    url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        if (data != null) {
+          this.highestBidder = data.username;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
+        }
+      );
+    return null;
+  }
+
   // Displays time remaining on auction.
   countDown(auction_endTime: string): void {
     // Set the date we're counting down to
@@ -341,24 +383,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         if (document.getElementById('countdown') != null) {
           if (days >= 1) {
             document.getElementById('countdown').innerHTML =
-              'Time remaining: ' +
-              days +
-              'd ' +
-              hours +
-              'h ' +
-              minutes +
-              'm ' +
-              seconds +
-              's ';
+              'Time remaining: ' + days +'d ' + hours +'h ' + minutes +'m ' + seconds + 's ';
           } else if (hours >= 1) {
-            document.getElementById('countdown').innerHTML =
-              'Time remaining: ' +
-              hours +
-              'h ' +
-              minutes +
-              'm ' +
-              seconds +
-              's ';
+            document.getElementById('countdown').innerHTML ='Time remaining: ' + hours +'h ' + minutes +'m ' + seconds +'s ';
           } else if (minutes >= 1) {
             document.getElementById('countdown').innerHTML =
               'Time remaining: ' + minutes + 'm ' + seconds + 's ';
@@ -376,7 +403,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           clearInterval(counter);
         }
       }),
-      1000
-    );
+      1000);
   }
 }

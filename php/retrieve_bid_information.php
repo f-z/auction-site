@@ -12,7 +12,7 @@
   try {
     // $sql = 'SELECT COUNT(bidID) AS count, MAX(price) as highest FROM bid WHERE auctionID = :auctionID;';
 
-    $sql = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = :auctionID;';
+    $sql = 'SELECT COUNT(bidID) AS count FROM bid WHERE auctionID = :auctionID AND price != 0;';
     $retrieveCount = $pdo->prepare($sql);
     $retrieveCount->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
     $retrieveCount->execute();

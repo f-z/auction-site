@@ -10,7 +10,7 @@
 
     try {
         $stmnt = $pdo->prepare('SELECT username FROM user
-           WHERE userID= :userID');
+           WHERE userID = :userID');
 
 -       // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);

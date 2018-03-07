@@ -53,6 +53,11 @@
     <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
     <br>
     <br>
+    <h3 class="item-right" id="auction-winner" *ngIf="isExpired && item.sellerID == user.userID">Winner: {{ highestBidder }} </h3>
+    <br>
+    <br>
+    <h3 class="" *ngIf="feedback.sellerComment == null || feedback.sellerRating == null">Have you completed the transation with {{ highestBidder }}? Give him some feedback:</h3>
+
     <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
       <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
       <input type="submit" value="Bid" (click)="bid()">

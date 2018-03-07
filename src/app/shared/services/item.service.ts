@@ -68,6 +68,16 @@ export interface Bid {
   highest: number;
 }
 
+export interface Feedback {
+  auctionID: number;
+  buyerID: number;
+  buyerComment: string;
+  buyerRating: number;
+  sellerID: number;
+  sellerComment: number;
+  sellerRating: number; 
+}
+
 export interface Auction {
   auctionID: number;
   startPrice: number;
