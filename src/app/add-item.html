@@ -1,5 +1,8 @@
 <div class="container">
   <div class="card login">
+    <img class="profilePhoto" src="{{this.user.photo}}">
+    <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
+    <h1 class="headline">UCL Bay</h1>
     <button class="button" routerLink="/register" *ngIf="user==null">
       <span>Register</span>
     </button>
@@ -18,12 +21,11 @@
 
   <form id="add-item-form">
     <br>
+    <br>
 
     <div class="space-bot text-center">
       <h2>Add Item</h2>
     </div>
-
-    <br>
 
     <div class="row">
       <h4>Item Name</h4>
@@ -63,7 +65,7 @@
     <div class="row">
       <div class="col-half">
         <label for="quantity">Quantity: </label>
-        <input type="number" [(ngModel)]="quantity" name="quantity" id="quantity" placeholder="Add item quantity" >
+        <input type="number" [(ngModel)]="quantity" name="quantity" id="quantity" placeholder="Add item quantity">
       </div>
     </div>
 
@@ -104,11 +106,10 @@
 
     </div>
 
-
     <div class="row">
       <br>
       <div class="col-half">
-        <input type="button" id="cancel-button" value="Cancel" (click)="goBack()"/>
+        <input type="button" id="cancel-button" value="Cancel" (click)="goBack()" />
       </div>
       <div class="col-half">
         <input type="submit" value="Create Auction" (click)="addItem()">

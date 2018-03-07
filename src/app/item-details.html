@@ -2,6 +2,9 @@
 
 <!-- card logout -->
 <div class="card login">
+  <img class="profilePhoto" src="{{this.user.photo}}">
+  <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
+  <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">
     <span>Register</span>
   </button>
@@ -45,8 +48,8 @@
     <br>
     <br>
     <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
-    <br  *ngIf="viewings != null">
-    <br  *ngIf="viewings != null">
+    <br *ngIf="viewings != null">
+    <br *ngIf="viewings != null">
     <h3 class="item-right" *ngIf="viewings != null">Buyers watching: {{ watchers }}</h3>
     <br *ngIf="viewings != null">
     <br *ngIf="viewings != null">
@@ -54,10 +57,11 @@
     <br>
     <br>
     <h3 class="item-right" id="auction-winner" *ngIf="isExpired && item.sellerID === user.userID">
-      Winner: {{ highestBidder }} 
+      Winner: {{ highestBidder }}
     </h3>
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item" 
-    *ngIf="isExpired && sellerFeedbackGiven == false"></app-feedback><!--I THINK sellerFeedbackGiven == false NEEDS CHANGING -->
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item"
+      *ngIf="isExpired && sellerFeedbackGiven == false"></app-feedback>
+    <!--I THINK sellerFeedbackGiven == false NEEDS CHANGING -->
     <br>
     <br>
     <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
