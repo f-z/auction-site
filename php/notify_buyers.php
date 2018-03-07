@@ -1,11 +1,11 @@
 <?php
   require_once('connect_azure_db.php');
   
-use phpmailer\PHPMailer\PHPMailer\PHPMailer;
-use phpmailer\PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 //Load composer's autoloader
-require_once('./phpmailer/vendor/autoload.php');
+require_once('./vendor/autoload.php');
 
 $mail = new PHPMailer(true);
 
@@ -55,15 +55,15 @@ $mail = new PHPMailer(true);
      $emailCur = $stmtCur['email'];
      
      //Server settings
-// $mail->SMTPDebug = 2;
-// $mail->isSMTP();
-// $mail->Host = 'smtp.gmail.com';
-// $mail->SMTPAuth = true;
-// $mail->Username = 'uclbay.gc06@gmail.com';
-// $mail->Password = 'uclbay_gc06';
-// $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
-// $mail->Port = 25;
-// // walkaround to bypass server errors
+$mail->isSMTP();
+$mail->SMTPDebug = 2;
+$mail->Host = 'smtp.gmail.com';
+$mail->Port = 587;
+$mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
+$mail->SMTPAuth = true;
+$mail->Username = 'uclbay.gc06@gmail.com';
+$mail->Password = 'uclbay_gc06';
+// walkaround to bypass server errors
 // $mail->SMTPOptions = array(
 // 'ssl' => array(
 //     'verify_peer' => false,
@@ -71,14 +71,14 @@ $mail = new PHPMailer(true);
 //     'allow_self_signed' => true
 // )
 // );
+$mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+$mail->addAddress($emailCur, $firstname);
 
-//  $mail->addAddress($email, $firstname);
+$mail->Subject = 'UCL Databases';
+$mail->Debugoutput = 'html';
+$mail->Body = 'Yeah';  
     
-//  $mail->Subject = 'Risk Assessment Update (NHS Falls)';
-    
-//      $mail->Body = 'Yeah';  
-    
-//      $mail->send();
+$mail->send();
     
     //  echo json_encode('Message has been sent');
     echo json_encode($mail);
