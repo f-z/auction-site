@@ -66,7 +66,7 @@
     *ngIf="isExpired && sellerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
-    <form *ngIf="user != null && item.sellerID != user.userID" id="bid-form">
+    <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">
       <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
       <input type="submit" value="Bid" (click)="bid()">
       <br>
