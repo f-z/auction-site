@@ -42,7 +42,7 @@
     // Thanks for placing a bid. You are the highest bidder on '.$time;  
 
     // $mail->send();
-    echo json_encode($mail);
+    echo json_encode('Congratulations! Your bid has been added!');
   } catch (Exception $e) {
       $error = $e->getMessage(); 
   }

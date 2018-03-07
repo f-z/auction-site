@@ -42,25 +42,25 @@
 
      $stmtCur = $retrieveEmailCurr->fetch(PDO::FETCH_ASSOC);
 
-     $firstname = $row['firstName'];
-     $emailCur = $row['email'];
+     $firstname = $stmtCur['firstName'];
+     $emailCur = $stmtCur['email'];
 
-     // Sending email to current highest bidder
-    //  require 'email_server.php';
+    //   Sending email to current highest bidder
+     require 'email_server.php';
     
-    //  $mail->addAddress($email, $firstname);
+     $mail->addAddress($email, $firstname);
     
-    //  $mail->Subject = 'Risk Assessment Update (NHS Falls)';
+     $mail->Subject = 'Risk Assessment Update (NHS Falls)';
     
-    //  $mail->Body = '
-    //  Hi '.$firstname.',
+     $mail->Body = '
+     Hi '.$firstname.',
     
-    //  Thanks for placing a bid. You are the highest bidder on '.$time.'!';  
+     Thanks for placing a bid. You are the highest bidder on '.$time.'!';  
     
-    //  $mail->send();
+     $mail->send();
     
-     echo json_encode($mail);
-     } catch (Exception $e) {
+     echo json_encode(array($prevBidder,$emailPrev,$stmtCur,$mail));
+    } catch (Exception $e) {
        $error = $e->getMessage();
        json_encode($error);
        die();
