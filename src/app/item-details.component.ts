@@ -247,6 +247,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data);
         this.openDialog(
           'Congratulations, you have successfully placed your bid!',
           '',

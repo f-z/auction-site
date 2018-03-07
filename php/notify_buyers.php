@@ -22,61 +22,45 @@
 
     $prevBidder = $retrieveBidder->fetch(PDO::FETCH_ASSOC);
 
-    if ($prevBidder != null) {
+    // Retrieving email of previous highest bidder
+    $sql1 = 'SELECT email FROM user WHERE `userID`= :prevBidder';
+    
+    $retrieveEmail = $pdo->prepare($sql1);
+    $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
+    $retrieveEmail->execute();
+    
+    $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
+    
+    $emailPrev = $stmt1['email'];
 
-      // Retrieving email of previous highest bidder
-      $sql1 = 'SELECT email FROM user WHERE `userID`= :prevBidder';
+    // Retrieving contact details of new highest bidder
+    $sql2 = 'SELECT firstName, email FROM user WHERE `userID`= :buyerID';
 
-      $retrieveEmail = $pdo->prepare($sql1);
-      $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
-      $retrieveEmail->execute();
+    $retrieveEmailCurr = $pdo->prepare($sql2);
+    $retrieveEmailCurr->bindParam(':buyerID', $currentBuyerID, PDO::PARAM_INT);
+    $retrieveEmailCurr->execute();
 
-      $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
+    $stmtCur = $retrieveEmailCurr->fetch(PDO::FETCH_ASSOC);
 
-      $emailPrev = $stmt1['email'];
+    $firstname = $row['firstName'];
+    $emailCur = $row['email'];
 
-      if ($emailPrev != null) {
-
-        // Retrieving contact details of new highest bidder
-        $sql2 = 'SELECT firstName, email FROM user WHERE `userID`= :buyerID';
-
-        $retrieveEmailCurr = $pdo->prepare($sql2);
-        $retrieveEmailCurr->bindParam(':buyerID', $currentBuyerID, PDO::PARAM_INT);
-        $retrieveEmailCurr->execute();
-
-        $stmtCur = $retrieveEmailCurr->fetch(PDO::FETCH_ASSOC);
-
-        $firstname = $row['firstName'];
-        $emailCur = $row['email'];
-
-        if ($emailCur != null && $firstname != null) {
-
-          // Sending email to current highest bidder
-          require 'email_server.php';
-
-          $mail->addAddress($email, $firstname);
-
-          $mail->Subject = 'Risk Assessment Update (NHS Falls)';
-          
-          $mail->Body    = '
-          Hi '.$firstname.',
-
-          Thanks for placing a bid. You are the highest bidder on '.$time;  
-
-          $mail->send();
-        } else {
-          json_encode(array('email cannot be sent'));
-        }
-
-
-      } else {
-        json_encode(array('emailprev is null'));
-      }
-
-    } else {
-      json_encode(array('prevBidder is null'));
-    }
-  } catch (Exception $e) {
+    // Sending email to current highest bidder
+    require 'email_server.php';
+    
+    $mail->addAddress($email, $firstname);
+    
+    $mail->Subject = 'Risk Assessment Update (NHS Falls)';
+    
+    $mail->Body = '
+    Hi '.$firstname.',
+    
+    Thanks for placing a bid. You are the highest bidder on '.$time.'!';  
+    
+    $mail->send();
+    
+    json_encode($prevBidder);
+    } catch (Exception $e) {
       $error = $e->getMessage();
       json_encode($error);
       die();
