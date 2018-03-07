@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from './shared/services/item.service';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-item',
@@ -8,6 +10,12 @@ import { Item } from './shared/services/item.service';
 })
 export class ItemComponent implements OnInit {
   @Input() item: Item;
+  timeleft: string;
+
+
+
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
   	this.timeRemaining(this.item.endTime);
@@ -15,44 +23,54 @@ export class ItemComponent implements OnInit {
 
     // Displays time remaining on auction.
   timeRemaining(auction_endTime: string): void {
-    // Set the date we're counting down to
-    const countDownDate = new Date(auction_endTime).getTime();
+	    // Set the date we're counting down to
+	    const countDownDate = new Date(auction_endTime).getTime();
+	   
+	    const now = new Date().getTime();
+	        
+	        // Find the distance between now an the count down date
+	    const distance = countDownDate - now;
 
-    // Update the count down every 1 second
-    
-    var id = this.item.itemID.toString();
-      window.onload = function() {
-        // Get todays date and time
-        const now = new Date().getTime();
+	        // Time calculations for days, hours, minutes and seconds
+	    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Find the distance between now an the count down date
-        const distance = countDownDate - now;
+	    if(days > 7){
+	    	this.timeleft =  days +'d left';
+	    }else if (days >= 1) {
+	        this.timeleft =  days +'d ' +hours +'h left';
+	    } else if (hours >= 1) {
+	        this.timeleft  = hours + 'h left';
+	    } else if (minutes >= 1) {
+	        this.timeleft = minutes + 'm left';
+	    } else if (seconds >= 1) {
+	        this.timeleft = seconds + 's left';
+	    }
+	          // If the count down is finished, display a notification text message.
+	    if (distance < 0) {
+	    	this.timeleft = 'EXPIRED';
+	    }
+    }
 
-        // Time calculations for days, hours, minutes and seconds
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    openDialog(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     // if (!succeeded) {
+     //   this.router.navigate(['/search']);
+      //} else {
+       // window.location.reload();
+      //}
+    });
+  }
 
 
-        // Display the result in the element with id='countdown'
-        if (document.getElementById(id) != null) {
-          if (days >= 1) {
-            document.getElementById(id).innerHTML = 'Time remaining: ' + days +'d ' +hours +'h ';
-          } else if (hours >= 1) {
-            document.getElementById(id).innerHTML = 'Time remaining: ' + hours + 'h ';
-          } else if (minutes >= 1) {
-             document.getElementById(id).innerHTML = 'Time remaining: ' + minutes + 'm ';
-          } else if (seconds >= 1) {
-             document.getElementById(id).innerHTML = 'Time remaining: ' + seconds + 's ';
-          }
-          // If the count down is finished, display a notification text message.
-          if (distance < 0) {
-           document.getElementById(id).innerHTML = 'Time remaining: EXPIRED';
-          }
-       }
-     }
-  } 
 }

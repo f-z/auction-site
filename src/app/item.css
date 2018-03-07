@@ -4,32 +4,67 @@
 
 /* ---------------------- */
 
+.item-box{
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+
+}
+
+
 .item-img {
-  width: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 70%;
   border-radius: 12px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  float: left;
+  grid-column: 1/2;
+  max-height: 150px;
 }
 
 .item-info {
-  display: block;
-  margin: 5px 0;
+  grid-column: 2/3; 
+  display: grid;
+  grid-template-rows: 2fr 1fr; 
+  position: relative;
 }
 
-.item-info .item-name {
-  font-size: 1.4rem;
+.item-name {
+  font-size: 2.0rem;
   margin-top: 0;
+  text-align: left;
+  grid-row: 1/2;
+  position: absolute;
+  bottom: 30%;
 }
 
-.item-info .item-quantity {
-  font-size: 1.1rem;
-  font-weight: 400;
-  float: right;
-}
-
-.item-info .item-category, .item-endTime, .item-highestbid {
+.item-info .item-category{
   font-size: 0.9rem;
-  font-weight: 400;
-  float: right;
+  grid-row: 1/2;
+  margin-top: auto;
+  margin-bottom: auto;
+  position: absolute;
+  right: 10%;
+  bottom:30%;
+  grid-row: 1/2;
 }
+
+
+.item-highestbid {
+  font-size: 1.2rem;
+  font-weight: 400;
+  grid-row: 2/3;
+  
+}
+
+
+.item-endTime {
+  font-size: 1.2rem;
+  font-weight: 400;
+  grid-row: 2/3;
+  position: absolute;
+  right: 10%;
+}
+
+

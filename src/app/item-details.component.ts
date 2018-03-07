@@ -313,6 +313,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
         // Display the result in the element with id='countdown'
         if (document.getElementById('countdown') != null) {
+          
           if (days >= 1) {
             document.getElementById('countdown').innerHTML =
               'Time remaining: ' +
