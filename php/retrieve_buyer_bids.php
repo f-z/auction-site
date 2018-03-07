@@ -10,7 +10,7 @@
 
     try {
         $stmnt = $pdo->prepare('SELECT b.bidID, b.time, MAX(b.price) as price,
-        i.itemID, i.name, i.picture, i.description, i.`condition`, i.categoryName, i.sellerID, 
+        i.itemID, i.name, i.photo, i.description, i.`condition`, i.categoryName, i.sellerID, 
         a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, a.auctionID
         FROM bid AS b, item AS i, auction AS a  
         WHERE  b.buyerID = :buyerID

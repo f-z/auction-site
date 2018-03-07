@@ -40,7 +40,7 @@ export class ItemService {
 export interface Item {
   itemID: number;
   name: string;
-  picture: string;
+  photo: string;
   description: string;
   condition: string;
   quantity: number;
@@ -75,7 +75,7 @@ export interface Feedback {
   buyerRating: number;
   sellerID: number;
   sellerComment: number;
-  sellerRating: number; 
+  sellerRating: number;
 }
 
 export interface Auction {

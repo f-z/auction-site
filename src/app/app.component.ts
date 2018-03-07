@@ -16,7 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
   item: Item;
-  items: Observable<Item[]> = null;
+  items: Observable<[Item]>;
   public selectedCategory: string;
   private user: User;
   private term: string;
@@ -70,10 +70,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.term = 'All';
-
-    this.getItems();
-
     this.user = this.getUser();
+    this.getItems();
   }
 
   getItems(): void {
@@ -84,6 +82,10 @@ export class AppComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.items = data;
+          for (let i = 0; i < data.length; i++) {
+            this.items[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+              this.items[i].photo.substring(5, this.items[i].photo.length - 5);
+          }
         },
         (error: any) => {
           console.dir(error);

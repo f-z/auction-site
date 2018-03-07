@@ -37,6 +37,7 @@
     </div>
 
     <div class="row">
+      <h4>Item Description</h4>
       <div class="col">
         <div class="input">
           <input type="text" [(ngModel)]="description" name="description" placeholder="Add item description" />
@@ -88,31 +89,36 @@
       <div class="col-half">
         <div class="input">
           <label for="startPrice">Start Price £: </label>
-          <input type="number" [(ngModel)]="startPrice" name="startPrice" placeholder="Enter start Price" />
+          <input type="number" [(ngModel)]="startPrice" name="startPrice" placeholder="Enter start price" />
         </div>
       </div>
       <div class="col-half">
         <div class="input">
           <label for="reservePrice">Reserve Price £: </label>
-          <input type="number" [(ngModel)]="reservePrice" name="reservePrice" placeholder="Reserve Price" />
+          <input type="number" [(ngModel)]="reservePrice" name="reservePrice" placeholder="Enter reserve price" />
         </div>
       </div>
       <div class="col-half">
         <div class="input">
           <label for="buyNowPrice">Buy-it-now Price £: </label>
-          <input type="number" [(ngModel)]="buyNowPrice" name="buyNowPrice" placeholder="Buy-it-now Price" />
+          <input type="number" [(ngModel)]="buyNowPrice" name="buyNowPrice" placeholder="Buy-it-now price" />
         </div>
       </div>
-
     </div>
 
+    <br>
+
     <div class="row">
+      <h4>Item Picture</h4>
+      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+      <br>
+      <br>
       <br>
       <div class="col-half">
         <input type="button" id="cancel-button" value="Cancel" (click)="goBack()" />
       </div>
       <div class="col-half">
-        <input type="submit" value="Create Auction" (click)="addItem()">
+        <input type="submit" value="Create Auction" (click)="validate()">
       </div>
     </div>
 

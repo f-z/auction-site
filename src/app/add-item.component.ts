@@ -18,22 +18,22 @@ import { FileUploader } from 'ng2-file-upload';
 export class AddItemComponent implements OnInit {
   private user: User;
 
-  name: string;
-  description: string;
-  condition: string;
-  quantity: number;
-  category: string;
-  picture: string;
-  endDate: string;
-  endTime: string;
-  startPrice: number;
-  reservePrice: number;
-  buyNowPrice: number;
+  private name: string;
+  private description: string;
+  private condition: string;
+  private quantity: number;
+  private category: string;
+  private photo: string;
+  private endDate: string;
+  private endTime: string;
+  private startPrice: number;
+  private reservePrice: number;
+  private buyNowPrice: number;
 
-  categories: Observable<Category[]> = null;
-  selectedCategory: string;
+  private categories: Observable<Category[]> = null;
+  private selectedCategory: string;
 
-  imageAdded: boolean;
+  private imageAdded: boolean;
 
   public uploader: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
@@ -65,17 +65,12 @@ export class AddItemComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      this.picture = response;
+      this.photo = response;
       this.addItem();
     };
   }
 
   addItem(): void {
-    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
-    if (!this.validate()) {
-      return;
-    }
-
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -90,7 +85,7 @@ export class AddItemComponent implements OnInit {
         startPrice: this.startPrice,
         reservePrice: this.reservePrice,
         buyNowPrice: this.buyNowPrice,
-        picture: this.picture,
+        photo: this.photo,
         sellerID: this.user.userID
       },
       url: any = 'https://php-group30.azurewebsites.net/insert_item.php';
@@ -174,8 +169,7 @@ export class AddItemComponent implements OnInit {
       this.endTime == null ||
       this.startPrice == null ||
       this.reservePrice == null ||
-      this.buyNowPrice == null ||
-      this.picture == null
+      this.buyNowPrice == null
     ) {
       // If there are any empty fields, notify the user.
       this.openDialog('Please fill in all the fields!', '', false);
