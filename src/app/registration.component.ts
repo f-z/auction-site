@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
-import { FileUploadModule } from 'primeng/fileupload';
-import { Message } from 'primeng/components/common/message';
 // const URL = 'http://localhost:3000/';
 // const URL = 'https://express-group30.azurewebsites.net/';
 // const URL = 'https://php-group30.azurewebsites.net/upload_image.php';
@@ -37,7 +35,6 @@ export class RegistrationComponent {
   private localURI: string;
   private remoteURI: string;
   files: FileList;
-  msgs: Message[];
   uploadedFiles: any[] = [];
 
   public uploader: FileUploader = new FileUploader({
