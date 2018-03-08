@@ -1,0 +1,41 @@
+<router-outlet></router-outlet>
+
+<!-- card logout -->
+<div class="card login">
+  <img class="profilePhoto" src="{{this.user.photo}}">
+  <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
+  <h1 class="headline">UCL Bay</h1>
+  <button class="button" routerLink="/register" *ngIf="user==null">
+    <span>Register</span>
+  </button>
+  <button class="button" routerLink="/login" *ngIf="user==null">
+    <span>Login</span>
+  </button>
+  <button class="button" (click)="logout()" *ngIf="user!=null">
+    <span>Logout</span>
+  </button>
+  <button class="button" routerLink="/search" *ngIf="user!=null">
+    <span>Main Page</span>
+  </button>
+</div>
+
+<br>
+
+<!--itemdetails-->
+<section class="card item-details" *ngIf="user!=null">
+  <div class="space-bot text-center">
+    <h2>{{ profileUsername }}</h2>
+  </div>
+  <br>
+
+  <br>
+
+  <!-- item list -->
+  <ul class="itemlist cf">
+    <li class="itemlist-item cf" *ngFor="let item of userItems">
+      <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+      </app-item>
+
+    </li>
+  </ul>
+</section>

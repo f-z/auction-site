@@ -88,6 +88,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   getSellerRating(sellerID: number): void{
+    console.log('sellerID = '+sellerID)
      const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -254,7 +255,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           this.highestBid = data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
-          console.log(this.highestBidderID);
           this.getUsernames(data.bid.buyerID, this.item.sellerID);
         }
       },
