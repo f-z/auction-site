@@ -10,7 +10,7 @@
 
     try {
         $data = array();
-        $stmnt = $pdo->prepare('SELECT role FROM user WHERE userID = :userID'); 
+        $stmnt = $pdo->prepare('SELECT role FROM user WHERE userID = :userID'); //TODO NEED TO GET PHOTO TOO
         $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
         $data = $stmnt->fetch(PDO::FETCH_OBJ);
         echo json_encode($data);

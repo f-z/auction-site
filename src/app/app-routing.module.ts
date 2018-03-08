@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'items/:itemID', component: ItemDetailsComponent },
   { path: 'my-items', component: MyItemsComponent },
   { path: 'feedback', component: FeedbackComponent },
-  { path: 'profile/:profileUsername', component: ProfileComponent },
+ // { path: 'profile/:profileUsername', component: ProfileComponent },
 
 ];
 
