@@ -3,16 +3,17 @@
   background: white;
 }
 
-.img-container{
-  width: 100%;
+ img.item-photo {
+  min-width: 100%;
+  max-width: 100%;
+  max-height: 250px;
+  margin-bottom: 20px;
+  object-fit: contain;
 }
 
-.img-container img{
-  width:100%;
-}
-
-.item-description{
+.item-description {
   clear:left;
+  white-space: pre-wrap;
 }
 
 .item-name {
