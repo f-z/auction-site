@@ -122,6 +122,7 @@ export class AddItemComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        this.user.role = 'seller';
         // If the request was successful, notify the user.
         this.openDialog(
           'Congratulations, the item was added and the auction was created!',
@@ -191,7 +192,7 @@ export class AddItemComponent implements OnInit {
       return false;
     } else if (!this.imageAdded) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
-      this.openDialog('Please add an item picture!', '', false);
+      this.openDialog('Please add an item photo!', '', false);
       return false;
     }
 
