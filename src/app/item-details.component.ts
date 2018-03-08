@@ -17,7 +17,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.html',
-  styleUrls: ['./item-details.css']
+  styleUrls: ['./item-details.css'], 
+
 })
 export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
@@ -29,6 +30,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private highestBidder: string;
   private emailHighest: string;
   private seller: string;
+  private sellerRating: number;
+  private sellerFeedbackCount: number;
+
   private itemID: number;
   private sub: any;
   private user: User;
@@ -58,10 +62,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.itemID = +params['itemID']; // (+) converts string 'id' to a number
 
       this.user = this.getUser();
-
       this.item = this.getItem();
+      this.getSellerRating(this.getItem().sellerID);
     });
-
     this.getAuctionInformation();
   }
 
@@ -82,6 +85,33 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.user = null;
     this.setUser(null);
     this.router.navigate(['/search']);
+  }
+
+  getSellerRating(sellerID: number): void{
+     const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { 'sellerID': sellerID },
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_rating.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.sellerRating = data.average*20;
+          this.sellerFeedbackCount = data.count;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
+    return null;   
   }
 
   getAuctionInformation(): void {
@@ -105,6 +135,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.setIsExpired(data[0].endTime);
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
+      
       },
       (error: any) => {
         // If there is an error, return to main search page.

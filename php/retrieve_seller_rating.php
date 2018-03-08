@@ -10,16 +10,15 @@
   try {
 
       //Get average rating
-      $averageRatingQuery = 'SELECT AVG(f.buyerRating) as average, u.username, COUNT(f.buyerRating) as count 
+      $averageRatingQuery = 'SELECT AVG(f.buyerRating) AS average, u.username, COUNT(f.buyerRating) AS count 
                             FROM feedback AS f
-                            INNER JOIN `user` AS u ON u.userID = f.sellerID
-                            WHERE sellerID = :sellerID';
+                            JOIN `user` AS u ON f.sellerID = u.userID
+                            WHERE f.sellerID = :sellerID';
 
       $getSellersAverage = $pdo->prepare($averageRatingQuery);
       $getSellersAverage->bindParam(':sellerID', $sellerID, PDO::PARAM_INT);
       $getSellersAverage->execute();
-      $sellersAverage = $getSellersAverage->fetch(PDO::FETCH_OBJ);
-      $data = $sellersAverage;
+      $data = $getSellersAverage->fetch(PDO::FETCH_OBJ);
 
       echo json_encode($data);
   }

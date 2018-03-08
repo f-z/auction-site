@@ -8,7 +8,7 @@ import { MyItemsComponent } from './my-items.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { AddItemComponent } from './add-item.component';
 import { FeedbackComponent } from './feedback.component';
-import { ProfileComponent } from './user_profile.component';
+//import { ProfileComponent } from './user-profile.component';
 
 
 export const routes: Routes = [

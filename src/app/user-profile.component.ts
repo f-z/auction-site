@@ -7,13 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './user_profile.html',
-  styleUrls: ['./user_profile.css']
+  templateUrl: './user-profile.html',
+  styleUrls: ['./user-profile.css']
 })
 export class ProfileComponent implements OnInit {
   private user: User;//the logged in user
 
   @Input() profileUser: User; // the user whose profile we're viewing
+  profileUsername:string;
   item: Item;
   userItems: Observable<Item[]> = null;
   profileUserRole: string;
@@ -29,6 +30,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.getUser();
+
+    this.profileUsername = this.profileUser.username;
     
     //getUserRole also triggers getUsersFeedback and getItems 
     this.getUserInfo();
