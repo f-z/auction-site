@@ -56,14 +56,13 @@
     <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
     <br>
     <br>
-    <h3 class="item-right" id="auction-winner" *ngIf="isExpired && item.sellerID === user.userID &&  highestBidderID != null">
+    <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">
       Winner: {{ highestBidder }}
     </h3>
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item" 
-    *ngIf="isExpired && highestBidderID != null && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>
-    
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller" [sellerID]="item.sellerID" [item]="item" 
-    *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item"
+      *ngIf="isExpired && highestBidderID != null && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>
+
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
     <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">

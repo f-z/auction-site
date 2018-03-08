@@ -407,7 +407,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         buyerID: buyerID,
         sellerID: sellerID
       },
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_usernames.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
