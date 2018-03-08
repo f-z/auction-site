@@ -24,11 +24,12 @@
 <!--itemdetails-->
 <section class="card item-details">
   <div class="space-bot text-center">
-    <h2>My Items</h2>
+    <h2 *ngIf="user!=null && user.role=='seller'">My Items</h2>
+    <h2 *ngIf="user!=null && user.role=='buyer'">My Bids</h2>
   </div>
   <br>
 
-  <button class="add-item-button" routerLink="/add-item" *ngIf="user!=null">
+  <button class="add-item-button" routerLink="/add-item" *ngIf="user!=null && user.role=='seller'">
     <span>Add New Item</span>
   </button>
   <br>
