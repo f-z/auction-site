@@ -16,7 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
   item: Item;
-  items: Observable<[Item]>;
+  items: Observable<Item[]> = null;
   public selectedCategory: string;
   private user: User;
   private term: string;
@@ -95,12 +95,6 @@ export class AppComponent implements OnInit {
 
   setItem(item: Item): void {
     this.itemService.setItem(item);
-
-    if (this.user !== null) {
-    this.router.navigate(['/items', item.itemID]);
-    } else {
-      this.router.navigate(['/login']);
-    }
   }
 
   selectCategory(category): void {

@@ -1,8 +1,22 @@
-.item-details{
+.item-details {
   margin-bottom: 30px;
   background: white;
 }
 
+<<<<<<< HEAD
+.img-container {
+  width: 100%;
+}
+
+.img-container img {
+  width: 100%;
+}
+
+.item-description {
+  position: relative;
+  clear: left;
+  top: 5%;
+=======
  img.item-photo {
   min-width: 100%;
   max-width: 100%;
@@ -39,6 +53,7 @@
   display: block;
   text-align: center;
   width:150px;
+>>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
 }
 
 .item-name {
@@ -46,37 +61,36 @@
   margin-top: 20px;
 }
 
-.info-columns{
+.info-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-.left-items{
+.left-items {
   grid-column: 1/2;
 }
 
-.left-items > * {
+.left-items>* {
   display: block;
 }
 
-.right-items{
+.right-items {
   grid-column: 2/3;
 }
 
-.userinfo-box{
+.userinfo-box {
   margin-bottom: 20px;
 }
 
-.vertical-align > * {
-    vertical-align: middle;  
+.vertical-align>* {
+  vertical-align: middle;
 }
 
-.sellerInfo{
+.sellerInfo {
   display: inline-block;
 }
 
-.ratingcount{
-  
+.ratingcount {
   display: inline-block;
   font-size: 14px;
 }
@@ -86,17 +100,18 @@ h3 {
   font-weight: 500;
 }
 
-.sellerName{
-    display: inline-block;
-    font-weight: 500;
-    color: blue;
+.sellerName {
+  display: inline-block;
+  font-weight: 500;
+  color: blue;
 }
 
 /*Stars*/
-.star{ 
-  width:90px; 
-	position: relative;
-	color: #bdbdbd;
+
+.star {
+  width: 90px;
+  position: relative;
+  color: #bdbdbd;
   display: inline-block;
 }
 
@@ -105,19 +120,17 @@ h3 {
   white-space: nowrap;
 }
 
-.rating span{
-	font-size: 18px;
-
+.rating span {
+  font-size: 18px;
   white-space: nowrap;
   overflow: hidden;
   color: gold;
 }
 
-.rating span:before { 
-  content:"\2606 \2606 \2606 \2606 \2606";
+.rating span:before {
+  content: "\2606 \2606 \2606 \2606 \2606";
   position: absolute;
   color: #bdbdbd;
   z-index: -1;
 }
-
 
