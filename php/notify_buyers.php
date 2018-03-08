@@ -87,23 +87,24 @@ $mail = new PHPMailer(true);
     $mail->Body = 'Hi '.$firstname.'
                     Your bid has been accepted! You are currently the highest bidder on '.$time.'!';  
         
-    $mail->send();
+    // $mail->send();
 
-    if (strcmp($emailCur, $emailPrev) !== 0) {
+    if (strcmp($emailCur, $emailPrev) != 0) {
+    $mail2 = new PHPMailer(true);
 
-      $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
-      $mail->addAddress($emailPrev, $firstnamePrev);
+      $mail2->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+      $mail2->addAddress($emailPrev, $firstnamePrev);
 
-      $mail->Subject = 'UCL Databases';
-      $mail->Debugoutput = 'html';
-      $mail->Body = 'Hi '.$firstname.'
+      $mail2->Subject = 'UCL Databases';
+      $mail2->Debugoutput = 'html';
+      $mail2->Body = 'Hi '.$firstnamePrev.'
                       You were outbid! Do not hesitate to jump back in! We still have what you are looking for!';  
           
-      $mail->send();
+    //   $mail2->send();
     }
     
-     echo json_encode('Message has been sent');
-    // echo json_encode($mail);
+    //  echo json_encode('Message has been sent');
+    echo json_encode($mail2);
     } catch (Exception $e) {
        echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
        die();
