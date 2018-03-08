@@ -1,6 +1,40 @@
-.item-details .item-name {
-  position: relative;
-  float: 50%;
+.item-details{
+  margin-bottom: 30px;
+  background: white;
+}
+
+.img-container{
+  width: 100%;
+}
+
+.img-container img{
+  width:100%;
+}
+
+.item-description{
+  clear:left;
+}
+
+.item-name {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.info-columns{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.left-items{
+  grid-column: 1/2;
+}
+
+.left-items > * {
+  display: block;
+}
+
+.right-items{
+  grid-column: 2/3;
 }
 
 .userinfo-box{
