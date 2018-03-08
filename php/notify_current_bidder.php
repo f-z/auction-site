@@ -63,7 +63,7 @@ $currentBuyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
     $mail->Body = 'Hi '.$firstname.'
                     Your bid has been accepted! You are currently the highest bidder on '.$time.'!';  
         
-    // $mail->send();
+    $mail->send();
     
     //  echo json_encode('Message has been sent');
     echo json_encode($emailCur);
