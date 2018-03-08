@@ -3,7 +3,6 @@
   background: white;
 }
 
-<<<<<<< HEAD
 .img-container {
   width: 100%;
 }
@@ -16,7 +15,7 @@
   position: relative;
   clear: left;
   top: 5%;
-=======
+}
  img.item-photo {
   min-width: 100%;
   max-width: 100%;
@@ -53,7 +52,7 @@
   display: block;
   text-align: center;
   width:150px;
->>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
+
 }
 
 .item-name {

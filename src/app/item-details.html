@@ -2,8 +2,8 @@
 
 <!-- card logout -->
 <div class="card login">
-  <img class="profilePhoto" src="{{ this.user.photo }}">
-  <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
+  <img class="profilePhoto" src="{{this.user.photo}}">
+  <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
   <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">
     <span>Register</span>
@@ -26,62 +26,32 @@
 
 <!-- item details -->
 <section class="card item-details">
-  <h1 class="item-name">{{ item?.name }}</h1>
+  <h1 class="item-name">{{item?.name}}</h1>
   <br>
   <!-- info -->
   <div class="info">
-    <div class="info-columns">
+  <div class="info-columns">
 
-<<<<<<< HEAD
-      <div class="left-items">
-        <div class="img-container">
-          <img class="item-photo" src="{{ item?.photo }}" alt="{{ item?.itemID }}">
-        </div>
-        <p class="item-description">{{ item?.description }}</p>
-        <br>
-        <br>
-        <div class="item-left userinfo-box">
-=======
     <div class="left-items">
       <img class="item-photo" src="{{item?.photo}}" alt="{{item?.itemID}}">
       <p class="item-description">{{ item?.description }}</p>
       <br>
       <br>
        <div class="item-left userinfo-box">
->>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
           <div class="vertical-align">
-            <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
-            <h3 id="sellerName" class="sellerName"> {{ seller }}</h3>
-            <!--[routerLink]="['/profile', seller]"-->
-            <div class="star" title="{{ seller }}'s average rating">
+          <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
+            <h3 id="sellerName" class="sellerName"> {{ seller }}</h3><!--[routerLink]="['/profile', seller]"-->
+            <div class="star" title="{{seller}}'s average rating">
               <div class="rating" [style.width.%]="sellerRating">
-                <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
               </div>
             </div>
-            <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{ seller }}">&nbsp;({{ sellerFeedbackCount }})</h6>
+            <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{seller}}">&nbsp;({{sellerFeedbackCount}})</h6>
           </div>
-        </div>
-
       </div>
 
-      <div class="right-items">
-        <h3 class="item-right">Quantity: {{ item?.quantity }}</h3>
-        <br>
-        <br>
+  </div>  
 
-<<<<<<< HEAD
-        <h3 class="item-right">Condition: {{ item?.condition }}</h3>
-        <br>
-        <br>
-
-        <h3 class="item-right" *ngIf="viewings != null">Total bids: {{ numberBids }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
-
-        <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
-        <br *ngIf="highestBid != null">
-        <br *ngIf="highestBid != null">
-=======
   <div class="right-items">
       <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{item?.quantity}}</h3>
       <br *ngIf=" item.quantity > 1 ">
@@ -120,31 +90,8 @@
         Winner: {{ highestBidder }}
       </h3>
     </div>
->>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
 
-        <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
-        <br *ngIf="auction != null && highestBid == null">
-        <br *ngIf="auction != null && highestBid == null">
-
-        <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
-
-        <h3 class="item-right" *ngIf="viewings != null">Buyers watching: {{ watchers }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
-
-        <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
-
-        <br *ngIf="isExpired &&  highestBidderID != null">
-        <br *ngIf="isExpired &&  highestBidderID != null">
-
-        <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">
-          Winner: {{ highestBidder }}
-        </h3>
-      </div>
-
-    </div>
+  </div>
 
 
     <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item"
