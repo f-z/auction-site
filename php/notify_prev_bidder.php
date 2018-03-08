@@ -14,7 +14,7 @@
     $newBuyerID = filter_var($obj->newBuyer, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        if (!$highestBidderID == $newBuyerID) {
+        if (!($highestBidderID == $newBuyerID)) {
             // Retrieving userID of previous highest bidder
             $sql = 'SELECT firstName, email FROM user
             WHERE userID = :buyerID';
