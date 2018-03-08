@@ -12,6 +12,7 @@ import { LoginComponent } from './login.component';
 import { MyItemsComponent } from './my-items.component';
 import { AddItemComponent } from './add-item.component';
 import { FeedbackComponent } from './feedback.component';
+import { ProfileComponent } from './user_profile.component';
 import { DialogComponent } from './dialog.component';
 
 import { SearchPipe } from './search.pipe';
@@ -46,6 +47,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ItemComponent,
     ItemDetailsComponent,
     FeedbackComponent,
+    ProfileComponent,
     SearchPipe,
     DialogComponent,
     FileSelectDirective
