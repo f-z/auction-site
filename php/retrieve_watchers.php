@@ -12,7 +12,7 @@
   try {
     // Selecting the count of both those buyers who have bid on the item
     // and those who are just watching the auction (bids of 0).
-    $sql = 'SELECT COUNT(bidID) AS watchers FROM bid WHERE auctionID = :auctionID';
+    $sql = 'SELECT COUNT(buyerID) AS watchers FROM bid WHERE auctionID = :auctionID';
     $retrieveCount = $pdo->prepare($sql);
     $retrieveCount->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
     $retrieveCount->execute();
