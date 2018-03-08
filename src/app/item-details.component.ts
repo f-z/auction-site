@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.html',
-  styleUrls: ['./item-details.css'], 
+  styleUrls: ['./item-details.css'],
 
 })
 export class ItemDetailsComponent implements OnInit, OnDestroy {
@@ -60,12 +60,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.itemID = +params['itemID']; // (+) converts string 'id' to a number
-
-      this.user = this.getUser();
       this.item = this.getItem();
-      this.getSellerRating(this.getItem().sellerID);
+      this.user = this.getUser();
     });
+
     this.getAuctionInformation();
+
+    this.getSellerRating(this.itemService.getItem().sellerID);
+    console.log(this.itemService.getItem().sellerID);
   }
 
   ngOnDestroy() {
@@ -87,8 +89,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/search']);
   }
 
-  getSellerRating(sellerID: number): void{
-    console.log('sellerID = '+sellerID)
+  getSellerRating(sellerID: number): void {
+    console.log('sellerID = ' + sellerID);
      const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -99,7 +101,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.sellerRating = data.average*20;
+          this.sellerRating = data.average * 20;
           this.sellerFeedbackCount = data.count;
         }
       },
@@ -112,7 +114,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         );
       }
     );
-    return null;   
+    return null;
   }
 
   getAuctionInformation(): void {
@@ -136,7 +138,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.setIsExpired(data[0].endTime);
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
-      
       },
       (error: any) => {
         // If there is an error, return to main search page.

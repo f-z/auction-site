@@ -13,7 +13,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MyItemsComponent implements OnInit {
   item: Item;
   userItems: Observable<Item[]> = null;
-  //buyerWatchingItems: Observable<Item[]> = null;
+  // buyerWatchingItems: Observable<Item[]> = null;
 
   private user: User;
 
