@@ -19,28 +19,29 @@ $mail = new PHPMailer(true);
 
    try {
 
-    //  // Retrieving userID of previous highest bidder
-    //  $sql = 'SELECT buyerID FROM bid
-    //  WHERE `auctionID`= :auctionID
-    //  AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
+     // Retrieving userID of previous highest bidder
+     $sql = 'SELECT buyerID FROM bid
+     WHERE `auctionID`= :auctionID
+     AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
-    //  $retrieveBidder = $pdo->prepare($sql);
-    //  $retrieveBidder->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
-    //  $retrieveBidder->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
-    //  $retrieveBidder->execute();
+     $retrieveBidder = $pdo->prepare($sql);
+     $retrieveBidder->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+     $retrieveBidder->bindParam(':auctionID2', $auctionID, PDO::PARAM_INT);
+     $retrieveBidder->execute();
 
-    //  $prevBidder = $retrieveBidder->fetch(PDO::FETCH_ASSOC);
+     $prevBidder = $retrieveBidder->fetch(PDO::FETCH_ASSOC);
 
-    //  // Retrieving email of previous highest bidder
-    //  $sql1 = 'SELECT email FROM user WHERE `userID`= :prevBidder';
+     // Retrieving email of previous highest bidder
+     $sql1 = 'SELECT firstName, email FROM user WHERE `userID`= :prevBidder';
     
-    //  $retrieveEmail = $pdo->prepare($sql1);
-    //  $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
-    //  $retrieveEmail->execute();
+     $retrieveEmail = $pdo->prepare($sql1);
+     $retrieveEmail->bindParam(':prevBidder', $prevBidder['buyerID'], PDO::PARAM_INT);
+     $retrieveEmail->execute();
     
-    //  $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
+     $stmt1 = $retrieveEmail->fetch(PDO::FETCH_ASSOC);
     
-    //  $emailPrev = $stmt1['email'];
+     $firstnamePrev = $stmt1['firstName'];
+     $emailPrev = $stmt1['email'];
 
      // Retrieving contact details of new highest bidder
      $sql2 = 'SELECT firstName, email FROM user WHERE `userID`= :buyerID';
@@ -62,31 +63,44 @@ $mail = new PHPMailer(true);
     $time = $currentTime->format('Y-m-d H:i:s');
      
      //Server settings
-$mail->isSMTP();
-$mail->SMTPDebug = 2;
-$mail->Host = 'smtp.gmail.com';
-$mail->Port = 587;
-$mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
-$mail->SMTPAuth = true;
-$mail->Username = 'uclbay.gc06@gmail.com';
-$mail->Password = 'uclbay_gc06';
-// walkaround to bypass server errors
-$mail->SMTPOptions = array(
-'ssl' => array(
-    'verify_peer' => false,
-    'verify_peer_name' => false,
-    'allow_self_signed' => true
-)
-);
-$mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
-$mail->addAddress($emailCur, $firstname);
+    $mail->isSMTP();
+    $mail->SMTPDebug = 2;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
+    $mail->SMTPAuth = true;
+    $mail->Username = 'uclbay.gc06@gmail.com';
+    $mail->Password = 'uclbay_gc06';
+    // walkaround to bypass server errors
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+    );
+    $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+    $mail->addAddress($emailCur, $firstname);
 
-$mail->Subject = 'UCL Databases';
-$mail->Debugoutput = 'html';
-$mail->Body = 'Hi '.$firstname.'
-                Your bid has been accepted! You are the highest bid now on '.$time.'!';  
-    
-$mail->send();
+    $mail->Subject = 'UCL Databases';
+    $mail->Debugoutput = 'html';
+    $mail->Body = 'Hi '.$firstname.'
+                    Your bid has been accepted! You are currently the highest bidder on '.$time.'!';  
+        
+    $mail->send();
+
+    if (strcmp($emailCur, $emailPrev) !== 0) {
+
+      $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+      $mail->addAddress($emailPrev, $firstnamePrev);
+
+      $mail->Subject = 'UCL Databases';
+      $mail->Debugoutput = 'html';
+      $mail->Body = 'Hi '.$firstname.'
+                      You were outbid! Do not hesitate to jump back in! We still have what you are looking for!';  
+          
+      $mail->send();
+    }
     
      echo json_encode('Message has been sent');
     // echo json_encode($mail);
