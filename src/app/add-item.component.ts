@@ -122,7 +122,6 @@ export class AddItemComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        this.user.role = 'seller';
         // If the request was successful, notify the user.
         this.openDialog(
           'Congratulations, the item was added and the auction was created!',
@@ -222,11 +221,7 @@ export class AddItemComponent implements OnInit {
   }
 
   goBack(): void {
-    if (this.user.role === 'seller') {
       this.router.navigate(['/my-items']);
-    } else {
-      this.router.navigate(['/search']);
-    }
   }
 
   logout(): void {

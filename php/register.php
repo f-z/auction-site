@@ -5,8 +5,10 @@
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
 
+    // By default, buyer / seller, not admin.
+    $userRole = 'user';
+
     // Sanitising URL supplied values.
-    $userRole = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $email	  = filter_var($obj->email, FILTER_SANITIZE_EMAIL);
 

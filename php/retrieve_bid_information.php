@@ -22,7 +22,7 @@
 
     $data['count'] = $retrieveCount->fetch(PDO::FETCH_OBJ);
 
-    $sql2 = 'SELECT price AS highest, buyerID FROM bid
+    $sql2 = 'SELECT price AS highestBid, buyerID FROM bid
           WHERE `auctionID`= :auctionID
           AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 

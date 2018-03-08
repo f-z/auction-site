@@ -21,7 +21,7 @@
     $result = $findFeedback->fetch(PDO::FETCH_OBJ);
     if (empty($result)){
 
-        $sql = 'INSERT INTO `feedback` (sellerRating, sellerComment, buyerID, sellerID, auctionID) VALUES (:sellerRating, :sellerComment,  :buyerID, :sellerID, :auctionID)';
+        $sql = 'INSERT INTO `feedback` (sellerRating, sellerComment, buyerID, sellerID, auctionID) VALUES (:sellerRating, :sellerComment, :buyerID, :sellerID, :auctionID)';
 
         $insertFeedback = $pdo->prepare($sql);
 

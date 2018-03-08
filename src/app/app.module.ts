@@ -11,8 +11,8 @@ import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
 import { MyItemsComponent } from './my-items.component';
 import { AddItemComponent } from './add-item.component';
-import { FeedbackComponent } from './feedback.component'
-import { DialogComponent} from './dialog.component';
+import { FeedbackComponent } from './feedback.component';
+import { DialogComponent } from './dialog.component';
 
 import { SearchPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
@@ -20,21 +20,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './shared/services/user.service';
 import { ItemService } from './shared/services/item.service';
 import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
 import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
-  imports: [BrowserModule,
-            FormsModule,
-            AppRoutingModule,
-            HttpClientModule,
-            MatDialogModule,
-            BrowserAnimationsModule,
-            MatButtonToggleModule,
-            MatIconModule
-          ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatButtonToggleModule,
+    MatIconModule
+  ],
   declarations: [
     HomeComponent,
     AppComponent,
@@ -50,10 +51,12 @@ import { FileSelectDirective } from 'ng2-file-upload';
     FileSelectDirective
   ],
   bootstrap: [HomeComponent],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }, UserService, ItemService ],
-  schemas: [ NO_ERRORS_SCHEMA ],
-  entryComponents: [
-    DialogComponent
-]
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    UserService,
+    ItemService
+  ],
+  schemas: [NO_ERRORS_SCHEMA],
+  entryComponents: [DialogComponent]
 })
 export class AppModule {}

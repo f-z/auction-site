@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from './shared/services/item.service';
-import { MatDialog } from '@angular/material';
-import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-item',
@@ -12,7 +10,7 @@ export class ItemComponent implements OnInit {
   @Input() item: Item;
   timeleft: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.timeRemaining(this.item.endTime);
@@ -51,22 +49,5 @@ export class ItemComponent implements OnInit {
     if (distance < 0) {
       this.timeleft = 'EXPIRED';
     }
-  }
-
-  openDialog(message: string, username: string, succeeded: boolean): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        message: message,
-        username: username
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // if (!succeeded) {
-      //   this.router.navigate(['/search']);
-      // } else {
-      // window.location.reload();
-      // }
-    });
   }
 }

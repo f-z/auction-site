@@ -29,7 +29,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private highestBidder: string;
   private emailHighest: string;
   private seller: string;
-  itemID: number;
+  private itemID: number;
   private sub: any;
   private user: User;
   private newBid: number;
@@ -220,7 +220,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data.bid.highest;
+          this.highestBid = data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
           this.getUsernames(data.bid.buyerID, this.item.sellerID);

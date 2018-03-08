@@ -35,9 +35,9 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {}
 
   insertFeedback(): void {
-    if (this.user.role === 'seller') {
+    if (this.user.userID === this.item.sellerID) {
       this.insertSellerFeedback();
-    } else if (this.user.role === 'buyer') {
+    } else {
       this.insertBuyerFeedback();
     }
   }

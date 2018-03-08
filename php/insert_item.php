@@ -7,7 +7,6 @@
 
     // Sanitising URL supplied values.
     $name = filter_var($obj->name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    // $picture = addslashes(file_get_contents($_FILES['picture']['tmp_name']));
     $photo = filter_var($obj->photo, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $description = filter_var($obj->description, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $condition = filter_var($obj->condition, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
@@ -32,11 +31,6 @@
         $insertItem->execute();
 
         echo json_encode($pdo->lastInsertId());
-
-        $buyerToSellerQuery = "UPDATE `user` SET role='seller' WHERE userID = ?";
-        $buyerToSeller = $pdo->prepare($buyerToSellerQuery);
-        $buyerToSeller->bindParam(1, $sellerID, PDO::PARAM_INT);
-        $buyerToSeller->execute();
       }
     catch (Exception $e) {
         $error = $e->getMessage();

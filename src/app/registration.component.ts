@@ -44,8 +44,6 @@ export class RegistrationComponent {
     private router: Router
   ) {
     this.loginPage = 'false';
-    this.userRole = 'buyer';
-
     this.imageAdded = false;
   }
 
@@ -74,7 +72,6 @@ export class RegistrationComponent {
           'Content-Type': 'application/json'
         }),
         options: any = {
-          userRole: this.userRole,
           firstName: this.firstName,
           lastName: this.lastName,
           street: this.street,
