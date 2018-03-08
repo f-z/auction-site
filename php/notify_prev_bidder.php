@@ -62,7 +62,7 @@ $mail = new PHPMailer(true);
 
     $mail->Subject = 'UCL Databases';
     $mail->Debugoutput = 'html';
-    $mail->Body = 'Hi '.$namePrev.'
+    $mail->Body = 'Hi '.$namePrev.', 
                      You were outbid! Do not hesitate to jump back in! We still have what you are looking for!';  
          
     $mail->send();
