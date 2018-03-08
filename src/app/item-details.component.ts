@@ -300,11 +300,12 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         auctionID: auctionID,
         buyerID: buyerID
       },
-      url: any = 'https://php-group30.azurewebsites.net/notify_current_bidder.php';
+      url: any =
+        'https://php-group30.azurewebsites.net/notify_current_bidder.php';
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
-        console.log("Previous highest bidder: " + this.highestBidderID);
+        console.log('Previous highest bidder: ' + this.highestBidderID);
         this.notifyPrevBidder(auctionID, this.highestBidderID);
       },
       (error: any) => {}
@@ -314,7 +315,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   notifyPrevBidder(auctionID, highestBidderID): void {
-    console.log("NotifyPrevBidder: " + highestBidderID);
+    console.log('NotifyPrevBidder: ' + highestBidderID);
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -326,7 +327,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
-        console.log("Email of previous bidder: " + data);
+        console.log('Email of previous bidder: ' + data);
       },
       (error: any) => {}
     );
@@ -402,8 +403,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { 'buyerID': buyerID,
-                     'sellerID': sellerID },
+      options: any = {
+        buyerID: buyerID,
+        sellerID: sellerID
+      },
       url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
