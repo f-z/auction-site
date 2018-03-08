@@ -34,8 +34,6 @@
 
     <div class="left-items">
       <img class="item-photo" src="{{item?.photo}}" alt="{{item?.itemID}}">
-      <br>
-      <br>
       <p class="item-description">{{ item?.description }}</p>
       <br>
       <br>
@@ -55,25 +53,25 @@
   </div>  
 
   <div class="right-items">
-      <h3 class="item-right">Quantity: {{item?.quantity}}</h3>
-      <br>
-      <br>
+      <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{item?.quantity}}</h3>
+      <br *ngIf=" item.quantity > 1 ">
+      <br *ngIf=" item.quantity > 1 ">
 
-      <h3 class="item-right">Condition: {{item?.condition}}</h3>
-      <br>
-      <br>
+      <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
+      <br *ngIf="highestBid != null">
+      <br *ngIf="highestBid != null">
+
+      <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
+      <br *ngIf="auction != null && highestBid == null">
+      <br *ngIf="auction != null && highestBid == null">
 
       <h3 class="item-right" *ngIf="viewings != null">Total bids: {{ numberBids }}</h3>
       <br *ngIf="viewings != null">
       <br *ngIf="viewings != null">
-      
-      <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
-      <br *ngIf="highestBid != null">
-      <br *ngIf="highestBid != null">
-      
-      <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
-      <br *ngIf="auction != null && highestBid == null">
-      <br *ngIf="auction != null && highestBid == null">
+
+      <h3 class="item-right">Condition: {{item?.condition}}</h3>
+      <br>
+      <br>
       
       <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
       <br *ngIf="viewings != null">
@@ -102,12 +100,15 @@
     <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
+
     <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">
-      <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
-      <input type="submit" value="Bid" (click)="bid()">
+      <div class="bid-box">
+        <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
+        <input type="submit" value="Bid" id="submit-bid" (click)="bid()">
+      </div>
       <br>
       <br>
-      <input type="submit" value="Watch Auction" (click)="watchAuction()">
+      <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn">
     </form>
   </div>
 

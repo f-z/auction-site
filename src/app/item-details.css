@@ -16,6 +16,31 @@
   white-space: pre-wrap;
 }
 
+#newBid {
+  width:200px;
+  display: inline-block;
+}
+ #submit-bid{
+  width:100px;
+  text-align: center;
+  display: inline-block;
+ }
+
+.bid-box {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+}
+
+#watch-btn{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width:150px;
+}
+
 .item-name {
   text-align: center;
   margin-top: 20px;
