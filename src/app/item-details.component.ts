@@ -27,6 +27,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private highestBid: number;
   private highestBidderID: number;
   private highestBidder: string;
+  private emailHighest: string;
   private seller: string;
   itemID: number;
   private sub: any;
@@ -253,7 +254,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
-          this.notifyPreviousBidders(this.auction.auctionID, this.user.userID);
+          this.notifyCurrentBidder(this.auction.auctionID, this.user.userID);
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -285,7 +286,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return true; // if bid is valid
   }
 
-  notifyPreviousBidders(auctionID, buyerID): void {
+  notifyCurrentBidder(auctionID, buyerID): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -293,16 +294,38 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         auctionID: auctionID,
         buyerID: buyerID
       },
-      url: any = 'https://php-group30.azurewebsites.net/notify_buyers.php';
+      url: any = 'https://php-group30.azurewebsites.net/notify_current_bidder.php';
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
         console.log(data);
+        this.emailHighest = data;
+        this.notifyPrevBidder(auctionID, this.emailHighest);
         this.openDialog(
           'Congratulations, you have successfully placed your bid!',
           '',
           true
         );
+      },
+      (error: any) => {}
+    );
+
+    return null;
+  }
+
+  notifyPrevBidder(auctionID, emailHighest): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options1: any = {
+        auctionID: auctionID,
+        emailHighest: this.emailHighest
+      },
+      url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
+
+    this.http.post(url, JSON.stringify(options1), headers).subscribe(
+      (data: any) => {
+        console.log(data);
       },
       (error: any) => {}
     );
