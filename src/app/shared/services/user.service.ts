@@ -52,3 +52,18 @@ export interface User {
   lastName: string;
   email: string;
 }
+
+export interface Feedback{
+  auctionID:number; 
+  sellerID: number;
+  sellerComment: string;
+  sellerRating: number;
+  buyerID: number;
+  buyerComment: string;
+  buyerRating: number;
+  name: string;//item name
+  username: string; //comment maker username
+  endTime: string;
+
+
+}

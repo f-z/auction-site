@@ -50,8 +50,6 @@
 
       echo json_encode(array('message' => 'Congratulations, your feedback has been recorded!'));
     }
-
-
   } catch (Exception $e) {
     $error = $e->getMessage();
   }

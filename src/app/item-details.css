@@ -2,3 +2,62 @@
   position: relative;
   float: 50%;
 }
+
+.userinfo-box{
+  margin-bottom: 20px;
+}
+
+.vertical-align > * {
+    vertical-align: bottom;  
+}
+
+.sellerInfo{
+  display: inline-block;
+}
+
+.ratingcount{
+  
+  display: inline-block;
+  font-size: 14px;
+}
+
+h3 {
+  font-size: 1.0em;
+  font-weight: 500;
+}
+
+.sellerName{
+    display: inline-block;
+    font-weight: 500;
+    color: blue;
+}
+
+/*Stars*/
+.star{ 
+  width:90px; 
+	position: relative;
+	color: #bdbdbd;
+  display: inline-block;
+}
+
+.rating {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rating span{
+	font-size: 18px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  color: gold;
+}
+
+.rating span:before { 
+  content:"\2606 \2606 \2606 \2606 \2606";
+  position: absolute;
+  color: #bdbdbd;
+  z-index: -1;
+}
+
+
