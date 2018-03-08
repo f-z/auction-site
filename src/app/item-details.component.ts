@@ -223,6 +223,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           this.highestBid = data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
+          console.log(this.highestBidderID);
           this.getUsernames(data.bid.buyerID, this.item.sellerID);
         }
       },
@@ -255,6 +256,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.notifyCurrentBidder(this.auction.auctionID, this.user.userID);
+          this.openDialog(
+            'Congratulations, you have successfully placed your bid!',
+            '',
+            true
+          );
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -298,14 +304,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
-        console.log(data);
-        this.emailHighest = data;
-        this.notifyPrevBidder(auctionID, this.emailHighest);
-        this.openDialog(
-          'Congratulations, you have successfully placed your bid!',
-          '',
-          true
-        );
+        console.log("Previous highest bidder: " + this.highestBidderID);
+        this.notifyPrevBidder(auctionID, this.highestBidderID);
       },
       (error: any) => {}
     );
@@ -313,19 +313,20 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  notifyPrevBidder(auctionID, emailHighest): void {
+  notifyPrevBidder(auctionID, highestBidderID): void {
+    console.log("NotifyPrevBidder: " + highestBidderID);
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options1: any = {
         auctionID: auctionID,
-        emailHighest: this.emailHighest
+        prevBidderID: this.highestBidderID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {
-        console.log(data);
+        console.log("Email of previous bidder: " + data);
       },
       (error: any) => {}
     );
