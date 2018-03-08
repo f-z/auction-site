@@ -27,45 +27,16 @@ export class MyItemsComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.getUser();
 
-    if (this.user.role === 'seller') {
-      this.getSellerItems();
-    } else if (this.user.role === 'buyer') {
-      this.getBuyerItems();
-    }
+    this.getItems();
   }
 
-  getSellerItems(): void {
+  getItems(): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { sellerID: this.user.userID },
+      options: any = { userID: this.user.userID, userRole: this.user.role },
       url: any =
-        'https://php-group30.azurewebsites.net/retrieve_seller_items.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        this.userItems = data;
-        for (let i = 0; i < data.length; i++) {
-          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
-        }
-      },
-      (error: any) => {
-        // If there is unauthorised / improper access, log out and return to Login page.
-        this.user = null;
-        this.setUser(null);
-        this.router.navigate(['/login']);
-      }
-    );
-  }
-
-  getBuyerItems(): void {
-    const headers: any = new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      options: any = { buyerID: this.user.userID },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_buyer_bids.php';
+        'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
