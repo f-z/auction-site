@@ -9,13 +9,16 @@
     $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $stmnt = $pdo->prepare('SELECT b.bidID, b.time, MAX(b.price) as price,
-        i.itemID, i.name, i.photo, i.description, i.`condition`, i.categoryName, i.sellerID, 
-        a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, a.auctionID
-        FROM bid AS b, item AS i, auction AS a  
-        WHERE  b.buyerID = :buyerID
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+        a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highest 
+        FROM item AS i, auction as a 
+        LEFT JOIN bid AS b 
+            ON a.auctionID = b.auctionID 
+            AND b.price = (SELECT MAX(price) FROM bid 
+                WHERE auctionID = a.auctionID
+        )
+        WHERE buyerID = :buyerID 
         AND i.itemID = a.itemID
-        AND b.auctionID = a.auctionID
         GROUP BY a.auctionID');
 
         // Binding the provided username to our prepared statement.
