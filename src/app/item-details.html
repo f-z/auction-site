@@ -32,6 +32,7 @@
   <div class="info">
     <div class="info-columns">
 
+<<<<<<< HEAD
       <div class="left-items">
         <div class="img-container">
           <img class="item-photo" src="{{ item?.photo }}" alt="{{ item?.itemID }}">
@@ -40,6 +41,14 @@
         <br>
         <br>
         <div class="item-left userinfo-box">
+=======
+    <div class="left-items">
+      <img class="item-photo" src="{{item?.photo}}" alt="{{item?.itemID}}">
+      <p class="item-description">{{ item?.description }}</p>
+      <br>
+      <br>
+       <div class="item-left userinfo-box">
+>>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
           <div class="vertical-align">
             <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
             <h3 id="sellerName" class="sellerName"> {{ seller }}</h3>
@@ -60,6 +69,7 @@
         <br>
         <br>
 
+<<<<<<< HEAD
         <h3 class="item-right">Condition: {{ item?.condition }}</h3>
         <br>
         <br>
@@ -71,6 +81,46 @@
         <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
         <br *ngIf="highestBid != null">
         <br *ngIf="highestBid != null">
+=======
+  <div class="right-items">
+      <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{item?.quantity}}</h3>
+      <br *ngIf=" item.quantity > 1 ">
+      <br *ngIf=" item.quantity > 1 ">
+
+      <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
+      <br *ngIf="highestBid != null">
+      <br *ngIf="highestBid != null">
+
+      <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
+      <br *ngIf="auction != null && highestBid == null">
+      <br *ngIf="auction != null && highestBid == null">
+
+      <h3 class="item-right" *ngIf="viewings != null">Total bids: {{ numberBids }}</h3>
+      <br *ngIf="viewings != null">
+      <br *ngIf="viewings != null">
+
+      <h3 class="item-right">Condition: {{item?.condition}}</h3>
+      <br>
+      <br>
+      
+      <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
+      <br *ngIf="viewings != null">
+      <br *ngIf="viewings != null">
+      
+      <h3 class="item-right" *ngIf="viewings != null">Buyers watching: {{ watchers }}</h3>
+      <br *ngIf="viewings != null">
+      <br *ngIf="viewings != null">
+      
+      <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
+      
+      <br *ngIf="isExpired &&  highestBidderID != null">
+      <br *ngIf="isExpired &&  highestBidderID != null">
+      
+      <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">
+        Winner: {{ highestBidder }}
+      </h3>
+    </div>
+>>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
 
         <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
         <br *ngIf="auction != null && highestBid == null">
@@ -103,12 +153,15 @@
     <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
+
     <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">
-      <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
-      <input type="submit" value="Bid" (click)="bid()">
+      <div class="bid-box">
+        <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
+        <input type="submit" value="Bid" id="submit-bid" (click)="bid()">
+      </div>
       <br>
       <br>
-      <input type="submit" value="Watch Auction" (click)="watchAuction()">
+      <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn">
     </form>
   </div>
 

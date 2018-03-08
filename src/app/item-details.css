@@ -3,6 +3,7 @@
   background: white;
 }
 
+<<<<<<< HEAD
 .img-container {
   width: 100%;
 }
@@ -15,6 +16,44 @@
   position: relative;
   clear: left;
   top: 5%;
+=======
+ img.item-photo {
+  min-width: 100%;
+  max-width: 100%;
+  max-height: 250px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+.item-description {
+  clear:left;
+  white-space: pre-wrap;
+}
+
+#newBid {
+  width:200px;
+  display: inline-block;
+}
+ #submit-bid{
+  width:100px;
+  text-align: center;
+  display: inline-block;
+ }
+
+.bid-box {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+}
+
+#watch-btn{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width:150px;
+>>>>>>> 5753ce55c1619e6245da4a721cfc3a76503e36c8
 }
 
 .item-name {
