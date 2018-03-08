@@ -21,8 +21,8 @@ $mail = new PHPMailer(true);
 
      // Retrieving userID of previous highest bidder
      $sql = 'SELECT buyerID FROM bid
-     WHERE `auctionID`= :auctionID
-     AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
+             WHERE `auctionID`= :auctionID
+             AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
      $retrieveBidder = $pdo->prepare($sql);
      $retrieveBidder->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

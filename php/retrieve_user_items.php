@@ -8,15 +8,15 @@
     // Sanitising URL supplied values.
     $role = filter_var($obj->userRole, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     if ($role == 'buyer') {
-        $buyerID = filter_var($obj->userID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $buyerID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
     } else {
-        $sellerID = filter_var($obj->userID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $sellerID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
     }
 
     try {
         if ($role == 'buyer') {
             $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highest 
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
                     ON a.auctionID = b.auctionID 
@@ -31,7 +31,7 @@
             $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
         } else {
             $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highest 
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
                 ON a.auctionID = b.auctionID 

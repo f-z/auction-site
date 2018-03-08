@@ -53,6 +53,7 @@ export interface Item {
   startTime: string;
   endTime: string;
   viewings: number;
+  highestBid: number;
 }
 
 export interface Category {

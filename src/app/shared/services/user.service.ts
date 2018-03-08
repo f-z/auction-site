@@ -28,19 +28,7 @@ export class UserService {
     }
 
     // Returning copy for added security.
-    /*
-    return new Promise(resolve => {
-      this.http
-        .get("http://ocaexerciseapp.azurewebsites.net/retrieve-users.php")
-        .map(res => res.json())
-        .subscribe(data => {
-          this.users = data;
-          resolve(this.users);
-        });
-    });
-    */
     return { ...this.currentUser };
-    // return Promise.resolve(this.currentUser);
   }
 
   setUser(user: User): void {

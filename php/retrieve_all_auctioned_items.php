@@ -1,23 +1,35 @@
 <?php
     require_once('connect_azure_db.php');
 
-    // Declaring an empty array to store the data we retrieve from the database in.
-    $data = array();
-
     // Attempting to query database table and retrieve data.
     try {
-       $stmt = $pdo->query('SELECT * FROM item, auction WHERE item.itemID = auction.itemID');
-       
-       while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-          // Assigning each row of data to associative array.
-          $data[] = $row;
-       }
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, 
+                                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
+                                FROM item AS i, auction as a 
+                                LEFT JOIN bid AS b 
+                                ON a.auctionID = b.auctionID 
+                                AND b.price = (SELECT MAX(price) FROM bid 
+                                WHERE auctionID = a.auctionID
+                                )
+                                WHERE i.itemID = a.itemID
+                                GROUP BY a.auctionID');
+
+        $stmnt->execute();
  
-       // Returning data as JSON.
-       echo json_encode($data);
+        // Declaring an empty array to store the data we retrieve from the database in.
+        $data = array();
+
+        // Fetching the row.
+        while($row = $stmnt->fetch(PDO::FETCH_OBJ)) {
+            // Assigning each row of data to an associative array.
+            $data[] = $row;
+        }
+
+        // Returning data as JSON.
+        echo json_encode($data);
     }
-    // Catching potential exceptions being thrown.
     catch(PDOException $e) {
-       echo $e->getMessage();
+        echo $e->getMessage();
+        die();
     }
 ?>
