@@ -94,7 +94,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   getSellerRating(sellerID: number): void {
-    console.log('sellerID = ' + sellerID);
      const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),

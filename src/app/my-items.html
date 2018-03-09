@@ -35,7 +35,7 @@
 
   <!-- item list -->
   <ul class="itemlist cf">
-    <li class="itemlist-item cf" *ngFor="let item of userBids">
+    <li class="itemlist-item cf" *ngFor="let item of userAuctions">
       <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
       </app-item>
 
