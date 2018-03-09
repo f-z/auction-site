@@ -7,6 +7,7 @@
 
     // Sanitising URL supplied values.
     $userID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
+    $includeExpired = filter_var($obj->includeExpired, FILTER_VALIDATE_BOOLEAN); 
 
     try {
 
@@ -31,10 +32,22 @@
         $auctionStmnt->bindParam(':sellerID', $userID, PDO::PARAM_INT);
         $auctionStmnt->execute();
 
-        // Fetching the row.
-        while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
-            // Assigning each row of data to an associative array.
-            $data['auctions'][] = $row;
+        if($includeExpired){
+            // Fetching the row.
+            while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
+                // Assigning each row of data to an associative array.
+                $data['auctions'][] = $row;
+           }
+        }else{
+            //Test to see if the auction has expired:
+            while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
+                // Assigning each row of data to an associative array.
+                $endTime = array_column($row, $endTime);
+                $endTime = date('Y-m-d H:i:s', strtotime("$endTime")); 
+                $now = date('Y-m-d H:i:s');
+                if($endTime - $now > 0){
+                $data['auctions'][] = $row;
+           }
         }
 
 

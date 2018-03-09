@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   profileUser: User; // the user whose profile we're viewing
 
   item: Item;
-  userItems: Observable<Item[]> = null;
+  userAuctions: Observable<Item[]> = null;
   profileUserRole: string;
   averageSellerRating: number;
   userSellerFeedback: Observable<Feedback[]> = null;
@@ -35,6 +35,8 @@ export class ProfileComponent implements OnInit {
     this.user = this.getUser();
 
     this.profileUser = this.getProfile();
+
+    this.getItems(this.profileUser.userID);
     
     this.getUsersSellerFeedback();
     this.getUsersBuyerFeedback();
@@ -85,16 +87,17 @@ export class ProfileComponent implements OnInit {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { userID: sellerID},
+      options: any = { userID: sellerID,
+                       includeExpired: false},
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        this.userItems = data;
-        for (let i = 0; i < data.length; i++) {
-          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
+        this.userAuctions = data.auctions;
+        for (let i = 0; i < data.auctions.length; i++) {
+          this.userAuctions[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo.substring(5, this.userAuctions[i].photo.length - 5);
         }
       },
       (error: any) => {

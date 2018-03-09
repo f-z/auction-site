@@ -30,12 +30,16 @@
 
   <br>
 
+  <div class="userAuctions">
+
+  <h2>Auctions</h2> 
   <!-- item list -->
   <ul class="itemlist cf">
-    <li class="itemlist-item cf" *ngFor="let item of userItems">
+    <li class="itemlist-item cf" *ngFor="let item of userAuctions">
       <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
       </app-item>
 
     </li>
   </ul>
+</div>
 </section>

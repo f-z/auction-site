@@ -35,7 +35,8 @@ export class MyItemsComponent implements OnInit {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { userID: this.user.userID, userRole: 'buyer' },
+      options: any = { userID: this.user.userID,
+                       includeExpired: true },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 
