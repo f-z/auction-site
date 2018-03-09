@@ -13,7 +13,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MyItemsComponent implements OnInit {
   item: Item;
   userAuctions: Observable<Item[]> = null;
-  userBids: Observable<Item[]> = null;
+  userTopBids: Observable<Item[]> = null;
+  userWatching: Observable<Item[]> = null;
+  userOutBid:  Observable<Item[]> = null;
   // buyerWatchingItems: Observable<Item[]> = null;
 
   private user: User;
@@ -49,10 +51,22 @@ export class MyItemsComponent implements OnInit {
             this.userAuctions[i].photo.substring(5, this.userAuctions[i].photo.length - 5);
         }
 
-        this.userBids = data.bids;
-        for (let i = 0; i < data.bids.length; i++) {
-          this.userBids[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userBids[i].photo.substring(5, this.userBids[i].photo.length - 5);
+        this.userTopBids = data.topbids;
+        for (let i = 0; i < data.topbids.length; i++) {
+          this.userTopBids[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userTopBids[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
+        }
+
+        this.userWatching = data.watching;
+        for (let i = 0; i < data.watching.length; i++) {
+          this.userWatching[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userWatching[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
+        }
+
+        this.userOutBid = data.outbid;
+        for (let i = 0; i < data.outbid.length; i++) {
+          this.userOutBid[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userOutBid[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
         }
         
       },
