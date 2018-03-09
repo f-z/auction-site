@@ -13,8 +13,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ProfileComponent implements OnInit {
   private user: User;//the logged in user
 
-  @Input() profileUser: User; // the user whose profile we're viewing
-  profileUsername:string;
+  profileUser: User; // the user whose profile we're viewing
+
   item: Item;
   userItems: Observable<Item[]> = null;
   profileUserRole: string;
@@ -31,10 +31,20 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.getUser();
 
-    this.profileUsername = this.profileUser.username;
+    this.profileUser = this.getProfile();
+
+    //this.profileUsername = this.profileUser.username;
     
     //getUserRole also triggers getUsersFeedback and getItems 
     this.getUserInfo();
+  }
+
+  getProfile(): User{
+    return this.userService.getProfile();
+  }
+
+  getItem(): Item {
+    return this.itemService.getItem();
   }
 
   getUsersFeedback(role: string): void {
@@ -53,26 +63,7 @@ export class ProfileComponent implements OnInit {
     return null;
   }
 
-  getUserInfo(): void {
-    const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-    options: any = {'userID': this.profileUser.userID,},
-    url: any = 'https://php-group30.azurewebsites.net/retrieve_user_info.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        if (data != null) {
-          this.profileUserRole = data.role;
-          this.getUsersFeedback(data.role);
-          //IF seller profile we're viewing we want to get their auctions
-          if(data.role === 'seller'){
-            this.getItems(this.profileUser.userID);
-          }
-        }
-      },
-      (error: any) => {});
-    return null;
-  }
-
+ 
   getItems(sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'

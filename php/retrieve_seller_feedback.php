@@ -31,7 +31,7 @@
         }
 
       //Get average rating
-      $averageRatingQuery = 'SELECT AVG(f.buyerRating) as average, u.username 
+      $averageRatingQuery = 'SELECT AVG(f.buyerRating) as average, u.username, COUNT(f.buyerRating) as count 
                             FROM feedback AS f
                             INNER JOIN `user` AS u ON u.userID = f.sellerID
                             WHERE sellerID = :sellerID';
