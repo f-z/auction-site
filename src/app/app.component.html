@@ -77,7 +77,7 @@
   <!-- item list -->
   <ul class="itemlist cf" *ngIf="term">
     <li class="itemlist-item cf" *ngFor="let item of items | search : term">
-      <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+      <app-item class="content" [item]="item" (click)="setItem(item)">
       </app-item>
     </li>
   </ul>

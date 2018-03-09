@@ -21,7 +21,7 @@
 
   <br>
 
-  <form id="register-form">
+  <form id="register-form" autocomplete="on">
 
     <div class="space-bot text-center">
       <h2>Login</h2>
@@ -30,11 +30,11 @@
     <br>
 
     <div class="fullrow">
-      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" />
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" autocomplete="username"/>
     </div>
 
     <div class="fullrow">
-      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" />
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" autocomplete="current-password"/>
     </div>
 
     <br>

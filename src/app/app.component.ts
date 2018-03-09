@@ -32,39 +32,27 @@ export class AppComponent implements OnInit {
   ) {
     iconRegistry.addSvgIcon(
       'car',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/car.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/car.svg')
     );
     iconRegistry.addSvgIcon(
       'book',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/book.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/book.svg')
     );
     iconRegistry.addSvgIcon(
       'fashion',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/clothes.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/clothes.svg')
     );
     iconRegistry.addSvgIcon(
       'sports',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/ball.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ball.svg')
     );
     iconRegistry.addSvgIcon(
       'home',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/home.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/home.svg')
     );
     iconRegistry.addSvgIcon(
       'collectables',
-      sanitizer.bypassSecurityTrustResourceUrl(
-        'assets/img/collectables.svg'
-      )
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/collectables.svg')
     );
   }
 
@@ -83,7 +71,8 @@ export class AppComponent implements OnInit {
         (data: any) => {
           this.items = data;
           for (let i = 0; i < data.length; i++) {
-            this.items[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.items[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
               this.items[i].photo.substring(5, this.items[i].photo.length - 5);
           }
         },
@@ -95,6 +84,12 @@ export class AppComponent implements OnInit {
 
   setItem(item: Item): void {
     this.itemService.setItem(item);
+
+    if (this.user === null) {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/items', item.itemID]);
+    }
   }
 
   selectCategory(category): void {
