@@ -27,9 +27,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private numberBids: number;
   private highestBid: number;
   private highestBidderID: number;
-  private highestBidder: string;
+  private highestBidder: User;
   private emailHighest: string;
-  private seller: string;
+  private seller: User;
   private sellerRating: number;
   private sellerFeedbackCount: number;
 
@@ -81,6 +81,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   setUser(user: User): void {
     this.userService.setUser(user);
+  }
+
+  setProfile(user: User): void{
+    this.userService.setProfile(user);
   }
 
   logout(): void {
@@ -256,7 +260,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           this.highestBid = data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
-          this.getUsernames(data.bid.buyerID, this.item.sellerID);
+          this.getUsers(data.bid.buyerID, this.item.sellerID);
         }
       },
       (error: any) => {
@@ -433,7 +437,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return;
   }
 
-  getUsernames(buyerID: number, sellerID: number): void {
+  getUsers(buyerID: number, sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -446,8 +450,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          this.highestBidder = data[0].username;
-          this.seller = data[1].username;
+          this.highestBidder = data[0];
+          this.seller = data[1];
         }
       },
       (error: any) => {

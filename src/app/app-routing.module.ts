@@ -8,7 +8,7 @@ import { MyItemsComponent } from './my-items.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { AddItemComponent } from './add-item.component';
 import { FeedbackComponent } from './feedback.component';
-//import { ProfileComponent } from './user-profile.component';
+import { ProfileComponent } from './user-profile.component';
 
 
 export const routes: Routes = [
@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'items/:itemID', component: ItemDetailsComponent },
   { path: 'my-items', component: MyItemsComponent },
   { path: 'feedback', component: FeedbackComponent },
- // { path: 'profile/:profileUsername', component: ProfileComponent },
+  { path: 'profile/:profileUsername', component: ProfileComponent },
 
 ];
 

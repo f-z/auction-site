@@ -40,14 +40,14 @@
         <div class="item-left userinfo-box">
           <div class="vertical-align">
             <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
-            <h3 id="sellerName" class="sellerName"> {{ seller }}</h3>
-            <!--[routerLink]="['/profile', seller]"-->
-            <div class="star" title="{{seller}}'s average rating">
+            <h3 id="sellerName" class="sellerName" (click)="setProfile(seller)" [routerLink]="['/profile', seller?.username]"> {{ seller?.username }}</h3>
+            
+            <div class="star" title="{{seller?.username}}'s average rating">
               <div class="rating" [style.width.%]="sellerRating">
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
               </div>
             </div>
-            <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{seller}}">&nbsp;({{sellerFeedbackCount}})</h6>
+            <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{seller?.username}}">&nbsp;({{sellerFeedbackCount}})</h6>
           </div>
         </div>
 
@@ -88,17 +88,17 @@
         <br *ngIf="isExpired &&  highestBidderID != null">
 
         <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">
-          Winner: {{ highestBidder }}
+          Winner: {{ highestBidder?.username }}
         </h3>
       </div>
 
     </div>
 
 
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder" [sellerID]="item.sellerID" [item]="item"
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder?.username" [sellerID]="item.sellerID" [item]="item"
       *ngIf="isExpired && highestBidderID != null && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>
 
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller?.username" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
 

@@ -13,13 +13,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ProfileComponent implements OnInit {
   private user: User;//the logged in user
 
-  @Input() profileUser: User; // the user whose profile we're viewing
-  profileUsername:string;
+  profileUser: User; // the user whose profile we're viewing
+
   item: Item;
-  userItems: Observable<Item[]> = null;
+  userAuctions: Observable<Item[]> = null;
   profileUserRole: string;
-  averageRating: number;
-  userFeedback: Observable<Feedback[]> = null;
+  averageSellerRating: number;
+  userSellerFeedback: Observable<Feedback[]> = null;
+
+  averageBuyerRating: number;
+  userBuyerFeedback: Observable<Feedback[]> = null;
 
   constructor(
     private userService: UserService,
@@ -31,42 +34,49 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.getUser();
 
-    this.profileUsername = this.profileUser.username;
+    this.profileUser = this.getProfile();
+
+    this.getItems(this.profileUser.userID);
     
-    //getUserRole also triggers getUsersFeedback and getItems 
-    this.getUserInfo();
+    this.getUsersSellerFeedback();
+    this.getUsersBuyerFeedback();
   }
 
-  getUsersFeedback(role: string): void {
+  getProfile(): User{
+    return this.userService.getProfile();
+  }
+
+  getItem(): Item {
+    return this.itemService.getItem();
+  }
+
+  getUsersSellerFeedback(): void {
       const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
       options: any = {'userID': this.profileUser.userID},
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_'+role+'_feedback.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          this.userFeedback = data['feedbackRows'];
-          this.averageRating = data['average'].average;
+          this.userSellerFeedback = data['feedbackRows'];
+          this.averageSellerRating = data['average'].average;
         }
       },
       (error: any) => {});
     return null;
   }
 
-  getUserInfo(): void {
-    const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-    options: any = {'userID': this.profileUser.userID,},
-    url: any = 'https://php-group30.azurewebsites.net/retrieve_user_info.php';
+
+  getUsersBuyerFeedback(): void {
+      const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
+      options: any = {'userID': this.profileUser.userID},
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_buyer_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          this.profileUserRole = data.role;
-          this.getUsersFeedback(data.role);
-          //IF seller profile we're viewing we want to get their auctions
-          if(data.role === 'seller'){
-            this.getItems(this.profileUser.userID);
-          }
+          this.userBuyerFeedback = data['feedbackRows'];
+          this.averageBuyerRating = data['average'].average;
         }
       },
       (error: any) => {});
@@ -77,16 +87,17 @@ export class ProfileComponent implements OnInit {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { userID: sellerID},
+      options: any = { userID: sellerID,
+                       includeExpired: false},
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        this.userItems = data;
-        for (let i = 0; i < data.length; i++) {
-          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
+        this.userAuctions = data.auctions;
+        for (let i = 0; i < data.auctions.length; i++) {
+          this.userAuctions[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo.substring(5, this.userAuctions[i].photo.length - 5);
         }
       },
       (error: any) => {

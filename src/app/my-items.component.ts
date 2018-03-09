@@ -12,7 +12,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class MyItemsComponent implements OnInit {
   item: Item;
-  userItems: Observable<Item[]> = null;
+  userAuctions: Observable<Item[]> = null;
+  userBids: Observable<Item[]> = null;
   // buyerWatchingItems: Observable<Item[]> = null;
 
   private user: User;
@@ -34,17 +35,26 @@ export class MyItemsComponent implements OnInit {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { userID: this.user.userID, userRole: 'buyer' },
+      options: any = { userID: this.user.userID,
+                       includeExpired: true },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        this.userItems = data;
-        for (let i = 0; i < data.length; i++) {
-          this.userItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userItems[i].photo.substring(5, this.userItems[i].photo.length - 5);
+
+        this.userAuctions = data.auctions;
+        for (let i = 0; i < data.auctions.length; i++) {
+          this.userAuctions[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo.substring(5, this.userAuctions[i].photo.length - 5);
         }
+
+        this.userBids = data.bids;
+        for (let i = 0; i < data.bids.length; i++) {
+          this.userBids[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userBids[i].photo.substring(5, this.userBids[i].photo.length - 5);
+        }
+        
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.
