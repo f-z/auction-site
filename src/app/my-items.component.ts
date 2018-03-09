@@ -15,7 +15,7 @@ export class MyItemsComponent implements OnInit {
   userAuctions: Observable<Item[]> = null;
   userTopBids: Observable<Item[]> = null;
   userWatching: Observable<Item[]> = null;
-  userOutBid:  Observable<Item[]> = null;
+  userOutbid:  Observable<Item[]> = null;
   // buyerWatchingItems: Observable<Item[]> = null;
 
   private user: User;
@@ -63,10 +63,10 @@ export class MyItemsComponent implements OnInit {
             this.userWatching[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
         }
 
-        this.userOutBid = data.outbid;
+        this.userOutbid = data.outbid;
         for (let i = 0; i < data.outbid.length; i++) {
-          this.userOutBid[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userOutBid[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
+          this.userOutbid[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userOutbid[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
         }
         
       },
