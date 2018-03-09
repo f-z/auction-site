@@ -26,8 +26,27 @@
   <div class="space-bot text-center">
     <h2>{{ profileUser?.username }}</h2>
   </div>
+  <!-- IMAGE -->
   <br>
+  <div class="vertical-align">
+  <h3>Seller Rating: </h3>
+  <div class="star" title="{{ profileUser?.username}}'s average seller rating">
+      <div class="rating" [style.width.%]="averageSellerRating">
+        <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+      </div>
+  </div>
+  <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{profileUser?.username}} as a vendor">&nbsp;({{sellerFeedbackCount}})</h6>
+</div>
 
+<div class="vertical-align">
+  <h3>Buyer rating: </h3>
+    <div class="star" title="{{ profileUser?.username}}'s average buyer rating">
+      <div class="rating" [style.width.%]="averageBuyerRating">
+        <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+      </div>
+  </div>
+  <h6 class="ratingcount" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer">&nbsp;({{buyerFeedbackCount}})</h6>
+</div>
   <br>
 
   <div class="userAuctions">

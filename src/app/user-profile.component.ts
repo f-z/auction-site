@@ -14,15 +14,16 @@ export class ProfileComponent implements OnInit {
   private user: User;//the logged in user
 
   profileUser: User; // the user whose profile we're viewing
-
   item: Item;
   userAuctions: Observable<Item[]> = null;
-  profileUserRole: string;
-  averageSellerRating: number;
-  userSellerFeedback: Observable<Feedback[]> = null;
 
-  averageBuyerRating: number;
-  userBuyerFeedback: Observable<Feedback[]> = null;
+  private averageSellerRating: number;
+  private sellerFeedbackCount: number;
+  private userSellerFeedback: Observable<Feedback[]> = null;
+
+  private averageBuyerRating: number;
+  private buyerFeedbackCount: number
+  private userBuyerFeedback: Observable<Feedback[]> = null;
 
   constructor(
     private userService: UserService,
@@ -59,7 +60,8 @@ export class ProfileComponent implements OnInit {
       (data: any) => {
         if (data != null) {
           this.userSellerFeedback = data['feedbackRows'];
-          this.averageSellerRating = data['average'].average;
+          this.averageSellerRating = data['average'].average*20;
+          this.sellerFeedbackCount = data['average'].count;
         }
       },
       (error: any) => {});
@@ -76,7 +78,8 @@ export class ProfileComponent implements OnInit {
       (data: any) => {
         if (data != null) {
           this.userBuyerFeedback = data['feedbackRows'];
-          this.averageBuyerRating = data['average'].average;
+          this.averageBuyerRating = data['average'].average*20;
+          this.buyerFeedbackCount = data['average'].count;
         }
       },
       (error: any) => {});
