@@ -18,8 +18,11 @@ export class ProfileComponent implements OnInit {
   item: Item;
   userItems: Observable<Item[]> = null;
   profileUserRole: string;
-  averageRating: number;
-  userFeedback: Observable<Feedback[]> = null;
+  averageSellerRating: number;
+  userSellerFeedback: Observable<Feedback[]> = null;
+
+  averageBuyerRating: number;
+  userBuyerFeedback: Observable<Feedback[]> = null;
 
   constructor(
     private userService: UserService,
@@ -32,11 +35,9 @@ export class ProfileComponent implements OnInit {
     this.user = this.getUser();
 
     this.profileUser = this.getProfile();
-
-    //this.profileUsername = this.profileUser.username;
     
-    //getUserRole also triggers getUsersFeedback and getItems 
-    this.getUserInfo();
+    this.getUsersSellerFeedback();
+    this.getUsersBuyerFeedback();
   }
 
   getProfile(): User{
@@ -47,23 +48,39 @@ export class ProfileComponent implements OnInit {
     return this.itemService.getItem();
   }
 
-  getUsersFeedback(role: string): void {
+  getUsersSellerFeedback(): void {
       const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
       options: any = {'userID': this.profileUser.userID},
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_'+role+'_feedback.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          this.userFeedback = data['feedbackRows'];
-          this.averageRating = data['average'].average;
+          this.userSellerFeedback = data['feedbackRows'];
+          this.averageSellerRating = data['average'].average;
         }
       },
       (error: any) => {});
     return null;
   }
 
- 
+
+  getUsersBuyerFeedback(): void {
+      const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
+      options: any = {'userID': this.profileUser.userID},
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_buyer_feedback.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        if (data != null) {
+          this.userBuyerFeedback = data['feedbackRows'];
+          this.averageBuyerRating = data['average'].average;
+        }
+      },
+      (error: any) => {});
+    return null;
+  }
+
   getItems(sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
