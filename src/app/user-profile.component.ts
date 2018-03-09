@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
 
   getUsersSellerFeedback(): void {
       const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-      options: any = {'userID': this.profileUser.userID},
+      options: any = {'sellerID': this.profileUser.userID},
       url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
 
   getUsersBuyerFeedback(): void {
       const headers: any = new HttpHeaders({'Content-Type': 'application/json'}),
-      options: any = {'userID': this.profileUser.userID},
+      options: any = {'buyerID': this.profileUser.userID},
       url: any = 'https://php-group30.azurewebsites.net/retrieve_buyer_feedback.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
