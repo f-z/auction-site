@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
         'Content-Type': 'application/json'
       }),
       options: any = { userID: sellerID,
-                       includeExpired: false},
+                       "includeExpired": false},
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';
 

@@ -7,7 +7,7 @@
 
     // Sanitising URL supplied values.
     $userID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
-  //  $includeExpired = filter_var($obj->includeExpired, FILTER_VALIDATE_BOOLEAN); 
+    $includeExpired = filter_var($obj->includeExpired, FILTER_VALIDATE_BOOLEAN); 
 
     try {
 
@@ -18,6 +18,7 @@
 
         $data['auctions']=array();
 
+         if($includeExpired == TRUE){
         $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
             a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
             FROM item AS i, auction as a 
@@ -28,30 +29,32 @@
             )
             WHERE i.itemID = a.itemID AND (sellerID = :sellerID) 
             GROUP BY a.auctionID');
+        }else{
+
+            $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
+            FROM item AS i, auction as a 
+            LEFT JOIN bid AS b 
+            ON a.auctionID = b.auctionID 
+            AND b.price = (SELECT MAX(price) FROM bid 
+                WHERE auctionID = a.auctionID
+            )
+            WHERE i.itemID = a.itemID AND (sellerID = :sellerID) AND a.endTime > NOW()
+            GROUP BY a.auctionID');
+
+        }
 
         // Binding the provided username to our prepared statement.
         $auctionStmnt->bindParam(':sellerID', $userID, PDO::PARAM_INT);
-        $auctionStmnt->execute();
 
-        //if($includeExpired){
+
+       
+        $auctionStmnt->execute();
             // Fetching the row.
-            while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
+        while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
                 // Assigning each row of data to an associative array.
-                $data['auctions'][] = $row;
-           }
-        //} else {
-            //Test to see if the auction has expired:
-          //  while($row = $auctionStmnt->fetch(PDO::FETCH_OBJ)) {
-               
-             //   $endTime = $row['endTime'];
-             //   $endTime = date('Y-m-d H:i:s', strtotime("$endTime")); 
-            //    $now = date('Y-m-d H:i:s');
-             //   if($endTime - $now > 0){
-                     // Assigning each row of data to an associative array.
-                  //  $data['auctions'][] = $row;
-              //  }
-        //   }
-      //  }
+        $data['auctions'][] = $row;
+     
 
 
         //retieving user bids
