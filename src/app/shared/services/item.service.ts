@@ -71,12 +71,11 @@ export interface Bid {
 
 export interface Feedback {
   auctionID: number;
-  buyerID: number;
-  buyerComment: string;
-  buyerRating: number;
-  sellerID: number;
-  sellerComment: number;
-  sellerRating: number;
+  name: string; //of item 
+  username: string; // of person making comment
+  comment: string;
+  rating: number;
+  endTime: string;
 }
 
 export interface Auction {

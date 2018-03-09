@@ -46,19 +46,29 @@
       </div>
   </div>
   <h6 class="ratingcount" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer">&nbsp;({{buyerFeedbackCount}})</h6>
-</div>
+    </div>
   <br>
+
+  <div>
+    <ul class="feedback-list cf">
+     <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
+        <app-feedback-item class="content" [feedback]="feedback">
+        </app-feedback-item>
+      </li>
+    </ul>
+  </div>
 
   <div class="userAuctions">
 
-  <h2>Auctions</h2> 
-  <!-- item list -->
-  <ul class="itemlist cf">
-    <li class="itemlist-item cf" *ngFor="let item of userAuctions">
-      <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-      </app-item>
+    <h2>Auctions</h2> 
+    <!-- item list -->
+    <ul class="itemlist cf">
+      <li class="itemlist-item cf" *ngFor="let item of userAuctions">
+        <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+        </app-item>
 
-    </li>
+      </li>
   </ul>
 </div>
+
 </section>
