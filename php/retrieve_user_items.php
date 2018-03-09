@@ -17,6 +17,7 @@
         //Retrieving auctions: 
 
         $data['auctions']=array();
+
         $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
             a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
             FROM item AS i, auction as a 
@@ -47,6 +48,7 @@
                 $now = date('Y-m-d H:i:s');
                 if($endTime - $now > 0){
                 $data['auctions'][] = $row;
+            }
            }
         }
 
