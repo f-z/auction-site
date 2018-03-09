@@ -48,7 +48,7 @@
             //    $now = date('Y-m-d H:i:s');
              //   if($endTime - $now > 0){
                      // Assigning each row of data to an associative array.
-                    $data['auctions'][] = $row;
+                  //  $data['auctions'][] = $row;
               //  }
         //   }
       //  }
