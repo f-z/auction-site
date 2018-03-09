@@ -62,6 +62,10 @@
       <mat-icon svgIcon="collectables"></mat-icon>
       <b>Collectables</b>
     </mat-button-toggle>
+    <mat-button-toggle value="Other">
+      <mat-icon>more</mat-icon>
+      <b>Other</b>
+    </mat-button-toggle>
   </mat-button-toggle-group>
 
   <br>
@@ -70,7 +74,8 @@
   <label class="search-label">search
     <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
   </label>
-  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}" onfocus="this.value=''">
+  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}"
+    onfocus="this.value=''">
 </div>
 
 <section class="card item-details">
