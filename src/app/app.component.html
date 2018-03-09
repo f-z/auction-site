@@ -70,7 +70,7 @@
   <label class="search-label">search
     <span *ngIf="query" [innerHTML]="' for: ' + query"></span>
   </label>
-  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}">
+  <input class="search-input" [(ngModel)]="term" placeholder="type in search term here" [ngModelOptions]="{updateOn: 'change'}" onfocus="this.value=''">
 </div>
 
 <section class="card item-details">
