@@ -13,7 +13,6 @@ export class FeedbackItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-  	this.feedbackpercentage = this.feedback.rating * 20;
+    this.feedbackpercentage = this.feedback.rating * 20;
   }
-
 }

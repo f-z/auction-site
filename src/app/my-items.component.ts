@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-my-items',
   templateUrl: './my-items.html',
-  styleUrls: ['./my-items.css']
+  styleUrls: ['./my-items.scss']
 })
 export class MyItemsComponent implements OnInit {
   item: Item;
@@ -67,7 +67,6 @@ export class MyItemsComponent implements OnInit {
           this.userOutbid[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
             this.userOutbid[i].photo.substring(5, this.userOutbid[i].photo.length - 5);
         }
-        
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.

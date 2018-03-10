@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from './shared/services/item.service';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.html',
-  styleUrls: ['./item.css']
+  styleUrls: ['./item.scss']
 })
 export class ItemComponent implements OnInit {
   @Input() item: Item;

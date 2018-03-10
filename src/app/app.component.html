@@ -78,12 +78,11 @@
     onfocus="this.value=''">
 </div>
 
-<section class="card item-details">
-  <!-- item list -->
-  <ul class="itemlist cf" *ngIf="term">
-    <li class="itemlist-item cf" *ngFor="let item of items | search : term">
-      <app-item class="content" [item]="item" (click)="setItem(item)">
+<div class="grid-list-container">
+  <mat-grid-list cols="3" gutterSize="16" *ngIf="term">
+    <mat-grid-tile *ngFor="let item of items | search : term">
+      <app-item [item]="item" (click)="setItem(item)">
       </app-item>
-    </li>
-  </ul>
-</section>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

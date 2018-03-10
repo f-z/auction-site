@@ -37,16 +37,37 @@
   flex-wrap: wrap;
 }
 
-.itemlist-item{
+.itemlist-item {
   width: 100%;
   box-sizing: border-box;
-  padding-left:20px;
-  padding-right:20px;
+  padding-left: 20px;
+  padding-right: 20px;
   background: white;
 }
 
-.item-details{
-  background: #ECECEA;
+.item-details {
   margin-top: 60px;
-  padding: 30px 40px;
 }
+
+/* ---------------------- */
+
+/* item.css Styles */
+
+/* ---------------------- */
+
+:host {
+  display: block;
+  background: #f3f3f3;
+}
+
+.grid-list-container {
+  margin-top: -0.75%;
+  padding: 16px;
+  z-index: 8;
+}
+
+@import '../palette';
+app-item {
+  cursor: pointer;
+}
+

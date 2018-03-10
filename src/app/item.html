@@ -1,11 +1,2 @@
-<div class="item-box">
-	<img class="item-photo" src="{{item?.photo}}" alt="{{item?.itemID}} photo">
-	<div class="item-info">
-		<h2 class="item-name" *ngIf="item.quantity <= 1">{{ item?.name }} </h2>
-		<h3 class="item-name" *ngIf="item.quantity > 1">{{ item?.name }} &times; {{ item?.quantity }}</h3>
-		<h3 class="item-category">{{ item?.categoryName }}</h3>
-		<h3 class="item-highestbid" *ngIf="item.highestBid!=null"> £{{ item?.highestBid }}</h3>
-		<h3 class="item-highestbid" *ngIf="item.highestBid==null"> £{{ item?.startPrice }}</h3>
-		<h3 class="item-endTime"> {{ timeleft }}</h3>
-	</div>
-</div>
+<div class="item-photo" [ngStyle]="{'background-image': 'url(' + item?.photo + ')'}"></div>
+<div class="item-name">{{ item?.name }}</div>
