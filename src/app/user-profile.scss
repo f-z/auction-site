@@ -18,16 +18,32 @@
 
 .ratings {
   position: relative;
-  margin-top: -6%;
 }
-
 .feedback {
   position: relative;
+  margin-left:15%;
+  margin-right:15%;
+}
+
+.ratingcount{
+  font-size:0.9em;
+}
+
+.comments-title{
+  font-size: 1.3em;
+  padding-left:20%;
+  background:white;
+  margin-bottom: 0;
+  margin-top: 20px;
+  padding-top:20px;
+  padding-bottom: 10px;
 }
 
 .user-auctions {
   position: relative;
-  margin-top: -7.5%;
+  margin-top: 20px;
+  margin-left: 15%;
+  margin-right:15%;
 }
 
 /* Stars */
@@ -42,6 +58,10 @@
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+}
+
+hr{
+  margin:0;
 }
 
 .rating span {

@@ -38,8 +38,8 @@
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount" *ngIf="sellerFeedbackCount > 1">{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller.</h6>
-      <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller.</h6>
+      <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount > 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
       <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a seller.</h6>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -49,28 +49,30 @@
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount" *ngIf="buyerFeedbackCount > 1">{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer.</h6>
-      <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 1">{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer.</h6>
-      <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a buyer.</h6>
+      <h6 class="ratingcount" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount > 1">&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount" title="{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount == 1" >&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount" title="{{ profileUser?.username }} is yet unrated as a buyer." *ngIf="buyerFeedbackCount == 0">&nbsp;({{ buyerFeedbackCount }})</h6>
     </mat-grid-tile>
   </mat-grid-list>
 
   <div class="feedback" *ngIf="userSellerFeedback != null">
-    <h3>Comments from {{profileUser.username}}'s customers: </h3>
+    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s customers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
+        <hr>
       </li>
     </ul>
   </div>
 
    <div class="feedback" *ngIf="userBuyerFeedback != null">
-    <h3>Comments from {{profileUser.username}}'s sellers: </h3>
+    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s sellers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
+        <hr>
       </li>
     </ul>
   </div>

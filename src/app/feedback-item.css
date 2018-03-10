@@ -1,10 +1,7 @@
 .feedback-item{
-  width: 80%;
-  /*margin-left: 10%;
-  margin-right: 10%;*/
-  margin-bottom: 20px;
+  padding-bottom: 15px;
   background: white;
-  padding: 10px 50px;
+  padding: 10px 20%;
 }
 
 .username{
@@ -16,6 +13,10 @@
   display:inline-block;
   vertical-align: middle;
 
+}
+
+.comment{
+  word-wrap: normal;
 }
 
 

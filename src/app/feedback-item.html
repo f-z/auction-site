@@ -9,7 +9,7 @@
 		<h3 *ngIf="feedback.name != null" class="inline-block" > bought</h3>
 		<h3 *ngIf="feedback.name != null" class="inline-block" (click)="setItem()" [routerLink]="['/items', item?.itemID]"> {{ feedback?.name }}</h3>
 
-	<h4> "{{ feedback?.comment }}"</h4>
+	<h4 class="comment"> "{{ feedback?.comment }}"</h4>
 	
 
 </div>
