@@ -1,6 +1,18 @@
 .user-details {
   position: relative;
-  margin-top: 10%;
+  margin-top: 40px;
+}
+
+.login{
+  margin-bottom: 20px;
+}
+
+.centred{
+  text-align: center;
+}
+
+.viewingProfileName{
+  padding-top: 20px;
 }
 
 .viewingProfilePhoto {
@@ -9,11 +21,6 @@
   height: 100px;
   width: 100px;
   margin-right: 10px;
-}
-
-.viewingProfileName {
-  position: relative;
-  display: inline-block;
 }
 
 .ratings {
@@ -39,11 +46,25 @@
   padding-bottom: 10px;
 }
 
+.vertical-align{
+  vertical-align: middle;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+.ratings{
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: center;
+}
+
+
 .user-auctions {
   position: relative;
   margin-top: 20px;
   margin-left: 15%;
   margin-right:15%;
+  margin-bottom: 50px;
 }
 
 /* Stars */
@@ -71,16 +92,14 @@ hr{
   color: gold;
 }
 
-:host {
-  display: block;
-  background: #f3f3f3;
+
+.rating span:before { 
+  content:"\2606 \2606 \2606 \2606 \2606";
+  position: absolute;
+  color: #bdbdbd;
+  z-index: -1;
 }
 
-.grid-list-container {
-  margin-top: -0.75%;
-  padding: 16px;
-  z-index: 8;
-}
 
 @import '../palette';
 app-item {

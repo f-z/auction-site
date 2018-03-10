@@ -115,7 +115,6 @@ h3 {
 }
 
 .rating {
-  position: relative;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -125,4 +124,11 @@ h3 {
   white-space: nowrap;
   overflow: hidden;
   color: gold;
+}
+
+.rating span:before { 
+  content:"\2606 \2606 \2606 \2606 \2606";
+  position: absolute;
+  color: #bdbdbd;
+  z-index: -1;
 }

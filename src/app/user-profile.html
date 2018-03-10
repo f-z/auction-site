@@ -1,6 +1,7 @@
 <router-outlet></router-outlet>
 
 <!-- card logout -->
+<section>
 <div class="card login">
   <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
@@ -18,45 +19,46 @@
     <span>Main Page</span>
   </button>
 </div>
+</section>
 
 <br>
 
 <!-- user details -->
 <section class="user-details" *ngIf="user!=null">
-  <mat-grid-list cols="1" rowHeight="100px">
-    <mat-grid-tile>
-      <img class="viewingProfilePhoto" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
-      <h2 class="viewingProfileName" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
-      <h2 class="viewingProfileName" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list class="ratings" cols="2" rowHeight="2:1">
-    <mat-grid-tile>
-      <h3>Seller Rating:&nbsp;</h3>
-      <div class="star">
+ 
+  <div>
+      <img class="viewingProfilePhoto centred" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
+      <h2 class="viewingProfileName centred" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
+      <h2 class="viewingProfileName centred" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
+  </div>
+
+  <div class="ratings">
+    <div class="average-rating">
+      <h3 class="vertical-align">Seller Rating:&nbsp;</h3>
+      <div class="star vertical-align">
         <div class="rating" [style.width.%]="averageSellerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount > 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
-      <h6 class="ratingcount" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
-      <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a seller.</h6>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <h3>Buyer Rating:&nbsp;</h3>
-      <div class="star">
+      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount > 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" *ngIf="sellerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a seller.</h6>
+    </div>
+    <div class="average-rating">
+      <h3 class="vertical-align">Buyer Rating:&nbsp;</h3>
+      <div class="star vertical-align">
         <div class="rating" [style.width.%]="averageBuyerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount > 1">&nbsp;({{ buyerFeedbackCount }})</h6>
-      <h6 class="ratingcount" title="{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount == 1" >&nbsp;({{ buyerFeedbackCount }})</h6>
-      <h6 class="ratingcount" title="{{ profileUser?.username }} is yet unrated as a buyer." *ngIf="buyerFeedbackCount == 0">&nbsp;({{ buyerFeedbackCount }})</h6>
-    </mat-grid-tile>
-  </mat-grid-list>
+      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount > 1">&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount == 1" >&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ profileUser?.username }} is yet unrated as a buyer." *ngIf="buyerFeedbackCount == 0">&nbsp;({{ buyerFeedbackCount }})</h6>
+    </div>
+  </div>
 
   <div class="feedback" *ngIf="userSellerFeedback != null">
-    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s customers</h3>
+    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Feedback from {{profileUser.username}}'s customers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
@@ -67,7 +69,7 @@
   </div>
 
    <div class="feedback" *ngIf="userBuyerFeedback != null">
-    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s sellers</h3>
+    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Feedback from {{profileUser.username}}'s sellers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
