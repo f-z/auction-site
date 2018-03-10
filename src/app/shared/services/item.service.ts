@@ -71,7 +71,7 @@ export interface Bid {
 
 export interface Feedback {
   auctionID: number;
-  name: string; //of item 
+  name: string; // of item
   userID: number;
   username: string; // of person making comment
   comment: string;

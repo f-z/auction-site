@@ -20,7 +20,7 @@ export class FeedbackItemComponent implements OnInit {
                private itemService: ItemService,
                private router: Router,
                private route: ActivatedRoute,
-               public http: HttpClient,) {}
+               public http: HttpClient) {}
 
   ngOnInit(): void {
     this.feedbackpercentage = this.feedback.rating * 20;
@@ -64,7 +64,7 @@ export class FeedbackItemComponent implements OnInit {
     return null;
   }
 
-  getFeedbackUser(userID: number):void{
+  getFeedbackUser(userID: number): void {
         const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -84,7 +84,7 @@ export class FeedbackItemComponent implements OnInit {
         //  'Oops! Something went wrong; redirecting you to safety...',
          // '',
         // false
-        //);
+        // );
       }
     );
     return null;
