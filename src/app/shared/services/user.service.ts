@@ -66,9 +66,14 @@ export class UserService {
   private saveProfile(): void {
     localStorage.setItem(PROFILE_USER_KEY, JSON.stringify(this.profileUser));
   }
+
+
   private loadProfile(): User {
     return JSON.parse(localStorage.getItem(PROFILE_USER_KEY));
   }
+
+
+
 }
 
 export interface User {
