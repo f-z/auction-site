@@ -124,9 +124,10 @@ export class ProfileComponent implements OnInit {
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.
-        this.user = null;
-        this.setUser(null);
-        this.router.navigate(['/login']);
+      //  this.user = null;
+       // this.setUser(null);
+        //this.router.navigate(['/login']);
+                alert("error in get items");
       }
     );
   }

@@ -10,7 +10,7 @@
   try {
 
       //Get feedback rows
-      $feedbackRowsQuery = 'SELECT f.auctionID, f.buyerRating AS rating, f.buyerComment AS comment, i.`name`, a.endTime, f.buyerID, u.username
+      $feedbackRowsQuery = 'SELECT f.auctionID, f.buyerRating AS rating, f.buyerComment AS comment, i.`name`, a.endTime, f.buyerID as userID, u.username
                             FROM feedback AS f 
                             INNER JOIN auction AS a ON f.auctionID = a.auctionID
                             INNER JOIN item AS i ON a.itemID = i.itemID

@@ -14,6 +14,7 @@ export class FeedbackItemComponent implements OnInit {
   @Input() feedback: Feedback;
   feedbackpercentage: number;
   item: Item;
+  feedbackUser: User;
 
   constructor( private userService: UserService,
                private itemService: ItemService,
@@ -25,8 +26,9 @@ export class FeedbackItemComponent implements OnInit {
     this.feedbackpercentage = this.feedback.rating * 20;
   }
 
-  setProfile(user: User): void {
-    this.userService.setProfile(user);
+  setProfile(): void {
+    this.getFeedbackUser(this.feedback.userID);
+    this.userService.setProfile(this.feedbackUser);
   }
 
 
@@ -57,6 +59,32 @@ export class FeedbackItemComponent implements OnInit {
          // '',
          // false
        // );
+      }
+    );
+    return null;
+  }
+
+  getFeedbackUser(userID: number):void{
+        const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        buyerID: userID,
+      },
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_user.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+       this.feedbackUser = data;
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+       // this.openDialog(
+        //  'Oops! Something went wrong; redirecting you to safety...',
+         // '',
+        // false
+        //);
       }
     );
     return null;
