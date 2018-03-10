@@ -6,6 +6,7 @@ import { HomeComponent } from './home';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ItemComponent } from './item.component';
+import { FeedbackItemComponent } from './feedback-item.component';
 import { ItemDetailsComponent } from './item-details.component';
 import { RegistrationComponent } from './registration.component';
 import { LoginComponent } from './login.component';
@@ -47,6 +48,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     MyItemsComponent,
     AddItemComponent,
     ItemComponent,
+    FeedbackItemComponent,
     ItemDetailsComponent,
     FeedbackComponent,
     ProfileComponent,

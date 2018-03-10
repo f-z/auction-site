@@ -1,12 +1,15 @@
 <div class="feedback-item">
-	<h4> {{ feedback.username }}</h4>
-	<h4> {{ feedback.name }}</h4>
-
-	<h4> {{ feedback.comment }}</h4>
-
-	<div class="star" title="{{ profileUser?.username }}'s average seller rating">
-		<div class="rating" [style.width.%]="feedback.ratingpercentage">
-			<span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+	
+		<div class="star inline-block">
+			<div class="rating" [style.width.%]="feedback?.ratingpercentage">
+				<span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+			</div>
 		</div>
-	</div>
+		<h3 class="inline-block username" (click)="setProfile(feedback.username)" [routerLink]="['/profile', feedback?.username]">&ndash; {{ feedback?.username }}</h3>
+		<h3 *ngIf="feedback.name != null" class="inline-block" > bought</h3>
+		<h3 *ngIf="feedback.name != null" class="inline-block" (click)="setItem()" [routerLink]="['/items', item?.itemID]"> {{ feedback?.name }}</h3>
+
+	<h4> "{{ feedback?.comment }}"</h4>
+	
+
 </div>

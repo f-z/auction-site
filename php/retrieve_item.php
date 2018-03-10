@@ -1,0 +1,41 @@
+<?php
+    require_once('connect_azure_db.php');
+
+    // Retrieving the posted data.
+    $json    =  file_get_contents('php://input');
+    $obj     =  json_decode($json);
+
+    // Sanitising URL supplied values.
+    $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT); 
+
+    try {
+
+        // Declaring an empty array to store the data we retrieve from the database in.
+        $data = array();
+
+        //Retrieving item: 
+         
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
+                FROM item AS i, auction as a 
+                LEFT JOIN bid AS b 
+                ON a.auctionID = b.auctionID 
+                WHERE i.itemID = a.itemID
+                AND a.auctionID = :auctionID
+                AND b.price = (SELECT MAX(price) FROM bid 
+                    WHERE auctionID = a.auctionID)');
+       
+        // Binding the provided username to our prepared statement.
+        $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+
+        $stmnt->execute();
+            // Fetching the row.
+        $data = $stmnt->fetch(PDO::FETCH_OBJ));
+     
+        // Returning data as JSON.
+        echo json_encode($data);
+    }
+    catch(PDOException $e) {
+        echo $e->getMessage();
+        die();
+    }
+?>

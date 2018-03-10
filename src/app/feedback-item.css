@@ -1,0 +1,41 @@
+.feedback-item{
+  width: 80%;
+  /*margin-left: 10%;
+  margin-right: 10%;*/
+  margin-bottom: 20px;
+  background: white;
+  padding: 10px 50px;
+}
+
+.username{
+  font-size: 1.1em;
+  color: blue;
+}
+
+.inline-block{
+  display:inline-block;
+  vertical-align: middle;
+
+}
+
+
+/* Stars */
+
+.star {
+  width: 92px;
+  position: relative;
+  color: #bdbdbd;
+}
+
+.rating {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rating span {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: gold;
+}
