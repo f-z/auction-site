@@ -56,7 +56,7 @@
   </mat-grid-list>
 
   <div class="feedback" *ngIf="userSellerFeedback != null">
-    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s customers</h3>
+    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Comments about {{ profileUser.username }} as a seller:</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
@@ -67,7 +67,7 @@
   </div>
 
    <div class="feedback" *ngIf="userBuyerFeedback != null">
-    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Comments from {{profileUser.username}}'s sellers</h3>
+    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Comments about {{ profileUser.username }} as a buyer:</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
