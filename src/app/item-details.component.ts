@@ -17,8 +17,7 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.html',
-  styleUrls: ['./item-details.css'],
-
+  styleUrls: ['./item-details.css']
 })
 export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
@@ -67,7 +66,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.getAuctionInformation();
 
     this.getSellerRating(this.itemService.getItem().sellerID);
-    console.log(this.itemService.getItem().sellerID);
   }
 
   ngOnDestroy() {
@@ -83,7 +81,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.userService.setUser(user);
   }
 
-  setProfile(user: User): void{
+  setProfile(user: User): void {
     this.userService.setProfile(user);
   }
 
@@ -94,11 +92,12 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   getSellerRating(sellerID: number): void {
-     const headers: any = new HttpHeaders({
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { 'sellerID': sellerID },
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_seller_rating.php';
+      options: any = { sellerID: sellerID },
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_seller_rating.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -291,7 +290,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.notifyCurrentBidder(this.auction.auctionID, this.user.userID);
-          this.notifyPrevBidder(this.auction.auctionID, this.highestBidderID, this.user.userID);
+          this.notifyPrevBidder(
+            this.auction.auctionID,
+            this.highestBidderID,
+            this.user.userID
+          );
           this.openDialog(
             'Congratulations, you have successfully placed your bid!',
             '',

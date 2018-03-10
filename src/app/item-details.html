@@ -34,29 +34,30 @@
 
       <div class="left-items">
         <img class="item-photo" src="{{ item?.photo }}" alt="{{ item?.itemID }}">
-        <p class="item-description">{{ item?.description }}</p>
+        <h3 class="item-description">{{ item?.description }}</h3>
         <br>
         <br>
         <div class="item-left userinfo-box">
           <div class="vertical-align">
             <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
-            <h3 id="sellerName" class="sellerName" (click)="setProfile(seller)" [routerLink]="['/profile', seller?.username]"> {{ seller?.username }}</h3>
+            <h3 id="sellerName" class="sellerName" (click)="setProfile(seller)" [routerLink]="['/profile', seller?.username]">{{ seller?.username }}</h3>
             
-            <div class="star" title="{{seller?.username}}'s average rating">
+            <div class="star" title="{{ seller?.username }}'s average rating">
               <div class="rating" [style.width.%]="sellerRating">
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
               </div>
             </div>
-            <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{seller?.username}}">&nbsp;({{sellerFeedbackCount}})</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount != 1">{{ sellerFeedbackCount }} people have rated {{seller?.username}}.</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{seller?.username}}.</h6>
           </div>
         </div>
 
       </div>
 
       <div class="right-items">
-        <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{item?.quantity}}</h3>
-        <br *ngIf=" item.quantity > 1 ">
-        <br *ngIf=" item.quantity > 1 ">
+        <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{ item?.quantity }}</h3>
+        <br *ngIf="item.quantity > 1">
+        <br *ngIf="item.quantity > 1">
 
         <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
         <br *ngIf="highestBid != null">

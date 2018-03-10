@@ -2,8 +2,8 @@
 
 <!-- card logout -->
 <div class="card login">
-  <img class="profilePhoto" src="{{this.user.photo}}">
-  <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
+  <img class="profilePhoto" src="{{ this.user.photo }}">
+  <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
   <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">
     <span>Register</span>
@@ -21,37 +21,40 @@
 
 <br>
 
-<!--itemdetails-->
+<!-- item details -->
 <section class="card item-details" *ngIf="user!=null">
   <div class="space-bot text-center">
+    <img class="profilePhoto" src="{{ profileUser?.photo }}">
     <h2>{{ profileUser?.username }}</h2>
   </div>
-  <!-- IMAGE -->
+  <!-- image -->
   <br>
   <div class="vertical-align">
-  <h3>Seller Rating: </h3>
-  <div class="star" title="{{ profileUser?.username}}'s average seller rating">
+    <h3>Seller Rating: </h3>
+    <div class="star">
       <div class="rating" [style.width.%]="averageSellerRating">
         <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
       </div>
+    </div>
+    <h6 class="ratingcount" *ngIf="sellerFeedbackCount !== 1">{{ sellerFeedbackCount }} people have rated {{profileUser?.username}} as a seller.</h6>
+    <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{profileUser?.username}} as a seller.</h6>
   </div>
-  <h6 class="ratingcount" title="{{ sellerFeedbackCount }} people have rated {{profileUser?.username}} as a vendor">&nbsp;({{sellerFeedbackCount}})</h6>
-</div>
 
-<div class="vertical-align">
-  <h3>Buyer rating: </h3>
-    <div class="star" title="{{ profileUser?.username}}'s average buyer rating">
+  <div class="vertical-align">
+    <h3>Buyer Rating: </h3>
+    <div class="star">
       <div class="rating" [style.width.%]="averageBuyerRating">
         <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
       </div>
-  </div>
-  <h6 class="ratingcount" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer">&nbsp;({{buyerFeedbackCount}})</h6>
     </div>
+    <h6 class="ratingcount" *ngIf="buyerFeedbackCount !== 1">{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer.</h6>
+    <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 1">{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer.</h6>
+  </div>
   <br>
 
   <div>
     <ul class="feedback-list cf">
-     <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
+      <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
       </li>
@@ -59,16 +62,14 @@
   </div>
 
   <div class="userAuctions">
-
-    <h2>Auctions</h2> 
+    <h2>Auctions</h2>
     <!-- item list -->
     <ul class="itemlist cf">
       <li class="itemlist-item cf" *ngFor="let item of userAuctions">
         <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
         </app-item>
-
       </li>
-  </ul>
-</div>
+    </ul>
+  </div>
 
 </section>

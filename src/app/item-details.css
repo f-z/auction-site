@@ -16,7 +16,8 @@
   clear: left;
   top: 5%;
 }
- img.item-photo {
+
+img.item-photo {
   min-width: 100%;
   max-width: 100%;
   max-height: 250px;
@@ -25,19 +26,20 @@
 }
 
 .item-description {
-  clear:left;
+  clear: left;
   white-space: pre-wrap;
 }
 
 #newBid {
-  width:200px;
+  width: 200px;
   display: inline-block;
 }
- #submit-bid{
-  width:100px;
+
+#submit-bid {
+  width: 100px;
   text-align: center;
   display: inline-block;
- }
+}
 
 .bid-box {
   margin-left: auto;
@@ -46,13 +48,12 @@
   text-align: center;
 }
 
-#watch-btn{
+#watch-btn {
   margin-left: auto;
   margin-right: auto;
   display: block;
   text-align: center;
-  width:150px;
-
+  width: 150px;
 }
 
 .item-name {
@@ -105,7 +106,7 @@ h3 {
   color: blue;
 }
 
-/*Stars*/
+/* Stars */
 
 .star {
   width: 92px;
@@ -115,6 +116,7 @@ h3 {
 }
 
 .rating {
+  position: relative;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -132,4 +134,3 @@ h3 {
   color: #bdbdbd;
   z-index: -1;
 }
-
