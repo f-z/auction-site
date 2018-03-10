@@ -23,6 +23,7 @@ import { ItemService } from './shared/services/item.service';
 import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { FileSelectDirective } from 'ng2-file-upload';
 
@@ -35,7 +36,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     MatDialogModule,
     BrowserAnimationsModule,
     MatButtonToggleModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ],
   declarations: [
     HomeComponent,

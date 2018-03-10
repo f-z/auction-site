@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Item, ItemService } from './shared/services/item.service';
 import { User, UserService, Feedback } from './shared/services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-profile',
@@ -102,7 +103,7 @@ export class ProfileComponent implements OnInit {
       }),
       options: any = {
         userID: sellerID,
-        includeExpired: false
+        includeExpired: true
       },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';

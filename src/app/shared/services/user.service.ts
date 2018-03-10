@@ -24,7 +24,6 @@ export class UserService {
     localStorage.setItem(USER_KEY, JSON.stringify(this.currentUser));
   }
 
-
   // Returning a copy of the stored user, if it is not null (if logged in).
   getUser(): any {
     if (this.currentUser == null) {
@@ -44,37 +43,32 @@ export class UserService {
     delete this.currentUser[ID];
     this.saveState();
   }
-  //////////
+
   setProfile(user: User): void {
     this.profileUser = user;
     this.saveProfile();
   }
 
-  getProfile(): any{
-
-     if (this.profileUser == null) {
+  getProfile(): any {
+    if (this.profileUser == null) {
       return null;
     }
 
     // Returning copy for added security.
     return { ...this.profileUser };
   }
-  
-   exitProfile(ID: string): void{
-     delete this.profileUser[ID];
-     this.saveProfile();
-   }
 
+  exitProfile(ID: string): void {
+    delete this.profileUser[ID];
+    this.saveProfile();
+  }
 
-  
   private saveProfile(): void {
     localStorage.setItem(PROFILE_USER_KEY, JSON.stringify(this.profileUser));
   }
   private loadProfile(): User {
     return JSON.parse(localStorage.getItem(PROFILE_USER_KEY));
   }
-
- 
 }
 
 export interface User {
@@ -87,20 +81,17 @@ export interface User {
   lastName: string;
   email: string;
   city: string;
-
 }
 
-export interface Feedback{
-  auctionID:number; 
+export interface Feedback {
+  auctionID: number;
   sellerID: number;
   sellerComment: string;
   sellerRating: number;
   buyerID: number;
   buyerComment: string;
   buyerRating: number;
-  name: string;//item name
-  username: string; //comment maker username
+  name: string; // item name
+  username: string; // comment maker username
   endTime: string;
-
-
 }

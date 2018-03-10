@@ -23,36 +23,38 @@
 
 <!-- item details -->
 <section class="card item-details" *ngIf="user!=null">
-  <div class="space-bot text-center">
-    <img class="profilePhoto" src="{{ profileUser?.photo }}">
-    <h2>{{ profileUser?.username }}</h2>
-  </div>
-  <!-- image -->
-  <br>
-  <div class="vertical-align">
-    <h3>Seller Rating: </h3>
-    <div class="star">
-      <div class="rating" [style.width.%]="averageSellerRating">
-        <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+  <mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile>
+      <img class="viewingProfilePhoto" src="{{ profileUser?.photo }}">
+      <h2 class="viewingProfileName">{{ profileUser?.username }}</h2>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+      <h3>Seller Rating:&nbsp;</h3>
+      <div class="star">
+        <div class="rating" [style.width.%]="averageSellerRating">
+          <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+        </div>
       </div>
-    </div>
-    <h6 class="ratingcount" *ngIf="sellerFeedbackCount !== 1">{{ sellerFeedbackCount }} people have rated {{profileUser?.username}} as a seller.</h6>
-    <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{profileUser?.username}} as a seller.</h6>
-  </div>
-
-  <div class="vertical-align">
-    <h3>Buyer Rating: </h3>
-    <div class="star">
-      <div class="rating" [style.width.%]="averageBuyerRating">
-        <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+      <h6 class="ratingcount" *ngIf="sellerFeedbackCount > 1">{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller.</h6>
+      <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller.</h6>
+      <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a seller.</h6>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <h3>Buyer Rating:&nbsp;</h3>
+      <div class="star">
+        <div class="rating" [style.width.%]="averageBuyerRating">
+          <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+        </div>
       </div>
-    </div>
-    <h6 class="ratingcount" *ngIf="buyerFeedbackCount !== 1">{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer.</h6>
-    <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 1">{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer.</h6>
-  </div>
-  <br>
+      <h6 class="ratingcount" *ngIf="buyerFeedbackCount > 1">{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer.</h6>
+      <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 1">{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer.</h6>
+      <h6 class="ratingcount" *ngIf="buyerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a buyer.</h6>
+    </mat-grid-tile>
+  </mat-grid-list>
 
-  <div>
+  <div *ngIf="userSellerFeedback != null">
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">

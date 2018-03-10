@@ -11,16 +11,15 @@
 
     try {
         $data = array();
-        $stmnt = $pdo->prepare('SELECT username, userID, role, firstName, lastName, email, city FROM user WHERE userID = :buyerID'); 
+        $stmnt = $pdo->prepare('SELECT username, userID, photo, role, firstName, lastName, email, city FROM user WHERE userID = :buyerID'); 
         $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
         $stmnt->execute();
         $data[0] = $stmnt->fetch(PDO::FETCH_OBJ);
 
-        $stmnt = $pdo->prepare('SELECT username, userID, role, firstName, lastName, email, city  FROM user WHERE userID = :sellerID'); 
+        $stmnt = $pdo->prepare('SELECT username, userID, photo, role, firstName, lastName, email, city  FROM user WHERE userID = :sellerID'); 
         $stmnt->bindParam(':sellerID', $sellerID, PDO::PARAM_INT);
         $stmnt->execute();
         $data[1] = $stmnt->fetch(PDO::FETCH_OBJ);
-
 
         echo json_encode($data);
     }

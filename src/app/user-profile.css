@@ -1,3 +1,16 @@
+.viewingProfilePhoto {
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.viewingProfileName {
+  position: relative;
+  display: inline-block;
+}
+
 .item-details .add-item-button {
   position: relative;
   text-align: center;
@@ -51,18 +64,12 @@
   padding: 30px 40px;
 }
 
-.vertical-align>* {
-  vertical-align: middle;
-  display: inline-block;
-}
-
 /* Stars */
 
 .star {
   width: 92px;
   position: relative;
   color: #bdbdbd;
-  display: inline-block;
 }
 
 .rating {
@@ -76,11 +83,4 @@
   white-space: nowrap;
   overflow: hidden;
   color: gold;
-}
-
-.rating span:before {
-  content: "\2606 \2606 \2606 \2606 \2606";
-  position: absolute;
-  color: #bdbdbd;
-  z-index: -1;
 }

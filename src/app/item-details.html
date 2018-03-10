@@ -31,7 +31,6 @@
   <!-- info -->
   <div class="info">
     <div class="info-columns">
-
       <div class="left-items">
         <img class="item-photo" src="{{ item?.photo }}" alt="{{ item?.itemID }}">
         <h3 class="item-description">{{ item?.description }}</h3>
@@ -47,11 +46,11 @@
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
               </div>
             </div>
-            <h6 class="ratingcount" *ngIf="sellerFeedbackCount != 1">{{ sellerFeedbackCount }} people have rated {{seller?.username}}.</h6>
-            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{seller?.username}}.</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount > 1">{{ sellerFeedbackCount }} people have rated {{ seller?.username }}.</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{ seller?.username }}.</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">{{ seller?.username }} is yet unrated.</h6>
           </div>
         </div>
-
       </div>
 
       <div class="right-items">

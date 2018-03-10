@@ -447,13 +447,23 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         buyerID: buyerID,
         sellerID: sellerID
       },
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_usernames.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_buyer_seller_users.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
           this.highestBidder = data[0];
+          if (this.highestBidder.photo != null) {
+            this.highestBidder.photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.highestBidder.photo.substring(1, this.highestBidder.photo.length - 1);
+          }
           this.seller = data[1];
+          if (this.seller.photo != null) {
+            this.seller.photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.seller.photo.substring(1, this.seller.photo.length - 1);
+          }
         }
       },
       (error: any) => {
