@@ -1,7 +1,8 @@
 .feedback-item{
   padding-bottom: 15px;
-  background: white;
   padding: 10px 20%;
+  position: relative;
+ 
 }
 
 .username{
@@ -21,27 +22,34 @@
 
 
 /* Stars  https://stackoverflow.com/questions/33858426/only-fill-60-percent-star-using-css-width*/
-.star {
-  width: 92px;
+.star{ 
+  width:92px; 
   position: relative;
   color: #bdbdbd;
+
 }
 
 .rating {
+  /*width inserted*/
   overflow: hidden;
   white-space: nowrap;
+  z-index: 2;
 }
 
-.rating span {
-  font-size: 18px;
+.rating span{
+  font-size:18px;
   white-space: nowrap;
   overflow: hidden;
   color: gold;
+
 }
 
 .rating span:before { 
   content:"\2606 \2606 \2606 \2606 \2606";
   position: absolute;
   color: #bdbdbd;
-  z-index: -1;
+  z-index: 1;
+
+
+
 }

@@ -1,10 +1,13 @@
 <div class="feedback-item">
 	
-		<div class="star inline-block">
-			<div class="rating" *ngIf="feedback" [style.width.%]="feedbackpercentage">
+		<div class="inline-block">
+		<div class="star">
+			<div class="rating" [style.width.%]="feedbackpercentage">
 				<span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
 			</div>
 		</div>
+		</div>
+
 		<h3 class="inline-block username" (click)="setProfile(feedback.username)" [routerLink]="['/profile', feedback?.username]">&ndash; {{ feedback?.username }}</h3>
 		<h3 *ngIf="feedback.name != null" class="inline-block" > bought</h3>
 		<h3 *ngIf="feedback.name != null" class="inline-block" (click)="setItem()" [routerLink]="['/items', item?.itemID]"> {{ feedback?.name }}</h3>
