@@ -1,12 +1,12 @@
 <div class="feedback-item">
-	<h4> {{feedback.username}}</h4>
-	<h4> {{feedback.name}}</h4>
+	<h4> {{ feedback.username }}</h4>
+	<h4> {{ feedback.name }}</h4>
 
-	<h4> {{feedback.comment}}</h4>
+	<h4> {{ feedback.comment }}</h4>
 
-	<div class="star" title="{{ profileUser?.username}}'s average seller rating">
-      <div class="rating" [style.width.%]="feedback.ratingpercentage">
-        <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
-      </div>
-  	</div>
+	<div class="star" title="{{ profileUser?.username }}'s average seller rating">
+		<div class="rating" [style.width.%]="feedback.ratingpercentage">
+			<span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
+		</div>
+	</div>
 </div>

@@ -89,6 +89,11 @@ export class MyItemsComponent implements OnInit {
     this.userService.setUser(user);
   }
 
+  goToMyProfile(): void {
+    this.userService.setProfile(this.user);
+    this.router.navigate(['/profile', this.user.username]);
+  }
+
   logout(): void {
     this.user = null;
     this.setUser(null);

@@ -2,7 +2,7 @@
 
 <!-- card logout -->
 <div class="card login">
-  <img class="profilePhoto" src="{{ this.user.photo }}">
+  <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
   <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">
@@ -40,7 +40,7 @@
           <div class="vertical-align">
             <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
             <h3 id="sellerName" class="sellerName" (click)="setProfile(seller)" [routerLink]="['/profile', seller?.username]">{{ seller?.username }}</h3>
-            
+
             <div class="star" title="{{ seller?.username }}'s average rating">
               <div class="rating" [style.width.%]="sellerRating">
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
@@ -98,7 +98,8 @@
     <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder?.username" [sellerID]="item.sellerID" [item]="item"
       *ngIf="isExpired && highestBidderID != null && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>
 
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller?.username" [sellerID]="item.sellerID" [item]="item" *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller?.username" [sellerID]="item.sellerID" [item]="item"
+      *ngIf="isExpired && buyerFeedbackGiven == false && highestBidderID === user.userID"></app-feedback>
     <br>
     <br>
 

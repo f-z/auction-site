@@ -85,12 +85,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.userService.setProfile(user);
   }
 
-  logout(): void {
-    this.user = null;
-    this.setUser(null);
-    this.router.navigate(['/search']);
-  }
-
   getSellerRating(sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -403,27 +397,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  openDialog(message: string, username: string, succeeded: boolean): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        message: message,
-        username: username
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!succeeded) {
-        this.router.navigate(['/search']);
-      } else {
-        window.location.reload();
-      }
-    });
-  }
-
-  goBack(): void {
-    window.history.back();
-  }
-
   setIsExpired(auction_endTime: string): void {
     // Set the date we're counting down to
     const countDownDate = new Date(auction_endTime).getTime();
@@ -447,7 +420,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         buyerID: buyerID,
         sellerID: sellerID
       },
-      url: any = 'https://php-group30.azurewebsites.net/retrieve_buyer_seller_users.php';
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_buyer_seller_users.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -456,7 +430,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           if (this.highestBidder.photo != null) {
             this.highestBidder.photo =
               'http://php-group30.azurewebsites.net/uploads/' +
-              this.highestBidder.photo.substring(1, this.highestBidder.photo.length - 1);
+              this.highestBidder.photo.substring(
+                1,
+                this.highestBidder.photo.length - 1
+              );
           }
           this.seller = data[1];
           if (this.seller.photo != null) {
@@ -541,5 +518,37 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }),
       1000
     );
+  }
+
+  openDialog(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!succeeded) {
+        this.router.navigate(['/search']);
+      } else {
+        window.location.reload();
+      }
+    });
+  }
+
+  goBack(): void {
+    window.history.back();
+  }
+
+  goToMyProfile(): void {
+    this.userService.setProfile(this.user);
+    this.router.navigate(['/profile', this.user.username]);
+  }
+
+  logout(): void {
+    this.user = null;
+    this.setUser(null);
+    this.router.navigate(['/search']);
   }
 }

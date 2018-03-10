@@ -2,7 +2,7 @@
 
 <!-- card logout -->
 <div class="card login">
-  <img class="profilePhoto" src="{{this.user.photo}}">
+  <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
   <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">

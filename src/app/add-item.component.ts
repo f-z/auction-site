@@ -224,6 +224,11 @@ export class AddItemComponent implements OnInit {
       this.router.navigate(['/my-items']);
   }
 
+  goToMyProfile(): void {
+    this.userService.setProfile(this.user);
+    this.router.navigate(['/profile', this.user.username]);
+  }
+
   logout(): void {
     this.user = null;
     this.setUser(null);
