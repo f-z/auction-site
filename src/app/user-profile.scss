@@ -1,0 +1,69 @@
+.user-details {
+  position: relative;
+  margin-top: 10%;
+}
+
+.viewingProfilePhoto {
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.viewingProfileName {
+  position: relative;
+  display: inline-block;
+}
+
+.ratings {
+  position: relative;
+  margin-top: -5%;
+}
+
+.feedback {
+  position: relative;
+}
+
+.user-auctions {
+  position: relative;
+  margin-top: -7.5%;
+}
+
+/* Stars */
+
+.star {
+  width: 92px;
+  position: relative;
+  color: #bdbdbd;
+}
+
+.rating {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rating span {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: gold;
+}
+
+:host {
+  display: block;
+  background: #f3f3f3;
+}
+
+.grid-list-container {
+  margin-top: -0.75%;
+  padding: 16px;
+  z-index: 8;
+}
+
+@import '../palette';
+app-item {
+  cursor: pointer;
+}
+

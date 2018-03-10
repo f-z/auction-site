@@ -9,7 +9,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 @Component({
   selector: 'app-profile',
   templateUrl: './user-profile.html',
-  styleUrls: ['./user-profile.css']
+  styleUrls: ['./user-profile.scss']
 })
 export class ProfileComponent implements OnInit {
   private user: User; // the logged-in user

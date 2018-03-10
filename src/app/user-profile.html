@@ -21,15 +21,16 @@
 
 <br>
 
-<!-- item details -->
-<section class="card item-details" *ngIf="user!=null">
+<!-- user details -->
+<section class="user-details" *ngIf="user!=null">
   <mat-grid-list cols="1" rowHeight="100px">
     <mat-grid-tile>
-      <img class="viewingProfilePhoto" src="{{ profileUser?.photo }}">
-      <h2 class="viewingProfileName">{{ profileUser?.username }}</h2>
+      <img class="viewingProfilePhoto" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
+      <h2 class="viewingProfileName" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
+      <h2 class="viewingProfileName" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
     </mat-grid-tile>
   </mat-grid-list>
-  <mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-list class="ratings" cols="2" rowHeight="2:1">
     <mat-grid-tile>
       <h3>Seller Rating:&nbsp;</h3>
       <div class="star">
@@ -54,7 +55,7 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-  <div *ngIf="userSellerFeedback != null">
+  <div class="feedback" *ngIf="userSellerFeedback != null">
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
@@ -62,16 +63,18 @@
       </li>
     </ul>
   </div>
-
-  <div class="userAuctions">
-    <h2>Auctions</h2>
-    <!-- item list -->
-    <ul class="itemlist cf">
-      <li class="itemlist-item cf" *ngFor="let item of userAuctions">
-        <app-item class="content" [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-        </app-item>
-      </li>
-    </ul>
-  </div>
-
 </section>
+
+<div class="user-auctions">
+  <h2 *ngIf="user.userID != profileUser?.userID">Auctions</h2>
+  <h2 *ngIf="user.userID == profileUser?.userID">My Auctions</h2>
+  <!-- item grid -->
+  <div class="grid-list-container">
+    <mat-grid-list cols="3" gutterSize="16">
+      <mat-grid-tile *ngFor="let item of userAuctions">
+        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+        </app-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
