@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class FeedbackItemComponent implements OnInit {
   @Input() feedback: Feedback;
-  feedbackPercentage: number;
+  feedbackpercentage: number;
   item: Item;
   feedbackUser: User;
 
@@ -23,12 +23,7 @@ export class FeedbackItemComponent implements OnInit {
                public http: HttpClient) {}
 
   ngOnInit(): void {
-<<<<<<< HEAD
     this.feedbackpercentage = this.feedback.rating * 20;
-    console.log(this.feedbackpercentage);
-=======
-    this.feedbackPercentage = this.feedback.rating * 20;
->>>>>>> eb7680cad5ecf9cabcf7295e7955a3d016c2497d
   }
 
   setProfile(): void {

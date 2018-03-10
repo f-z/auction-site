@@ -40,9 +40,8 @@
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount > 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount != 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
       <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
-      <h6 class="ratingcount vertical-align" *ngIf="sellerFeedbackCount == 0">{{ profileUser?.username }} is yet unrated as a seller.</h6>
     </div>
     <div class="average-rating">
       <h3 class="vertical-align">Buyer Rating:&nbsp;</h3>
@@ -57,8 +56,8 @@
     </div>
   </div>
 
-  <div class="feedback" *ngIf="userSellerFeedback != null">
-    <h3 *ngIf="userSellerFeedback != null" class="comments-title">Feedback from {{profileUser.username}}'s customers</h3>
+  <div class="feedback" *ngIf="sellerFeedbackCount > 0">
+    <h3 *ngIf="sellerFeedbackCount > 0 " class="comments-title">Feedback from {{profileUser.username}}'s customers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
@@ -68,8 +67,8 @@
     </ul>
   </div>
 
-   <div class="feedback" *ngIf="userBuyerFeedback != null">
-    <h3 *ngIf="userBuyerFeedback != null" class="comments-title">Feedback from {{profileUser.username}}'s sellers</h3>
+   <div class="feedback" *ngIf="buyerFeedbackCount > 0">
+    <h3 *ngIf="buyerFeedbackCount > 0" class="comments-title">Feedback from {{profileUser.username}}'s sellers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
