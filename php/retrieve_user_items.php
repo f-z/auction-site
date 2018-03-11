@@ -19,7 +19,7 @@
         $data['auctions']=array();
 
          if($includeExpired == TRUE){
-            $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+            $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
@@ -32,7 +32,7 @@
                 GROUP BY a.auctionID');
         }else{
 
-            $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+            $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings,
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
@@ -58,7 +58,7 @@
         //retieving user bids
         $data['topbids']=array();
 
-         $bidsStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+         $bidsStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
             a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, b.price AS highestBid 
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
@@ -83,28 +83,26 @@
         //retieving user watchingbid
         $data['watching']=array();
 
-         $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+         $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON b.auctionID = a.auctionID 
             WHERE i.itemID = a.itemID AND a.endTime > adddate(NOW(),-7) 
-            GROUP BY b.auctionID
-            HAVING 0 = (SELECT MAX(b1.price) AS maxbid
-                        FROM bid as b1 
-                        WHERE b1.auctionID = a.auctionID 
-                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
-                        having COUNT(b1.buyerID) = 1 AND maxbid = 0)
-            AND 1 = (SELECT count(b1.buyerID)
-                        FROM bid as b1
-                        WHERE b1.auctionID = a.auctionID 
-                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
-                        having COUNT(b1.buyerID) = 1 AND MAX(b1.price) = 0)
-     ');
+            GROUP BY a.auctionID
+            HAVING 0 = (SELECT MAX(b1.price) as maxbid FROM bid AS b1 
+                    WHERE b1.auctionID = a.auctionID 
+                    AND b1.buyerID = :buyerID)
+            AND 1 = (SELECT COUNT(b2.buyerID) as bidcount FROM bid AS b2
+                        WHERE b2.auctionID = a.auctionID 
+                        AND b2.buyerID = :buyerID2
+                    )'
+                );
 
         // Binding the provided username to our prepared statement.
         $watchingStmnt->bindParam(':buyerID', $userID, PDO::PARAM_INT);
+        $watchingStmnt->bindParam(':buyerID2', $userID, PDO::PARAM_INT);
         $watchingStmnt->execute();
 
      // Fetching the row.
@@ -114,29 +112,32 @@
         }
 
           //retieving user outbid
-        $data['outbid']=array();
+        $data['outbid'] = array();
 
-         $outbidStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+        $outbidStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
-            FROM item AS i, auction as a 
-            LEFT JOIN bid AS b 
-            ON a.auctionID = b.auctionID 
-            WHERE i.itemID = a.itemID AND a.endTime > adddate(NOW(),-7)
-            GROUP BY b.auctionID
-            HAVING :buyerID != (SELECT b2.buyerID FROM bid AS b2
-                                WHERE b2.auctionID = b.auctionID
-                                AND b2.price = (SELECT MAX(b3.price) FROM bid as b3
-                                                WHERE b3.auctionID = b2.auctionID)
-                                                )
-             AND 0 < (SELECT MAX(b1.price) AS maxbid
+                FROM item AS i, auction as a 
+                LEFT JOIN bid AS b 
+                ON a.auctionID = b.auctionID 
+                WHERE i.itemID = a.itemID AND a.endTime > adddate(NOW(),-7)
+                GROUP BY a.auctionID
+                HAVING :buyerID != (SELECT b2.buyerID FROM bid AS b2
+                                    WHERE b2.auctionID = a.auctionID
+                                    AND b2.price = (SELECT MAX(b3.price) FROM bid as b3
+                                                WHERE b3.auctionID = b2.auctionID) 
+                                )
+                AND  0 < (SELECT MAX(b1.price) AS maxbid
                         FROM bid as b1 
                         WHERE b1.auctionID = a.auctionID 
-                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
-                        having maxbid > 0)');
+                        AND b1.buyerID = :buyerID2
+                        )'
+                    );
 
         // Binding the provided username to our prepared statement.
         $outbidStmnt->bindParam(':buyerID', $userID, PDO::PARAM_INT);
+        $outbidStmnt->bindParam(':buyerID2', $userID, PDO::PARAM_INT);
+
         $outbidStmnt->execute();
 
      // Fetching the row.
