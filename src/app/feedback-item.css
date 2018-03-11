@@ -1,24 +1,22 @@
-.feedback-item{
+.feedback-item {
   padding-bottom: 15px;
-  background: white;
   padding: 10px 20%;
+  position: relative;
 }
 
-.username{
+.username {
   font-size: 1.1em;
   color: blue;
 }
 
-.inline-block{
-  display:inline-block;
+.inline-block {
+  display: inline-block;
   vertical-align: middle;
-
 }
 
-.comment{
+.comment {
   word-wrap: normal;
 }
-
 
 /* Stars  https://stackoverflow.com/questions/33858426/only-fill-60-percent-star-using-css-width*/
 
@@ -29,8 +27,10 @@
 }
 
 .rating {
+  /*width inserted*/
   overflow: hidden;
   white-space: nowrap;
+  z-index: 2;
 }
 
 .rating span {
@@ -40,9 +40,9 @@
   color: gold;
 }
 
-.rating span:before { 
-  content:"\2606 \2606 \2606 \2606 \2606";
+.rating span:before {
+  content: "\2606 \2606 \2606 \2606 \2606";
   position: absolute;
   color: #bdbdbd;
-  z-index: -1;
+  z-index: 1;
 }

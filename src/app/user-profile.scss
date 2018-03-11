@@ -1,26 +1,32 @@
 .user-details {
   position: relative;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .login{
-  margin-bottom: 20px;
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 75px;
 }
 
 .centred{
   text-align: center;
 }
 
-.viewingProfileName{
-  padding-top: 20px;
-}
+.seller-feedback{
+margin-bottom: 20px;
 
+}
 .viewingProfilePhoto {
   position: relative;
   display: inline-block;
   height: 100px;
   width: 100px;
   margin-right: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ratings {
@@ -30,6 +36,7 @@
   position: relative;
   margin-left:15%;
   margin-right:15%;
+  background: white;
 }
 
 .ratingcount{
@@ -44,6 +51,10 @@
   margin-top: 20px;
   padding-top:20px;
   padding-bottom: 10px;
+}
+
+hr{
+  margin:0;
 }
 
 .vertical-align{
@@ -80,9 +91,6 @@
   white-space: nowrap;
 }
 
-hr{
-  margin:0;
-}
 
 .rating span {
   font-size: 18px;
@@ -90,7 +98,6 @@ hr{
   overflow: hidden;
   color: gold;
 }
-
 
 .rating span:before { 
   content:"\2606 \2606 \2606 \2606 \2606";
