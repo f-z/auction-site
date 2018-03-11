@@ -81,9 +81,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.userService.setUser(user);
   }
 
-  setProfile(user: User): void {
-    this.userService.setProfile(user);
-  }
 
   getSellerRating(sellerID: number): void {
     const headers: any = new HttpHeaders({
