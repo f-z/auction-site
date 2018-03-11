@@ -539,7 +539,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   goToMyProfile(): void {
-    this.userService.setProfile(this.user);
     this.router.navigate(['/profile', this.user.username]);
   }
 

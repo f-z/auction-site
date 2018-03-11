@@ -6,7 +6,7 @@
 			</div>
 		</div>
 	</div>
-	<h3 class="inline-block username" (click)="setProfile(feedback.username)" [routerLink]="['/profile', feedback?.username]">&ndash; {{ feedback?.username }}</h3>
+	<h3 class="inline-block username" (click)="visitProfile()" [routerLink]="['/profile', feedback?.userID]">&ndash; {{ feedback?.username }}</h3>
 	<h3 *ngIf="feedback.name != null" class="inline-block"> bought</h3>
 	<h3 *ngIf="feedback.name != null" class="inline-block" (click)="setItem()" [routerLink]="['/items', item?.itemID]"> {{ feedback?.name }}</h3>
 	<h4 class="comment"> "{{ feedback?.comment }}"</h4>

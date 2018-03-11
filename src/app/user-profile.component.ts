@@ -174,8 +174,7 @@ export class ProfileComponent implements OnInit {
   }
 
   goToMyProfile(): void {
-    this.userService.setProfile(this.user);
-    this.router.navigate(['/profile', this.user.username]);
+    this.router.navigate(['/profile', this.user.userID]);
   }
 
   logout(): void {

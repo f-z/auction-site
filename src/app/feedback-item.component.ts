@@ -26,11 +26,9 @@ export class FeedbackItemComponent implements OnInit {
     this.feedbackPercentage = this.feedback.rating * 20;
   }
 
-  setProfile(): void {
-    this.getFeedbackUser(this.feedback.userID);
-    this.userService.setProfile(this.feedbackUser);
+  visitProfile():void{
+    this.router.navigate(['/profile', this.feedback.userID]);
   }
-
 
   setItem(): void {
     this.getItem(this.feedback.auctionID);

@@ -90,7 +90,6 @@ export class MyItemsComponent implements OnInit {
   }
 
   goToMyProfile(): void {
-    this.userService.setProfile(this.user);
     this.router.navigate(['/profile', this.user.username]);
   }
 
