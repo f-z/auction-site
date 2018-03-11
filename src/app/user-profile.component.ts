@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Item, ItemService } from './shared/services/item.service';
-import { User, UserService, Feedback } from './shared/services/user.service';
+import { Item, ItemService, Feedback } from './shared/services/item.service';
+import { User, UserService } from './shared/services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {MatGridListModule} from '@angular/material/grid-list';
 
@@ -11,7 +11,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
   templateUrl: './user-profile.html',
   styleUrls: ['./user-profile.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   private user: User; // the logged-in user
 
   private profileUserID: number;
@@ -34,9 +34,7 @@ export class ProfileComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private http: HttpClient
   ) { 
-  }
-
-  ngOnInit(): void {
+    activatedRoute.params.subscribe(val => {
     this.profileUserID = +this.activatedRoute.snapshot.url[1].path;
     this.user = this.getUser();
     if (this.user === null) {
@@ -46,6 +44,7 @@ export class ProfileComponent implements OnInit {
     this.getUsersSellerFeedback();
     this.getUsersBuyerFeedback();
     this.getItems();
+  });
   }
 
 
