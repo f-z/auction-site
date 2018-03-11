@@ -2,7 +2,7 @@
   position: relative;
   text-align: center;
   font-size: 16px;
-  width: 150px;
+  width: 170px;
   cursor: pointer;
   padding: 10px 10px;
   opacity: .95;
@@ -14,6 +14,12 @@
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.item-details {
+  margin-right: 15%;
+  margin-left: 15%;
+  width: 70%;
 }
 
 .item-details .add-item-button span {
@@ -73,28 +79,30 @@ app-item {
 /*Tabs*/
 /* Style the tab */
 .tabwrapper {
-  display: block;
-  margin-left: auto;
-  margin-right: auto; 
+  text-align: center;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .tab {
-
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: black;
+   border: 1px solid #ccc;
 }
 
 /* Style the buttons inside the tab */
 .tab button {
     background-color: inherit;
-    float: left;
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
+    padding: 14px 0;
+    margin: 0 0;
+    width: 33.3%;
+    margin: 0 0;
     transition: 0.3s;
     font-size: 17px;
+      color: white;
 }
 
 /* Change background color of buttons on hover */

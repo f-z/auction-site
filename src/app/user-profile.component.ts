@@ -132,7 +132,7 @@ export class ProfileComponent {
       }),
       options: any = {
         userID: +this.activatedRoute.snapshot.url[1].path,
-        includeExpired: true
+        includeExpired: false
       },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_user_items.php';

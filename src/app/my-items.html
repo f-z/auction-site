@@ -28,7 +28,7 @@
   <br>
 
   <button class="add-item-button" routerLink="/add-item">
-    <span>Add New Item</span>
+    <span>Add New Auction</span>
   </button>
   <br>
 </section>
@@ -36,9 +36,9 @@
 <!-- item grid -->
 <div class="tabwrapper">
 <div class="tab">
-  <button id="auctions-btn" class="tablinks active" (click)="openTab('auctions-btn', 'auctions')">My Auctions</button>
-  <button id="bids-btn" class="tablinks" (click)="openTab('bids-btn', 'bids')">My Bids</button>
-  <button id="watching-btn" class="tablinks" (click)="openTab('watching-btn', 'watching')">Watching</button>
+  <button id="auctions-btn" class="tablinks active" (click)="openTab('auctions-btn', 'auctions')">My Auctions</button><!--
+  --><button id="bids-btn" class="tablinks" (click)="openTab('bids-btn', 'bids')">My Bids</button><!--
+  --><button id="watching-btn" class="tablinks" (click)="openTab('watching-btn', 'watching')">Watching</button>
 </div>
 </div>
 
@@ -53,7 +53,7 @@
 </div>
 
 <div class="tabcontent" id="bids">
-  <h2>Top bidder</h2>
+  <h2>Auctions where you are the current top bidder</h2>
   <div class="grid-list-container">
     <mat-grid-list cols="3" gutterSize="16">
       <mat-grid-tile *ngFor="let item of userTopBids">
@@ -63,7 +63,7 @@
     </mat-grid-list>
   </div>
 
-  <h2>Outbid</h2>
+  <h2>Auctions where you have been outbid</h2>
   <div class="grid-list-container">
     <mat-grid-list cols="3" gutterSize="16">
       <mat-grid-tile *ngFor="let item of userOutbid">
