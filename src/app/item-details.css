@@ -103,7 +103,7 @@ h3 {
 .sellerName {
   display: inline-block;
   font-weight: 500;
-  color: blue;
+
 }
 
 /* Stars */
@@ -135,4 +135,5 @@ h3 {
 
 .link {
     cursor: pointer;
+    color: blue;
 }
