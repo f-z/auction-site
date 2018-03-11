@@ -2,56 +2,60 @@
 
 <!-- card logout -->
 <section>
-<div class="card login">
-  <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
-  <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
-  <h1 class="headline">UCL Bay</h1>
-  <button class="button" routerLink="/register" *ngIf="user==null">
-    <span>Register</span>
-  </button>
-  <button class="button" routerLink="/login" *ngIf="user==null">
-    <span>Login</span>
-  </button>
-  <button class="button" (click)="logout()" *ngIf="user!=null">
-    <span>Logout</span>
-  </button>
-  <button class="button" routerLink="/search" *ngIf="user!=null">
-    <span>Main Page</span>
-  </button>
-</div>
+  <div class="card login">
+    <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
+    <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
+    <h1 class="headline">UCL Bay</h1>
+    <button class="button" routerLink="/register" *ngIf="user==null">
+      <span>Register</span>
+    </button>
+    <button class="button" routerLink="/login" *ngIf="user==null">
+      <span>Login</span>
+    </button>
+    <button class="button" (click)="logout()" *ngIf="user!=null">
+      <span>Logout</span>
+    </button>
+    <button class="button" routerLink="/search" *ngIf="user!=null">
+      <span>Main Page</span>
+    </button>
+  </div>
 </section>
 
 <br>
 
 <!-- user details -->
 <section class="user-details" *ngIf="user!=null">
- 
+
   <div>
-      <img class="viewingProfilePhoto centred" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
-      <h2 class="viewingProfileName centred" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
-      <h2 class="viewingProfileName centred" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
+    <img class="viewingProfilePhoto centred" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
+    <h2 class="viewingProfileName centred" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
+    <h2 class="viewingProfileName centred" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
   </div>
 
   <div class="ratings">
     <div class="average-rating">
       <h3 class="vertical-align">Seller Rating:&nbsp;</h3>
-      <div class="star vertical-align" title="{{profileUser.username}}'s average rating as a seller">
+      <div *ngIf="profileUser != null" class="star vertical-align" title="{{ profileUser.username }}'s average rating as a seller">
         <div class="rating" [style.width.%]="averageSellerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount != 1" >&nbsp;({{ sellerFeedbackCount }})</h6>
-      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller." *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} people have rated {{ profileUser?.username }} as a seller."
+        *ngIf="sellerFeedbackCount != 1">&nbsp;({{ sellerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ sellerFeedbackCount }} person has rated {{ profileUser?.username }} as a seller."
+        *ngIf="sellerFeedbackCount == 1">&nbsp;({{ sellerFeedbackCount }})</h6>
     </div>
-    <div class="average-rating">
+    <div *ngIf="profileUser != null" class="average-rating">
       <h3 class="vertical-align">Buyer Rating:&nbsp;</h3>
-      <div class="star vertical-align" title="{{profileUser.username}}'s average buyer rating">
+      <div class="star vertical-align" title="{{ profileUser.username }}'s average buyer rating">
         <div class="rating" [style.width.%]="averageBuyerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
       </div>
-      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} people have rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount > 1">&nbsp;({{ buyerFeedbackCount }})</h6>
-      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} person has rated {{profileUser?.username}} as a buyer." *ngIf="buyerFeedbackCount == 1" >&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} people have rated {{ profileUser?.username }} as a buyer."
+        *ngIf="buyerFeedbackCount > 1">&nbsp;({{ buyerFeedbackCount }})</h6>
+      <h6 class="ratingcount vertical-align" title="{{ buyerFeedbackCount }} person has rated {{ profileUser?.username }} as a buyer."
+        *ngIf="buyerFeedbackCount == 1">&nbsp;({{ buyerFeedbackCount }})</h6>
       <h6 class="ratingcount vertical-align" title="{{ profileUser?.username }} is yet unrated as a buyer." *ngIf="buyerFeedbackCount == 0">&nbsp;({{ buyerFeedbackCount }})</h6>
     </div>
   </div>
@@ -62,13 +66,13 @@
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
-        
+
       </li>
     </ul>
     <hr>
   </div>
 
-   <div class="feedback" *ngIf="buyerFeedbackCount > 0">
+  <div class="feedback" *ngIf="buyerFeedbackCount > 0">
     <h3 *ngIf="buyerFeedbackCount > 0" class="comments-title">Feedback from {{profileUser?.username}}'s sellers</h3>
     <ul class="feedback-list cf">
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
@@ -83,9 +87,11 @@
 <div class="user-auctions">
   <h2 *ngIf="user.userID != profileUser?.userID">Auctions</h2>
   <h2 *ngIf="user.userID == profileUser?.userID">My Auctions</h2>
-  <h3 *ngIf="userAuctions.length == 0 && user.userID != profileUser?.userID" class="centred">There are no live auctions from this user at this time.</h3>
-  <h3 class="no-auctions-comment centred" *ngIf="userAuctions.length == 0 && user.userID == profileUser?.userID">You have no live auctions at this time</h3>
-   <button class="add-item-button" routerLink="/add-item" *ngIf=" user.userID == profileUser?.userID">
+  <div *ngIf="userAuctions != null">
+    <h3 *ngIf="userAuctions.length == 0 && user.userID != profileUser?.userID" class="centred">There are no live auctions from this user at this time.</h3>
+    <h3 class="no-auctions-comment centred" *ngIf="userAuctions.length == 0 && user.userID == profileUser?.userID">You have no live auctions at this time</h3>
+  </div>
+  <button class="add-item-button" routerLink="/add-item" *ngIf=" user.userID == profileUser?.userID">
     <span>Add New Auction</span>
   </button>
   <!-- item grid -->
