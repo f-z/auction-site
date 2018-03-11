@@ -35,7 +35,7 @@
   <div class="ratings">
     <div class="average-rating">
       <h3 class="vertical-align">Seller Rating:&nbsp;</h3>
-      <div class="star vertical-align">
+      <div class="star vertical-align" title="{{profileUser.username}}'s average rating as a seller">
         <div class="rating" [style.width.%]="averageSellerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="average-rating">
       <h3 class="vertical-align">Buyer Rating:&nbsp;</h3>
-      <div class="star vertical-align">
+      <div class="star vertical-align" title="{{profileUser.username}}'s average buyer rating">
         <div class="rating" [style.width.%]="averageBuyerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
@@ -62,9 +62,10 @@
       <li class="feedbacklist-item cf" *ngFor="let feedback of userSellerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
-        <hr>
+        
       </li>
     </ul>
+    <hr>
   </div>
 
    <div class="feedback" *ngIf="buyerFeedbackCount > 0">
@@ -73,9 +74,9 @@
       <li class="feedbacklist-item cf" *ngFor="let feedback of userBuyerFeedback">
         <app-feedback-item class="content" [feedback]="feedback">
         </app-feedback-item>
-        <hr>
       </li>
     </ul>
+    <hr>
   </div>
 </section>
 

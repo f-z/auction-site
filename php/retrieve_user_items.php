@@ -61,6 +61,7 @@
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
+            AND b.price != 0
             AND b.price = (SELECT MAX(price) FROM bid 
                 WHERE auctionID = a.auctionID
             )
@@ -85,7 +86,7 @@
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
-            WHERE i.itemID = a.itemID AND buyerID = :buyerID AND b.price = 0 AND a.endTime > adddate(NOW(),-7)
+            WHERE i.itemID = a.itemID AND buyerID = :buyerID AND MAX(b.price) = 0 AND a.endTime > adddate(NOW(),-7)
             GROUP BY a.auctionID');
 
         // Binding the provided username to our prepared statement.
