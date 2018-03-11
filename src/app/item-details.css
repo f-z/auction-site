@@ -132,3 +132,7 @@ h3 {
   color: #bdbdbd;
   z-index: -1;
 }
+
+.link {
+    cursor: pointer;
+}

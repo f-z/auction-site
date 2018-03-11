@@ -6,7 +6,6 @@
 
 .username {
   font-size: 1.1em;
-  color: blue;
 }
 
 .inline-block {
@@ -45,4 +44,9 @@
   position: absolute;
   color: #bdbdbd;
   z-index: 1;
+}
+
+.link {
+    cursor: pointer;
+    color: blue;
 }
