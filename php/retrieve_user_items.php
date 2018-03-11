@@ -82,19 +82,20 @@
         $data['watching']=array();
 
          $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings 
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) as maxbid, count(b.buyerID) as bidcount
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
-            ON a.auctionID = b.auctionID 
-            WHERE i.itemID = a.itemID AND buyerID = :buyerID AND MAX(b.price) = 0 AND a.endTime > adddate(NOW(),-7)
-            GROUP BY a.auctionID');
+            ON b.auctionID = a.auctionID 
+            WHERE i.itemID = a.itemID AND buyerID = :buyerID AND a.endTime > adddate(NOW(),-7) 
+            GROUP BY b.auctionID
+            HAVING bidcount = 1 and maxbid = 0');
 
         // Binding the provided username to our prepared statement.
         $watchingStmnt->bindParam(':buyerID', $userID, PDO::PARAM_INT);
         $watchingStmnt->execute();
 
      // Fetching the row.
-        while($row = $bidsStmnt->fetch(PDO::FETCH_OBJ)) {
+        while($row = $watchingStmnt->fetch(PDO::FETCH_OBJ)) {
             // Assigning each row of data to an associative array.
             $data['watching'][] = $row;
         }

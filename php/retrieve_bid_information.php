@@ -24,8 +24,8 @@
 
     $sql2 = 'SELECT price AS highestBid, buyerID FROM bid
           WHERE `auctionID`= :auctionID
-          AND price != 0
-          AND price= (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
+          AND price > 0
+          AND price = (select MAX(price) FROM bid where `auctionID` = :auctionID2);';
 
     $retrieveBid = $pdo->prepare($sql2);
     $retrieveBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

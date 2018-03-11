@@ -57,6 +57,7 @@ export class MyItemsComponent implements OnInit {
         }
 
         this.userWatching = data.watching;
+        console.log(data.watching);
         for (let i = 0; i < data.watching.length; i++) {
           this.userWatching[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
             this.userWatching[i].photo.substring(5, this.userWatching[i].photo.length - 5);
