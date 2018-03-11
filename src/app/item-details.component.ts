@@ -122,11 +122,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data.length);
-        if(data.length === 1){
+        console.log(data[0].maxbid);
+        if(data[0].maxbid != null){
           this.isWatching = true;
         }
-        else if(data.length === 0){
+        else if(data[0].maxbid === null){
           this.isWatching = false;
         }
       },
@@ -153,7 +153,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
- 
+   console.log(data);
         this.openDialog('You are no longer watching this auction!', '', true);
       },
       (error: any) => {
