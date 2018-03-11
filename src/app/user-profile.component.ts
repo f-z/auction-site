@@ -94,7 +94,6 @@ export class ProfileComponent {
       (data: any) => {
         if (data != null) {
           this.userSellerFeedback = data['feedbackRows'];
-          console.log(data['feedbackRows']);
           this.averageSellerRating = data['average'].average * 20;
           this.sellerFeedbackCount = data['average'].count;
         }
@@ -115,7 +114,6 @@ export class ProfileComponent {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-          console.log(data['feedbackRows']);
           this.userBuyerFeedback = data['feedbackRows'];
           this.averageBuyerRating = data['average'].average * 20;
           this.buyerFeedbackCount = data['average'].count;
