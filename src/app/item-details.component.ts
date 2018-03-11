@@ -43,6 +43,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private sellerFeedbackGiven: boolean;
   private buyerFeedbackGiven: boolean;
   private isWatching: boolean;
+  private isOutbid: boolean;
 
   constructor(
     private userService: UserService,
@@ -122,13 +123,21 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data[0].maxbid);
-        if(data[0].maxbid != null){
+        console.log(data);
+        if(data.watching[0].maxbid != null){
           this.isWatching = true;
         }
-        else if(data[0].maxbid === null){
+        else if(data.watching[0].maxbid === null){
           this.isWatching = false;
         }
+        if(data.outbid[0].outbid != null){
+          this.isOutbid = true;
+        }
+        else if(data.outbid[0].outbid === null){
+          this.isOutbid = false;
+        }
+
+
       },
       (error: any) => {
         // If there is an error, return to main search page.
