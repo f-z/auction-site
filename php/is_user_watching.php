@@ -17,11 +17,7 @@
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
             WHERE b.buyerID = :buyerID AND a.auctionID = :auctionID 
-            AND price = 0 
-            OR b.buyerID != (SELECT b2.buyerID FROM bid AS b2
-                            WHERE b2.price = (SELECT MAX(b3.price) FROM bid as b3
-                                            WHERE b3.auctionID = b.auctionID)
-                            )');
+            AND price = 0');
        
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
