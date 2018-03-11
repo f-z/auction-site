@@ -9,10 +9,6 @@
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT); 
 
     try {
-
-        // Declaring an empty array to store the data we retrieve from the database in.
-        $data = array();
-
         //Retrieving item: 
          
         $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
@@ -29,7 +25,7 @@
 
         $stmnt->execute();
             // Fetching the row.
-        $data = $stmnt->fetch(PDO::FETCH_OBJ));
+        $data = $stmnt->fetch(PDO::FETCH_OBJ);
      
         // Returning data as JSON.
         echo json_encode($data);

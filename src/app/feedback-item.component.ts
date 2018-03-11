@@ -24,6 +24,7 @@ export class FeedbackItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.feedbackPercentage = this.feedback.rating * 20;
+    this.getItem(this.feedback.auctionID);
   }
 
   visitProfile():void{
@@ -31,7 +32,7 @@ export class FeedbackItemComponent implements OnInit {
   }
 
   setItem(): void {
-    this.getItem(this.feedback.auctionID);
+    console.log(this.item);
     this.itemService.setItem(this.item);
   }
 
@@ -48,6 +49,8 @@ export class FeedbackItemComponent implements OnInit {
         // Set the date we're counting down to.
         if (data != null) {
           this.item = data;
+          this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.item.photo.substring(5, this.item.photo.length - 5);
         }
       },
       (error: any) => {
