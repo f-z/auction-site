@@ -153,8 +153,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data);
-        
+ 
+        this.openDialog('You are no longer watching this auction!', '', true);
       },
       (error: any) => {
         // If there is an error, return to main search page.
