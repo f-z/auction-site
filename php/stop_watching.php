@@ -12,7 +12,7 @@
 
   try {
     
-    $sql = 'DELETE FROM `bid` WHERE auctionID = :auctionID AND buyerID = :buyerID';
+    $sql = 'DELETE * FROM `bid` WHERE auctionID = :auctionID AND buyerID = :buyerID';
     $query = $pdo->prepare($sql);
     $query->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
     $query->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);

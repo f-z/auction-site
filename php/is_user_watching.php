@@ -15,9 +15,12 @@
          
         $stmnt = $pdo->prepare('SELECT MAX(b.price) AS maxbid FROM auction as a 
             LEFT JOIN bid AS b 
-            ON b.auctionID = a.auctionID 
-            WHERE a.auctionID = :auctionID AND b.buyerID = :buyerID
-            HAVING maxbid = 0');
+            ON a.auctionID = b.auctionID 
+            WHERE b.buyerID = :buyerID AND a.auctionID = :auctionID 
+            AND b.buyerID != (SELECT b2.buyerID FROM bid AS b2
+                            WHERE b2.price = (SELECT MAX(b3.price) FROM bid as b3
+                                            WHERE b3.auctionID = b.auctionID)
+                            )');
        
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

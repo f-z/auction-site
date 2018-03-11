@@ -110,7 +110,7 @@
       </div>
       <br>
       <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf="isWatching === false">
-      <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true">
+      <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true && highestBidderID != user.userID">
     </form>
   </div>
 
