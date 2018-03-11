@@ -24,8 +24,11 @@
         $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
 
         $stmnt->execute();
-            // Fetching the row.
-        $data = $stmnt->fetch(PDO::FETCH_OBJ);
+
+        $data = array();
+         while($row = $stmnt->fetch(PDO::FETCH_OBJ)){
+            $data[] = $row;
+         }
      
         // Returning data as JSON.
         echo json_encode($data);

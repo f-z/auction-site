@@ -110,6 +110,7 @@
       </div>
       <br>
       <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf=" isWatching == false">
+      <input type="submit" value="Remove from watching list" (click)="stopWatching()" id="watch-btn" *ngIf=" isWatching == true">
     </form>
   </div>
 

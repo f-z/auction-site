@@ -111,22 +111,23 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  isUserWatching(auctionID):boolean{
+  isUserWatching(auctionID): void{
         const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options: any = { buyerID: this.user.userID,
-                        auctionID: auctionID },
+                        auctionID: auctionID  },
       url: any =
         'https://php-group30.azurewebsites.net/is_user_watching.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data.length);
         if(data.length === 1){
-          return true;
+          this.isWatching = true;
         }
-        if(data.length === 0){
-          return false;
+        else if(data.length === 0){
+          this.isWatching = false;
         }
       },
       (error: any) => {
@@ -138,7 +139,33 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         );
       }
     );
-    return false;
+    return;
+  }
+
+  stopWatching():void{
+      const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { buyerID: this.user.userID,
+                       auctionID: this.auction.auctionID  },
+      url: any =
+        'https://php-group30.azurewebsites.net/stop_watching.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        console.log(data);
+        
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
+    return;
   }
 
   getAuctionInformation(): void {
@@ -162,6 +189,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.setIsExpired(data[0].endTime);
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
+        this.isUserWatching(data[0].auctionID);
       },
       (error: any) => {
         // If there is an error, return to main search page.
