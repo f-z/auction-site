@@ -59,7 +59,7 @@
         $data['topbids']=array();
 
          $bidsStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, b.price as highestBid 
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, b.price AS highestBid 
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
@@ -84,13 +84,24 @@
         $data['watching']=array();
 
          $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) as maxbid, count(b.buyerID) as bidcount
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+                CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON b.auctionID = a.auctionID 
-            WHERE i.itemID = a.itemID AND buyerID = :buyerID AND a.endTime > adddate(NOW(),-7) 
+            WHERE i.itemID = a.itemID AND a.endTime > adddate(NOW(),-7) 
             GROUP BY b.auctionID
-            HAVING bidcount = 1 and maxbid = 0');
+            HAVING 0 = (SELECT MAX(b1.price) AS maxbid
+                        FROM bid as b1 
+                        WHERE b1.auctionID = a.auctionID 
+                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
+                        having COUNT(b1.buyerID) = 1 AND maxbid = 0)
+            AND 1 = (SELECT count(b1.buyerID)
+                        FROM bid as b1
+                        WHERE b1.auctionID = a.auctionID 
+                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
+                        having COUNT(b1.buyerID) = 1 AND MAX(b1.price) = 0)
+     ');
 
         // Binding the provided username to our prepared statement.
         $watchingStmnt->bindParam(':buyerID', $userID, PDO::PARAM_INT);
@@ -106,16 +117,23 @@
         $data['outbid']=array();
 
          $outbidStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) 
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+                CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
-            WHERE i.itemID = a.itemID AND b.buyerID = :buyerID AND b.price != 0 AND a.endTime > adddate(NOW(),-7)
-            AND b.buyerID != (SELECT b2.buyerID FROM bid AS b2
-                            WHERE b2.price = (SELECT MAX(b3.price) FROM bid as b3
-                                            WHERE b3.auctionID = b.auctionID)
-                            )
-            GROUP BY a.auctionID');
+            WHERE i.itemID = a.itemID AND a.endTime > adddate(NOW(),-7)
+            GROUP BY b.auctionID
+            HAVING :buyerID != (SELECT b2.buyerID FROM bid AS b2
+                                WHERE b2.auctionID = b.auctionID
+                                AND b2.price = (SELECT MAX(b3.price) FROM bid as b3
+                                                WHERE b3.auctionID = b2.auctionID)
+                                                )
+             AND 0 < (SELECT MAX(b1.price) AS maxbid
+                        FROM bid as b1 
+                        WHERE b1.auctionID = a.auctionID 
+                        AND b1.buyerID = :buyerID AND b1.auctionID = a.auctionID 
+                        having maxbid > 0)');
 
         // Binding the provided username to our prepared statement.
         $outbidStmnt->bindParam(':buyerID', $userID, PDO::PARAM_INT);
