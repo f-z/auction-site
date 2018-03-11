@@ -83,6 +83,11 @@
 <div class="user-auctions">
   <h2 *ngIf="user.userID != profileUser?.userID">Auctions</h2>
   <h2 *ngIf="user.userID == profileUser?.userID">My Auctions</h2>
+  <h3 *ngIf="userAuctions.length == 0 && user.userID != profileUser?.userID" class="centred">There are no live auctions from this user at this time.</h3>
+  <h3 class="no-auctions-comment centred" *ngIf="userAuctions.length == 0 && user.userID == profileUser?.userID">You have no live auctions at this time</h3>
+   <button class="add-item-button" routerLink="/add-item" *ngIf=" user.userID == profileUser?.userID">
+    <span>Add New Auction</span>
+  </button>
   <!-- item grid -->
   <div class="grid-list-container">
     <mat-grid-list cols="3" gutterSize="16">
