@@ -42,6 +42,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private feedback: Feedback;
   private sellerFeedbackGiven: boolean;
   private buyerFeedbackGiven: boolean;
+  private isWatching: boolean;
 
   constructor(
     private userService: UserService,
@@ -108,6 +109,36 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }
     );
     return null;
+  }
+
+  isUserWatching(auctionID):boolean{
+        const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { buyerID: this.user.userID,
+                        auctionID: auctionID },
+      url: any =
+        'https://php-group30.azurewebsites.net/is_user_watching.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        if(data.length === 1){
+          return true;
+        }
+        if(data.length === 0){
+          return false;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
+    return false;
   }
 
   getAuctionInformation(): void {

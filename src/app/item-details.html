@@ -109,7 +109,7 @@
         <input type="submit" value="Bid" id="submit-bid" (click)="bid()">
       </div>
       <br>
-      <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn">
+      <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf=" isWatching == false">
     </form>
   </div>
 
