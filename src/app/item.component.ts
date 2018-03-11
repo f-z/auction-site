@@ -9,7 +9,7 @@ import { NgStyle } from '@angular/common';
 })
 export class ItemComponent implements OnInit {
   @Input() item: Item;
-  timeleft: string;
+  timeLeft: string;
 
   constructor() {}
 
@@ -36,19 +36,19 @@ export class ItemComponent implements OnInit {
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     if (days > 7) {
-      this.timeleft = days + 'd left';
+      this.timeLeft = days + 'd left';
     } else if (days >= 1) {
-      this.timeleft = days + 'd ' + hours + 'h left';
+      this.timeLeft = days + 'd ' + hours + 'h left';
     } else if (hours >= 1) {
-      this.timeleft = hours + 'h left';
+      this.timeLeft = hours + 'h left';
     } else if (minutes >= 1) {
-      this.timeleft = minutes + 'm left';
+      this.timeLeft = minutes + 'm left';
     } else if (seconds >= 1) {
-      this.timeleft = seconds + 's left';
+      this.timeLeft = seconds + 's left';
     }
     // If the count down is finished, display a notification text message.
     if (distance < 0) {
-      this.timeleft = 'EXPIRED';
+      this.timeLeft = 'EXPIRED';
     }
   }
 }

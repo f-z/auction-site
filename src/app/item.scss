@@ -5,15 +5,12 @@
 /* ---------------------- */
 
 @import '../palette';
-
 :host {
   background: mat-color($ngs-background, card);
   height: 100%;
   width: 100%;
   padding: 10px;
-  text-align: center;
-
-  // Children layout
+  text-align: center; // Children layout
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,4 +28,25 @@
 .item-name {
   color: mat-color($ngs-foreground, text);
   font-size: 25px;
+}
+
+.item-info {
+  width: 100%;
+  margin-top: 5%;
+}
+
+.item-category {
+  width: 33.3%;
+  float: left;
+}
+
+.item-highestBid {
+  width: 33.3%;
+  float: left;
+  left: -50%;
+}
+
+.item-endTime {
+  width: 33.3%;
+  float: right;
 }

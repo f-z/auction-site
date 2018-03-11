@@ -12,6 +12,9 @@
    margin-top: 100px;
    z-index: 2;
    left: 50%;
+   -webkit-transform: translate(-50%, -50%);
+   -moz-transform: translate(-50%, -50%);
+   -ms-transform: translate(-50%, -50%);
    transform: translate(-50%, -50%);
  }
 
@@ -41,19 +44,18 @@
  }
 
  :host {
-  display: block;
-  background: #f3f3f3;
-}
+   display: block;
+   background: #f3f3f3;
+ }
 
-.grid-list-container {
-  position: relative;
-  padding: 16px;
-  z-index: 8;
-  margin-top: -12.5%;
-}
+ .grid-list-container {
+   position: relative;
+   padding: 16px;
+   z-index: 8;
+   margin-top: -12.5%;
+ }
 
-@import '../palette';
-
-app-item {
-  cursor: pointer;
-}
+ @import '../palette';
+ app-item {
+   cursor: pointer;
+ }
