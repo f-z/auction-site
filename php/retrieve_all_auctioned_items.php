@@ -3,7 +3,7 @@
 
     // Attempting to query database table and retrieve data.
     try {
-        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, photo1, photo2, photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
                                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
                                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                                 FROM item AS i, auction as a 
