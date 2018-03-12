@@ -46,27 +46,51 @@ export class MyItemsComponent implements OnInit {
 
         this.userAuctions = data.auctions;
         for (let i = 0; i < data.auctions.length; i++) {
-          this.userAuctions[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo.substring(5, this.userAuctions[i].photo.length - 5);
+          this.userAuctions[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo1.substring(5, this.userAuctions[i].photo1.length - 5);
+
+           this.userAuctions[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo2.substring(5, this.userAuctions[i].photo2.length - 5);
+
+            this.userAuctions[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo3.substring(5, this.userAuctions[i].photo3.length - 5);
         }
 
         this.userTopBids = data.topbids;
         for (let i = 0; i < data.topbids.length; i++) {
-          this.userTopBids[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userTopBids[i].photo.substring(5, this.userTopBids[i].photo.length - 5);
+          this.userTopBids[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userTopBids[i].photo1.substring(5, this.userTopBids[i].photo1.length - 5);
+
+          this.userTopBids[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userTopBids[i].photo2.substring(5, this.userTopBids[i].photo2.length - 5);
+            
+          this.userTopBids[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userTopBids[i].photo3.substring(5, this.userTopBids[i].photo3.length - 5);
         }
 
         this.userWatching = data.watching;
         console.log(data.watching);
         for (let i = 0; i < data.watching.length; i++) {
-          this.userWatching[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userWatching[i].photo.substring(5, this.userWatching[i].photo.length - 5);
+          this.userWatching[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userWatching[i].photo1.substring(5, this.userWatching[i].photo1.length - 5);
+                   
+             this.userWatching[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userWatching[i].photo2.substring(5, this.userWatching[i].photo2.length - 5);
+
+            this.userWatching[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userWatching[i].photo3.substring(5, this.userWatching[i].photo3.length - 5);
         }
 
         this.userOutbid = data.outbid;
         for (let i = 0; i < data.outbid.length; i++) {
-          this.userOutbid[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userOutbid[i].photo.substring(5, this.userOutbid[i].photo.length - 5);
+          this.userOutbid[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userOutbid[i].photo1.substring(5, this.userOutbid[i].photo1.length - 5);
+
+            this.userOutbid[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userOutbid[i].photo2.substring(5, this.userOutbid[i].photo2.length - 5);
+
+            this.userOutbid[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userOutbid[i].photo3.substring(5, this.userOutbid[i].photo3.length - 5);
         }
       },
       (error: any) => {

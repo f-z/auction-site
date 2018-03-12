@@ -72,9 +72,15 @@ export class AppComponent implements OnInit {
         (data: any) => {
           this.items = data;
           for (let i = 0; i < data.length; i++) {
-            this.items[i].photo =
+            this.items[i].photo1 =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo.substring(5, this.items[i].photo.length - 5);
+              this.items[i].photo1.substring(5, this.items[i].photo1.length - 5);
+             this.items[i].photo2 =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.items[i].photo2.substring(5, this.items[i].photo2.length - 5);
+             this.items[i].photo1 =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.items[i].photo2.substring(5, this.items[i].photo2.length - 5);
           }
         },
         (error: any) => {

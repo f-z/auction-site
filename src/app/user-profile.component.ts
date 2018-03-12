@@ -139,12 +139,14 @@ export class ProfileComponent {
       (data: any) => {
         this.userAuctions = data.auctions;
         for (let i = 0; i < data.auctions.length; i++) {
-          this.userAuctions[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo.substring(
-              5,
-              this.userAuctions[i].photo.length - 5
-            );
+          this.userAuctions[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo1.substring(5,this.userAuctions[i].photo1.length - 5);
+
+          this.userAuctions[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo2.substring(5,this.userAuctions[i].photo2.length - 5);
+
+           this.userAuctions[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo3.substring(5,this.userAuctions[i].photo3.length - 5);
         }
       },
       (error: any) => {

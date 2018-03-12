@@ -110,7 +110,7 @@
       
      <div class="col-half">
    
-        <div class="input">
+        <div class="input" title="If this price threshold is not met when the auction ends, the auction will expire without a winner.">
           <div class="align">
           <label for="reservePrice">Reserve Price: £</label>
           <input type="number" class="inline-block" [(ngModel)]="reservePrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)" name="reservePrice" class="price-input"/>
