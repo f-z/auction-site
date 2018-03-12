@@ -40,7 +40,9 @@ export class ItemService {
 export interface Item {
   itemID: number;
   name: string;
-  photo: string;
+  photo1: string;
+  photo2: string;
+  photo3: string;
   description: string;
   condition: string;
   quantity: number;
