@@ -24,7 +24,9 @@ export class AddItemComponent implements OnInit {
   private condition: string;
   private quantity: number;
   private category: string;
-  private photo: string;
+  private photo1: string;
+  private photo2: string;
+  private photo3: string;
   private endDate: string;
   private endTime: string;
   private startPrice: number;
@@ -67,7 +69,9 @@ export class AddItemComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      this.photo = response;
+      this.photo1 = response;
+
+      //PHOTO2 AND PHOTO3 
       this.addItem();
     };
   }
@@ -87,7 +91,9 @@ export class AddItemComponent implements OnInit {
         startPrice: this.startPrice,
         reservePrice: this.reservePrice,
         buyNowPrice: this.buyNowPrice,
-        photo: this.photo,
+        photo1: this.photo1,
+        photo2: this.photo2,
+        photo3: this.photo3,
         sellerID: this.user.userID
       },
       url: any = 'https://php-group30.azurewebsites.net/insert_item.php';
