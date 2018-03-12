@@ -142,11 +142,12 @@ export class ProfileComponent {
           this.userAuctions[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
             this.userAuctions[i].photo1.substring(5,this.userAuctions[i].photo1.length - 5);
 
+            if( this.userAuctions[i].photo2 != null){
           this.userAuctions[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo2.substring(5,this.userAuctions[i].photo2.length - 5);
-
+            this.userAuctions[i].photo2.substring(5,this.userAuctions[i].photo2.length - 5);}
+          if( this.userAuctions[i].photo3 != null){
            this.userAuctions[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo3.substring(5,this.userAuctions[i].photo3.length - 5);
+            this.userAuctions[i].photo3.substring(5,this.userAuctions[i].photo3.length - 5);}
         }
       },
       (error: any) => {

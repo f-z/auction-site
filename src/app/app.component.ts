@@ -75,12 +75,14 @@ export class AppComponent implements OnInit {
             this.items[i].photo1 =
               'https://php-group30.azurewebsites.net/uploads/' +
               this.items[i].photo1.substring(5, this.items[i].photo1.length - 5);
+               if( this.items[i].photo2 != null){
              this.items[i].photo2 =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo2.substring(5, this.items[i].photo2.length - 5);
+              this.items[i].photo2.substring(5, this.items[i].photo2.length - 5);}
+                  if( this.items[i].photo3 != null){
              this.items[i].photo3 =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo3.substring(5, this.items[i].photo3.length - 5);
+              this.items[i].photo3.substring(5, this.items[i].photo3.length - 5);}
           }
         },
         (error: any) => {
