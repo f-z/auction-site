@@ -25,7 +25,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private viewings: number;
   private numberBids: number;
   private highestBid: number;
-  private buyItNow: number;
+  private buyItNowPrice: number;
   private highestBidderID: number;
   private highestBidder: User;
   private emailHighest: string;
@@ -199,7 +199,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
-        this.buyItNow = data[0].buyNowPrice;
+        this.buyItNowPrice = data[0].buyNowPrice;
+        console.log(this.isExpired);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -374,6 +375,60 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  buyItNow(): void {
+
+    const headers: any = new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    options: any = {
+      buyerID: this.user.userID,
+      auctionID: this.auction.auctionID,
+      price: this.buyItNowPrice
+    },
+    url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
+
+  this.http.post(url, JSON.stringify(options), headers).subscribe(
+    (data: any) => {
+      this.endAuction();
+      this.openDialog(
+        'Congratulations, you have won this auction!',
+        '',
+        true
+      );
+    },
+    (error: any) => {
+      // If there is an error, return to main search page.
+      this.openDialog(
+        'Oops, something went wrong... Please try again!',
+        '',
+        true
+      );
+    }
+  );
+  return null;
+  }
+
+  endAuction(): void {
+
+    const headers: any = new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    options: any = {
+      auctionID: this.auction.auctionID,
+    },
+    url: any = 'https://php-group30.azurewebsites.net/end_auction.php';
+
+  this.http.post(url, JSON.stringify(options), headers).subscribe(
+    (data: any) => {
+      console.log(data);
+    },
+    (error: any) => {
+    }
+  );
+  return null;
+
+  }
+
   validateBid(): boolean {
     if (this.newBid == null) {
       this.openDialog('Please enter your bid amount!', '', true);
@@ -466,10 +521,12 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   setIsExpired(auction_endTime: string): void {
     // Set the date we're counting down to
     const countDownDate = new Date(auction_endTime).getTime();
+    // console.log(countDownDate);
     const now = new Date().getTime();
 
     // Find the distance between now an the count down date
     const distance = countDownDate - now;
+    // console.log(distance);
     if (distance <= 0) {
       this.isExpired = true;
     } else {

@@ -58,13 +58,13 @@
         <br *ngIf="item.quantity > 1">
         <br *ngIf="item.quantity > 1">
 
-        <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
-        <br *ngIf="highestBid != null">
-        <br *ngIf="highestBid != null">
+        <h3 class="item-right" *ngIf="highestBid != null && isExpired == false">Current bid: £{{ highestBid }} </h3>
+        <br *ngIf="highestBid != null && isExpired == false">
+        <br *ngIf="highestBid != null && isExpired == false">
 
-        <h3 class="item-right" *ngIf="buyItNow != null">Buy it now price: £{{ buyItNow }} </h3>
-        <br *ngIf="buyItNow != null">
-        <br *ngIf="buyItNow != null">
+        <h3 class="item-right" *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">Buy it now price: £{{ buyItNowPrice }} </h3>
+        <br *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">
+        <br *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">
 
         <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
         <br *ngIf="auction != null && highestBid == null">
@@ -113,6 +113,7 @@
         <input type="submit" value="Bid" id="submit-bid" (click)="bid()">
       </div>
       <br>
+      <input type="submit" value="Buy It Now" (click)="buyItNow()" *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">
       <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf="isWatching === false && isOutbid == false && highestBidderID != user.userID">
       <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true && highestBidderID != user.userID && isOutbid === false">
     </form>
