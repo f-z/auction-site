@@ -16,6 +16,7 @@ import { FeedbackComponent } from './feedback.component';
 import { ProfileComponent } from './user-profile.component';
 import { DialogComponent } from './dialog.component';
 
+
 import { SearchPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,8 @@ import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 import { FileSelectDirective } from 'ng2-file-upload';
 
@@ -38,7 +41,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     BrowserAnimationsModule,
     MatButtonToggleModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule
   ],
   declarations: [
     HomeComponent,

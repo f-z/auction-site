@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'
 
 import { User, UserService } from './shared/services/user.service';
 import { Category } from './shared/services/item.service';
@@ -50,6 +51,7 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.user = this.getUser();
     this.getCategories();
 
