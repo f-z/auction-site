@@ -25,6 +25,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private viewings: number;
   private numberBids: number;
   private highestBid: number;
+  private buyItNow: number;
   private highestBidderID: number;
   private highestBidder: User;
   private emailHighest: string;
@@ -185,6 +186,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data);
         this.auction = data[0];
         if (this.item.sellerID === this.user.userID) {
           this.incrementViewings(data[0].auctionID, 'false');
@@ -197,6 +199,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
+        this.buyItNow = data[0].buyNowPrice;
       },
       (error: any) => {
         // If there is an error, return to main search page.

@@ -62,6 +62,10 @@
         <br *ngIf="highestBid != null">
         <br *ngIf="highestBid != null">
 
+        <h3 class="item-right" *ngIf="buyItNow != null">Buy it now price: £{{ buyItNow }} </h3>
+        <br *ngIf="buyItNow != null">
+        <br *ngIf="buyItNow != null">
+
         <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
         <br *ngIf="auction != null && highestBid == null">
         <br *ngIf="auction != null && highestBid == null">
