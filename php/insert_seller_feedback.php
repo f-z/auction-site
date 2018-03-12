@@ -53,6 +53,4 @@
   } catch (Exception $e) {
     $error = $e->getMessage();
   }
-
 ?>
-

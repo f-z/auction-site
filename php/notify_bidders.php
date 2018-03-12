@@ -1,5 +1,4 @@
 <?php
-
 // Allowing access.
 header('Access-Control-Allow-Origin: *');
 
@@ -79,7 +78,7 @@ foreach($bidders as $bidder){
         $mail->Subject = ''.$item_name.' was sold';
         $mail->Debugoutput = 'html';
         $mail->Body = 'Hi '. $firstname. ', 
-                          This item is gone but there is more!';
+                          This item is unfortunately now sold, but there is more!';
              
         if ($mail->send()){
             $sql2 = 'UPDATE bid SET isNotified = 1 WHERE auctionID = :auctionID AND buyerID = :buyerID;';

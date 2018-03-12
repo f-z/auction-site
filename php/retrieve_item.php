@@ -9,9 +9,8 @@
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT); 
 
     try {
-        //Retrieving item: 
-         
-        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
+        // Retrieving item.
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, photo1, photo2, photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, MAX(b.price) AS highestBid 
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
                 ON a.auctionID = b.auctionID 

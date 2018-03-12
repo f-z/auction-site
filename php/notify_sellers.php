@@ -1,5 +1,4 @@
 <?php
-
 // Allowing access.
 header('Access-Control-Allow-Origin: *');
 
@@ -42,7 +41,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $sellers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach($sellers as $seller){
+foreach($sellers as $seller) {
 
     $firstname = $seller['firstName'];
     $email = $seller['email'];
@@ -90,5 +89,4 @@ foreach($sellers as $seller){
     }
 
 }
-             
 ?>

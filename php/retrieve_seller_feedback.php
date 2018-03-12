@@ -1,5 +1,4 @@
 <?php
-
   require_once('connect_azure_db.php');
 
   $json    =  file_get_contents('php://input');
@@ -8,8 +7,7 @@
   $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
 
   try {
-
-      //Get feedback rows
+      // Get feedback rows.
       $feedbackRowsQuery = 'SELECT f.auctionID, f.buyerRating AS rating, f.buyerComment AS comment, i.`name`, a.endTime, f.buyerID as userID, u.username
                             FROM feedback AS f 
                             INNER JOIN auction AS a ON f.auctionID = a.auctionID
@@ -22,7 +20,7 @@
       $getSellersFeedback->execute();
       // Declaring an empty array to store the data we retrieve from the database in.
       $data[] = array();
-      //First element of array is an array storing all of the feedback rows
+      // First element of array is an array storing all of the feedback rows.
       $data['feedbackRows'] = array();
       // Fetching the row.
       while($row = $getSellersFeedback->fetch(PDO::FETCH_OBJ)) {
@@ -30,7 +28,7 @@
           $data['feedbackRows'][] = $row;
         }
 
-      //Get average rating
+      // Get average rating.
       $averageRatingQuery = 'SELECT AVG(f.buyerRating) as average, u.username, COUNT(f.buyerRating) as count 
                             FROM feedback AS f
                             JOIN `user` AS u ON u.userID = f.sellerID
