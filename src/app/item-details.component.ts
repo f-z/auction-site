@@ -26,6 +26,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private numberBids: number;
   private highestBid: number;
   private buyItNowPrice: number;
+  private reservePrice: number;
   private highestBidderID: number;
   private highestBidder: User;
   private emailHighest: string;
@@ -201,7 +202,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
-        console.log(this.isExpired);
+        this.reservePrice = data[0].reservePrice;
+        // console.log(this.reservePrice);
       },
       (error: any) => {
         // If there is an error, return to main search page.
