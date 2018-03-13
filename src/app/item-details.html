@@ -106,9 +106,13 @@
         <br *ngIf="item.quantity > 1">
         <br *ngIf="item.quantity > 1">
 
-        <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
+        <h3 class="item-right" *ngIf="highestBid != null">Highest bid: £{{ highestBid }} </h3>
         <br *ngIf="highestBid != null">
         <br *ngIf="highestBid != null">
+
+        <h3 class="item-right" *ngIf="highestBid < reservePrice"><em>Reserve price not met</em></h3>
+        <br *ngIf="highestBid < reservePrice">
+        <br *ngIf="highestBid < reservePrice">
 
         <h3 class="item-right" *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">Buy it now price: £{{ buyItNowPrice }} </h3>
         <br *ngIf="buyItNowPrice != null && buyItNowPrice > highestBid">
