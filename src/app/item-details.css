@@ -79,7 +79,8 @@ img.item-photo {
 }
 
 .userinfo-box {
-  margin-bottom: 20px;
+  top: 10%;
+  margin-bottom: 6%;
 }
 
 .vertical-align>* {

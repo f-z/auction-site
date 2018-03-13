@@ -84,7 +84,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.userService.setUser(user);
   }
 
-
   getSellerRating(sellerID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -113,31 +112,28 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  isUserWatching(auctionID): void{
-        const headers: any = new HttpHeaders({
+  isUserWatching(auctionID): void {
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { buyerID: this.user.userID,
-                        auctionID: auctionID  },
-      url: any =
-        'https://php-group30.azurewebsites.net/is_user_watching.php';
+      options: any = {
+        buyerID: this.user.userID,
+        auctionID: auctionID
+      },
+      url: any = 'https://php-group30.azurewebsites.net/is_user_watching.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        if(data.watching[0].maxbid != null){
+        if (data.watching[0].maxbid != null) {
           this.isWatching = true;
-        }
-        else if(data.watching[0].maxbid === null){
+        } else if (data.watching[0].maxbid === null) {
           this.isWatching = false;
         }
-        if(data.outbid[0].outbid != null){
+        if (data.outbid[0].outbid != null) {
           this.isOutbid = true;
-        }
-        else if(data.outbid[0].outbid === null){
+        } else if (data.outbid[0].outbid === null) {
           this.isOutbid = false;
         }
-
-
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -151,14 +147,15 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return;
   }
 
-  stopWatching():void{
-      const headers: any = new HttpHeaders({
+  stopWatching(): void {
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { buyerID: this.user.userID,
-                       auctionID: this.auction.auctionID  },
-      url: any =
-        'https://php-group30.azurewebsites.net/stop_watching.php';
+      options: any = {
+        buyerID: this.user.userID,
+        auctionID: this.auction.auctionID
+      },
+      url: any = 'https://php-group30.azurewebsites.net/stop_watching.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -376,57 +373,53 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   buyItNow(): void {
-
     const headers: any = new HttpHeaders({
-      'Content-Type': 'application/json'
-    }),
-    options: any = {
-      buyerID: this.user.userID,
-      auctionID: this.auction.auctionID,
-      price: this.buyItNowPrice
-    },
-    url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        buyerID: this.user.userID,
+        auctionID: this.auction.auctionID,
+        price: this.buyItNowPrice
+      },
+      url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
 
-  this.http.post(url, JSON.stringify(options), headers).subscribe(
-    (data: any) => {
-      this.endAuction();
-      this.openDialog(
-        'Congratulations, you have won this auction!',
-        '',
-        true
-      );
-    },
-    (error: any) => {
-      // If there is an error, return to main search page.
-      this.openDialog(
-        'Oops, something went wrong... Please try again!',
-        '',
-        true
-      );
-    }
-  );
-  return null;
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        this.endAuction();
+        this.openDialog(
+          'Congratulations, you have won this auction!',
+          '',
+          true
+        );
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops, something went wrong... Please try again!',
+          '',
+          true
+        );
+      }
+    );
+    return null;
   }
 
   endAuction(): void {
-
     const headers: any = new HttpHeaders({
-      'Content-Type': 'application/json'
-    }),
-    options: any = {
-      auctionID: this.auction.auctionID,
-    },
-    url: any = 'https://php-group30.azurewebsites.net/end_auction.php';
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        auctionID: this.auction.auctionID
+      },
+      url: any = 'https://php-group30.azurewebsites.net/end_auction.php';
 
-  this.http.post(url, JSON.stringify(options), headers).subscribe(
-    (data: any) => {
-      console.log(data);
-    },
-    (error: any) => {
-    }
-  );
-  return null;
-
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        console.log(data);
+      },
+      (error: any) => {}
+    );
+    return null;
   }
 
   validateBid(): boolean {
