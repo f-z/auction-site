@@ -7,8 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { DomSanitizer } from '@angular/platform-browser';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -72,17 +73,36 @@ export class AppComponent implements OnInit {
         (data: any) => {
           this.items = data;
           for (let i = 0; i < data.length; i++) {
+            // Format the end date and time.
+            const endDate = new Date(this.items[i].endTime).getTime();
+            const now = new Date().getTime();
+            // Find the distance between now and the end date.
+            const distance = endDate - now;
+
+            // if (distance >=0) {}
+
             this.items[i].photo1 =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo1.substring(5, this.items[i].photo1.length - 5);
-               if( this.items[i].photo2 != null){
-             this.items[i].photo2 =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo2.substring(5, this.items[i].photo2.length - 5);}
-                  if( this.items[i].photo3 != null){
-             this.items[i].photo3 =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo3.substring(5, this.items[i].photo3.length - 5);}
+              this.items[i].photo1.substring(
+                5,
+                this.items[i].photo1.length - 5
+              );
+            if (this.items[i].photo2 != null) {
+              this.items[i].photo2 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.items[i].photo2.substring(
+                  5,
+                  this.items[i].photo2.length - 5
+                );
+            }
+            if (this.items[i].photo3 != null) {
+              this.items[i].photo3 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.items[i].photo3.substring(
+                  5,
+                  this.items[i].photo3.length - 5
+                );
+            }
           }
         },
         (error: any) => {

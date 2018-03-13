@@ -68,43 +68,43 @@ export class RegistrationComponent {
   }
 
   register(): void {
-      const headers: any = new HttpHeaders({
-          'Content-Type': 'application/json'
-        }),
-        options: any = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          street: this.street,
-          city: this.city,
-          postcode: this.postcode,
-          username: this.username,
-          email: this.email,
-          password: this.password,
-          confirmedPassword: this.confirmedPassword,
-          phone: this.phone,
-          DOB: this.DOB,
-          photo: this.photo
-        },
-        url: any = 'https://php-group30.azurewebsites.net/register.php';
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        street: this.street,
+        city: this.city,
+        postcode: this.postcode,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        confirmedPassword: this.confirmedPassword,
+        phone: this.phone,
+        DOB: this.DOB,
+        photo: this.photo
+      },
+      url: any = 'https://php-group30.azurewebsites.net/register.php';
 
-      this.http.post(url, JSON.stringify(options), headers).subscribe(
-        (data: any) => {
-          // If the request was successful, notify the user.
-          this.openDialog(
-            'Congratulations, the following user was registered: ',
-            this.username,
-            true
-          );
-        },
-        (error: any) => {
-          // If the supplied username or email already exist in the database, notify the user.
-          this.openDialog(
-            'The supplied username/email already exists!',
-            '',
-            false
-          );
-        }
-      );
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // If the request was successful, notify the user.
+        this.openDialog(
+          'Congratulations, the following user was registered: ',
+          this.username,
+          true
+        );
+      },
+      (error: any) => {
+        // If the supplied username or email already exist in the database, notify the user.
+        this.openDialog(
+          'The supplied username/email already exists!',
+          '',
+          false
+        );
+      }
+    );
   }
 
   validate(): boolean {
@@ -164,7 +164,11 @@ export class RegistrationComponent {
       return false;
     } else if (!this.termsAccepted) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
-      this.openDialog('Please accept the terms and conditions to proceed!', '', false);
+      this.openDialog(
+        'Please accept the terms and conditions to proceed!',
+        '',
+        false
+      );
       return false;
     } else if (!this.imageAdded) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
@@ -183,6 +187,12 @@ export class RegistrationComponent {
       data: {
         message: message,
         username: username
+      }
+    });
+
+    dialogRef.afterOpen().subscribe(result => {
+      if (succeeded) {
+        setTimeout(dialogRef.close(), 4000);
       }
     });
 

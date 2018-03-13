@@ -577,7 +577,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   // Displays time remaining on auction.
   countDown(auction_endTime: string): void {
-    // Set the date we're counting down to
+    // Set the date we're counting down to.
     const countDownDate = new Date(auction_endTime).getTime();
 
     // Update the count down every 1 second
@@ -586,10 +586,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         // Get todays date and time
         const now = new Date().getTime();
 
-        // Find the distance between now an the count down date
+        // Find the distance between now and the countdown date.
         const distance = countDownDate - now;
 
-        // Time calculations for days, hours, minutes and seconds
+        // Time calculations for days, hours, minutes and seconds.
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -597,7 +597,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Display the result in the element with id='countdown'
+        // Display the result in the element with id='countdown'.
         if (document.getElementById('countdown') != null) {
           if (days >= 1) {
             document.getElementById('countdown').innerHTML =

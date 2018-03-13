@@ -71,6 +71,10 @@ export class LoginComponent {
       }
     });
 
+    dialogRef.afterOpen().subscribe(result => {
+      setTimeout(dialogRef.close(), 4000);
+      });
+
     dialogRef.afterClosed().subscribe(result => {
       if (succeeded) {
         this.setUser(this.user);
