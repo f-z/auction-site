@@ -71,13 +71,6 @@
    
     </div>
 
-
-
-
-
-
-
-
         <h3 class="item-description">{{ item?.description }}</h3>
         <br>
         <br>
@@ -117,21 +110,21 @@
 
      
 
-        <h3 class="item-right" *ngIf="viewings != null">Total bids: {{ numberBids }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
+        <h3 class="item-right" *ngIf="distinctViewers != null">Total bids: {{ numberBids }}</h3>
+        <br *ngIf="distinctViewers != null">
+        <br *ngIf="distinctViewers != null">
 
         <h3 class="item-right">Condition: {{item?.condition}}</h3>
         <br>
         <br>
 
-        <h3 class="item-right" *ngIf="viewings != null">Total viewings: {{ viewings }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
+        <h3 class="item-right" *ngIf="distinctViewers != null">Total viewings: {{ distinctViewers }}</h3>
+        <br *ngIf="distinctViewers != null">
+        <br *ngIf="distinctViewers != null">
 
-        <h3 class="item-right" *ngIf="viewings != null">Buyers watching: {{ watchers }}</h3>
-        <br *ngIf="viewings != null">
-        <br *ngIf="viewings != null">
+        <h3 class="item-right" *ngIf="distinctViewers != null">Buyers watching: {{ watchers }}</h3>
+        <br *ngIf="distinctViewers != null">
+        <br *ngIf="distinctViewers != null">
 
         <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
 

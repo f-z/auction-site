@@ -22,7 +22,8 @@ import { Observable } from 'rxjs/Observable';
 export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
   private auction: Auction;
-  private viewings: number;
+  private distinctViewers: number;
+  private totalViews:number;
   private numberBids: number;
   private highestBid: number;
   private buyItNowPrice: number;
@@ -190,10 +191,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       (data: any) => {
         console.log(data);
         this.auction = data[0];
-        if (this.item.sellerID === this.user.userID) {
-          this.incrementViewings(data[0].auctionID, 'false');
-        } else {
-          this.incrementViewings(data[0].auctionID, 'true');
+        if (this.item.sellerID != this.user.userID) {
+          this.incrementViewings(data[0].auctionID);
         }
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
@@ -203,7 +202,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
         this.reservePrice = data[0].reservePrice;
-        // console.log(this.reservePrice);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -218,27 +216,24 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  incrementViewings(auctionID, isViewerBuyer): void {
+  incrementViewings(auctionID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { auctionID: auctionID, isViewerBuyer: isViewerBuyer },
-      url: any = 'https://php-group30.azurewebsites.net/increment_viewings.php';
+      options: any = { auctionID: auctionID, 
+                       userID: this.user.userID },
+      url: any = 'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.viewings = data.viewings;
+          this.distinctViewers = data.distinctViewings;
+          this.totalViews = data.totalViewings;
         }
       },
       (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
+          console.log(error);
       }
     );
 
