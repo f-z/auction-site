@@ -23,7 +23,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private item: Item;
   private auction: Auction;
   private distinctViewers: number;
-  private totalViews:number;
+  private totalViews: number;
   private numberBids: number;
   private highestBid: number;
   private buyItNowPrice: number;
@@ -48,7 +48,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private isWatching: boolean;
   private isOutbid: boolean;
 
-  slideIndex: number = 1;
+  slideIndex: number;
 
   constructor(
     private userService: UserService,
@@ -57,7 +57,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public http: HttpClient,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.slideIndex = 1;
+  }
 
   getItem(): Item {
     return this.itemService.getItem();
@@ -188,7 +190,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.auction = data[0];
-        if (this.item.sellerID != this.user.userID) {
+        if (this.item.sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
         }
         this.getHighestBid(data[0].auctionID);
@@ -199,8 +201,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
         this.reservePrice = data[0].reservePrice;
-        this.showSlides(1);
 
+        if (this.item.photo2 != null && this.item.photo3 != null) {
+          this.showSlides(1);
+        }
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -219,7 +223,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { 'auctionID': auctionID, 
+      options: any = { 'auctionID': auctionID,
                        'userID': this.user.userID },
       url: any = 'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
 
@@ -669,15 +673,15 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   // Image carousel
   plusSlides(n: number): void {
-    this.showSlides((this.slideIndex += n));
+    this.showSlides(this.slideIndex += n);
   }
 
   currentSlide(n: number): void {
-    this.showSlides((this.slideIndex = n));
+    this.showSlides(this.slideIndex = n);
   }
 
   showSlides(n: number): void {
-    let i;
+    let i: number;
     const slides = document.getElementsByClassName(
       'mySlides'
     ) as HTMLCollectionOf<HTMLElement>;
