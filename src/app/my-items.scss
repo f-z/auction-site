@@ -1,4 +1,4 @@
-.item-details .add-item-button {
+.my-items .add-item-button {
   position: relative;
   text-align: center;
   font-size: 16px;
@@ -16,48 +16,32 @@
   transform: translate(-50%, -50%);
 }
 
-.item-details {
+.my-items {
+  margin-top: 5%;
   margin-right: 15%;
   margin-left: 15%;
   width: 70%;
+  background-color: #ECECEA;
 }
 
-.item-details .add-item-button span {
+.my-items .add-item-button span {
   cursor: pointer;
   display: inline-block;
   transition: 0.5s;
 }
 
-.item-details .add-item-button span:after {
+.my-items .add-item-button span:after {
   content: '\00bb';
   opacity: 0;
   transition: 0.5s;
 }
 
-.item-details .add-item-button:hover span:after {
+.my-items .add-item-button:hover span:after {
   opacity: 1;
-}
-
-.itemlist {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.itemlist-item {
-  width: 100%;
-  box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 20px;
-  background: white;
-}
-
-.item-details {
-  margin-top: 60px;
 }
 
 :host {
   display: block;
-  background: #f3f3f3;
 }
 
 .grid-list-container {
@@ -67,7 +51,7 @@
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 16px;
-  z-index: 8;
+  z-index: 4;
   border: none;
 }
 
@@ -77,7 +61,9 @@ app-item {
 }
 
 /*Tabs*/
+
 /* Style the tab */
+
 .tabwrapper {
   text-align: center;
   margin-left: 15%;
@@ -87,43 +73,49 @@ app-item {
 .tab {
   overflow: hidden;
   background-color: black;
-   border: 1px solid #ccc;
+  border: 1px solid #ccc;
 }
 
 /* Style the buttons inside the tab */
+
 .tab button {
-    background-color: inherit;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 0;
-    margin: 0 0;
-    width: 33.3%;
-    margin: 0 0;
-    transition: 0.3s;
-    font-size: 17px;
-      color: white;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 0;
+  margin: 0 0;
+  width: 33.3%;
+  margin: 0 0;
+  transition: 0.3s;
+  font-size: 17px;
+  color: white;
 }
 
 /* Change background color of buttons on hover */
+
 .tab button:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
+
 .tab button.active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 /* Style the tab content */
+
 .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
 }
 
 /* Style the tab content */
+
 .activetab {
-    display: block;
+  display: block;
 }
+

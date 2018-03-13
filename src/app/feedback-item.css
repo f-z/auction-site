@@ -27,10 +27,10 @@
 }
 
 .rating {
-  /*width inserted*/
+  /* width inserted */
   overflow: hidden;
   white-space: nowrap;
-  z-index: 2;
+  z-index: 5;
 }
 
 .rating span {
@@ -44,7 +44,6 @@
   content: "\2606 \2606 \2606 \2606 \2606";
   position: absolute;
   color: #bdbdbd;
-  z-index: 1;
 }
 
 .link {

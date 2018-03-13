@@ -9,7 +9,7 @@
    width: 100%;
    font-weight: 300;
    min-width: 320px;
-   margin-top: 7%;
+   margin-top: 13%;
    z-index: 2;
    left: 50%;
    -webkit-transform: translate(-50%, -50%);
@@ -47,8 +47,8 @@
 
  .grid-list-container {
    position: relative;
-   z-index: 8;
-   margin-top: -12%;
+   z-index: 4;
+   margin-top: -6%;
  }
 
  @import '../palette';
