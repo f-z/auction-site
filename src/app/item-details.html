@@ -46,9 +46,9 @@
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
               </div>
             </div>
-            <h6 class="ratingcount" *ngIf="sellerFeedbackCount > 1">{{ sellerFeedbackCount }} people have rated {{ seller?.username }}.</h6>
-            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">{{ sellerFeedbackCount }} person has rated {{ seller?.username }}.</h6>
-            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">{{ seller?.username }} is yet unrated.</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount > 1">({{ sellerFeedbackCount }} people have rated {{ seller?.username }})</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 1">({{ sellerFeedbackCount }} person has rated {{ seller?.username }})</h6>
+            <h6 class="ratingcount" *ngIf="sellerFeedbackCount == 0">({{ seller?.username }} is yet unrated)</h6>
           </div>
         </div>
       </div>
@@ -91,13 +91,13 @@
         <br *ngIf="isExpired &&  highestBidderID != null">
         <br *ngIf="isExpired &&  highestBidderID != null">
 
-         <h3 class="item-right link" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null"  [routerLink]="['/profile', highestBidderID]"> {{ highestBidder?.username }}</h3>
+        <h3 class="item-right link" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null" [routerLink]="['/profile', highestBidderID]">
+        {{ highestBidder?.username }}</h3>
         <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">Winner:&nbsp;</h3>
-         
+
       </div>
 
     </div>
-
 
     <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder?.username" [sellerID]="item.sellerID" [item]="item"
       *ngIf="isExpired && highestBidderID != null && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>

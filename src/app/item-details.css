@@ -112,6 +112,7 @@ h3 {
   width: 95px;
   position: relative;
   display: inline-block;
+  margin-right: 15px;
 }
 
 .rating {

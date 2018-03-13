@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Item, ItemService, Feedback } from './shared/services/item.service';
 import { User, UserService } from './shared/services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-profile',
@@ -31,51 +31,46 @@ export class ProfileComponent {
     private userService: UserService,
     private itemService: ItemService,
     private router: Router,
-    private activatedRoute : ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private http: HttpClient
-  ) { 
+  ) {
     activatedRoute.params.subscribe(val => {
-    this.profileUserID = +this.activatedRoute.snapshot.url[1].path;
-    this.user = this.getUser();
-    if (this.user === null) {
-      this.router.navigate(['/login']);
-    }
-    this.retrieveProfile();
-    this.getUsersSellerFeedback();
-    this.getUsersBuyerFeedback();
-    this.getItems();
-  });
+      this.profileUserID = +this.activatedRoute.snapshot.url[1].path;
+      this.user = this.getUser();
+      if (this.user === null) {
+        this.router.navigate(['/login']);
+      }
+      this.retrieveProfile();
+      this.getUsersSellerFeedback();
+      this.getUsersBuyerFeedback();
+      this.getItems();
+    });
   }
 
-
-  retrieveProfile(): void{
-     const headers: any = new HttpHeaders({
+  retrieveProfile(): void {
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options: any = {
         userID: +this.activatedRoute.snapshot.url[1].path,
         includeExpired: true
       },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_user.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_user.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.profileUser = data;
         if (this.profileUser.photo != null) {
-            this.profileUser.photo =
-              'http://php-group30.azurewebsites.net/uploads/' +
-              this.profileUser.photo.substring(
-                1,
-                this.profileUser.photo.length - 1
-              );
-          }
+          this.profileUser.photo =
+            'http://php-group30.azurewebsites.net/uploads/' +
+            this.profileUser.photo.substring(
+              1,
+              this.profileUser.photo.length - 1
+            );
+        }
       },
-      (error: any) => {
-
-      }
+      (error: any) => {}
     );
-
   }
 
   getItem(): Item {
@@ -86,7 +81,7 @@ export class ProfileComponent {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { sellerID: +this.activatedRoute.snapshot.url[1].path},
+      options: any = { sellerID: +this.activatedRoute.snapshot.url[1].path },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_seller_feedback.php';
 
@@ -139,23 +134,37 @@ export class ProfileComponent {
       (data: any) => {
         this.userAuctions = data.auctions;
         for (let i = 0; i < data.auctions.length; i++) {
-          this.userAuctions[i].photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo1.substring(5,this.userAuctions[i].photo1.length - 5);
+          this.userAuctions[i].photo1 =
+            'https://php-group30.azurewebsites.net/uploads/' +
+            this.userAuctions[i].photo1.substring(
+              5,
+              this.userAuctions[i].photo1.length - 5
+            );
 
-            if( this.userAuctions[i].photo2 != null){
-          this.userAuctions[i].photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo2.substring(5,this.userAuctions[i].photo2.length - 5);}
-          if( this.userAuctions[i].photo3 != null){
-           this.userAuctions[i].photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo3.substring(5,this.userAuctions[i].photo3.length - 5);}
+          if (this.userAuctions[i].photo2 != null) {
+            this.userAuctions[i].photo2 =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo2.substring(
+                5,
+                this.userAuctions[i].photo2.length - 5
+              );
+          }
+          if (this.userAuctions[i].photo3 != null) {
+            this.userAuctions[i].photo3 =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo3.substring(
+                5,
+                this.userAuctions[i].photo3.length - 5
+              );
+          }
         }
       },
       (error: any) => {
         // If there is unauthorised / improper access, log out and return to Login page.
-      //  this.user = null;
-       // this.setUser(null);
+        //  this.user = null;
+        // this.setUser(null);
         // this.router.navigate(['/login']);
-                alert('error in get items');
+        alert('error in get items');
       }
     );
   }
