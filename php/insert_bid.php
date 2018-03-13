@@ -31,17 +31,17 @@
 
     $insertBid->execute();
     
-    // // Sending email to current highest bidder
-    // $mail->addAddress($email, $firstname);
+    // Sending email to current highest bidder
+    $mail->addAddress($email, $firstname);
 
-    // $mail->Subject = 'Risk Assessment Update (NHS Falls)';
+    $mail->Subject = 'Risk Assessment Update (NHS Falls)';
     
-    // $mail->Body    = '
-    // Hi '.$firstname.',
+    $mail->Body    = '
+    Hi '.$firstname.',
 
-    // Thanks for placing a bid. You are the highest bidder on '.$time;  
+    Thanks for placing a bid. You are the highest bidder on '.$time;  
 
-    // $mail->send();
+    $mail->send();
     echo json_encode('Congratulations! Your bid has been added!');
   } catch (Exception $e) {
       $error = $e->getMessage(); 

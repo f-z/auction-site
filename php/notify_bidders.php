@@ -91,7 +91,5 @@ foreach($bidders as $bidder){
         echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
         die();
     }
-
 }
-             
 ?>

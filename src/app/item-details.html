@@ -33,29 +33,29 @@
     <div class="info-columns">
       <div class="left-items">
 
+        <div>
 
-      <div>
+          <div class="slideshow-container">
 
-      <div class="slideshow-container">
-
-      <div class="mySlides fade">
-       <!-- <div class="numbertext" *ngIf="(item?.photo2 != null && item?.photo3 == null) || (item?.photo3 != null && item?.photo2 == null)">1 / 2</div>
+            <div class="mySlides fade">
+              <!-- <div class="numbertext" *ngIf="(item?.photo2 != null && item?.photo3 == null) || (item?.photo3 != null && item?.photo2 == null)">1 / 2</div>
          <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 != null">1 / 3</div>-->
-          <img class="item-photo" src="{{ item?.photo1 }}" alt="{{ item?.itemID }}">
-      </div>
+              <img class="item-photo" src="{{ item?.photo1 }}" alt="{{ item?.itemID }}">
+            </div>
 
-      <div class="mySlides fade" >
-        <div *ngIf=" item?.photo2 != null">
-      <!--  <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 == null">2 / 2</div>
+            <div class="mySlides fade">
+              <div *ngIf=" item?.photo2 != null">
+                <!--  <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 == null">2 / 2</div>
         <div class="numbertext" *ngIf="item?.photo2 != null  && item?.photo3 != null">2 / 3</div>-->
-        <img class="item-photo" src="{{item?.photo2}}" *ngIf="item?.photo2 != null"> 
-      </div>
-    </div>
+                <img class="item-photo" src="{{item?.photo2}}" *ngIf="item?.photo2 != null">
+              </div>
+            </div>
 
-      <div class="mySlides fade">
-        <div  *ngIf=" item?.photo3 != null">
-       <!-- <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 != null">3 / 3</div>
+            <div class="mySlides fade">
+              <div *ngIf=" item?.photo3 != null">
+                <!-- <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 != null">3 / 3</div>
         <div class="numbertext" *ngIf="item?.photo3 != null && item?.photo2 == null">2 / 2</div>-->
+
           <img class="item-photo" src="{{item?.photo3}}" *ngIf="item?.photo3 != null"> 
         </div>
       </div>
@@ -70,6 +70,7 @@
       </div>
    
     </div>
+
 
         <h3 class="item-description">{{ item?.description }}</h3>
         <br>
@@ -132,7 +133,7 @@
         <br *ngIf="isExpired &&  highestBidderID != null">
 
         <h3 class="item-right link" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null" [routerLink]="['/profile', highestBidderID]">
-        {{ highestBidder?.username }}</h3>
+          {{ highestBidder?.username }}</h3>
         <h3 class="item-right" id="auction-winner" *ngIf="isExpired &&  highestBidderID != null">Winner:&nbsp;</h3>
 
       </div>
@@ -160,3 +161,4 @@
   </div>
 
 </section>
+

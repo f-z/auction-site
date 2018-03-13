@@ -73,8 +73,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.getAuctionInformation();
 
     this.getSellerRating(this.itemService.getItem().sellerID);
-    this.showSlides(1);
-
   }
 
   ngOnDestroy() {
@@ -189,7 +187,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data);
         this.auction = data[0];
         if (this.item.sellerID != this.user.userID) {
           this.incrementViewings(data[0].auctionID);
@@ -202,6 +199,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
         this.reservePrice = data[0].reservePrice;
+<<<<<<< HEAD
+=======
+        this.showSlides(1);
+>>>>>>> 208de6a642879744edcb0d990dbddbc578e7b9f5
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -668,35 +669,37 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/search']);
   }
 
-
-
-  //Image carosel
-
-   plusSlides(n: number):void {
-    this.showSlides(this.slideIndex += n);
+  // Image carousel
+  plusSlides(n: number): void {
+    this.showSlides((this.slideIndex += n));
   }
 
-  currentSlide(n: number):void {
-    this.showSlides(this.slideIndex = n);
+  currentSlide(n: number): void {
+    this.showSlides((this.slideIndex = n));
   }
 
-  showSlides(n: number):void {
-    var i;
-    var slides = document.getElementsByClassName("mySlides") as HTMLCollectionOf<HTMLElement>;
-    var dots = document.getElementsByClassName("dot") as HTMLCollectionOf<HTMLElement>;
-    
+  showSlides(n: number): void {
+    let i;
+    const slides = document.getElementsByClassName(
+      'mySlides'
+    ) as HTMLCollectionOf<HTMLElement>;
+    const dots = document.getElementsByClassName('dot') as HTMLCollectionOf<
+      HTMLElement
+    >;
+
     if (n > slides.length) {
-       this.slideIndex = 1}    
+      this.slideIndex = 1;
+    }
     if (n < 1) {
-      this.slideIndex = slides.length}
+      this.slideIndex = slides.length;
+    }
     for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-
+      slides[i].style.display = 'none';
     }
     for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
+      dots[i].className = dots[i].className.replace(' active', '');
     }
-    slides[this.slideIndex - 1].style.display = "block"; 
-    (dots)[this.slideIndex - 1].className += " active";
+    slides[this.slideIndex - 1].style.display = 'block';
+    dots[this.slideIndex - 1].className += ' active';
   }
 }

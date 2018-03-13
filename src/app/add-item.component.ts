@@ -216,8 +216,7 @@ export class AddItemComponent implements OnInit {
       this.endDate == null ||
       this.endTime == null ||
       this.startPrice == null ||
-      this.reservePrice == null ||
-      this.buyNowPrice == null
+      this.reservePrice == null
     ) {
       // If there are any empty fields, notify the user.
       this.openDialog('Please fill in all the fields!', '', false);
