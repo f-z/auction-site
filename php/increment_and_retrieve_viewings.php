@@ -11,10 +11,10 @@
 
     try {
 
-        $query = 'SELECT * FROM `viewings` WHERE auctionID=:auctionID AND userID=:userID';
+        $query = 'SELECT * FROM `viewings` WHERE auctionID = :auctionID AND userID = :userID';
         $findViews = $pdo->prepare($query);
-        $findViews>bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
-        $findViews>bindParam(':userID', $userID, PDO::PARAM_INT);
+        $findViews->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+        $findViews->bindParam(':userID', $userID, PDO::PARAM_INT);
         $findViews->execute();
         $result = $findViews->fetch(PDO::FETCH_OBJ);
 
@@ -44,7 +44,7 @@
                     FROM `viewings` WHERE auctionID=:auctionID';
         
         $findViews = $pdo->prepare($query);
-        $findViews>bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+        $findViews->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
         $findViews->execute();
         $data = $findViews->fetch(PDO::FETCH_OBJ);
   

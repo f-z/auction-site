@@ -199,10 +199,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
         this.reservePrice = data[0].reservePrice;
-<<<<<<< HEAD
-=======
         this.showSlides(1);
->>>>>>> 208de6a642879744edcb0d990dbddbc578e7b9f5
+
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -221,8 +219,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { auctionID: auctionID, 
-                       userID: this.user.userID },
+      options: any = { 'auctionID': auctionID, 
+                       'userID': this.user.userID },
       url: any = 'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
