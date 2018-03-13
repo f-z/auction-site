@@ -40,15 +40,15 @@ export class AddItemComponent implements OnInit {
 
   public uploader1: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo1'
+    itemAlias: 'photo'
   });
   public uploader2: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo2'
+    itemAlias: 'photo'
   });
   public uploader3: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo3'
+    itemAlias: 'photo'
   });
 
   constructor(

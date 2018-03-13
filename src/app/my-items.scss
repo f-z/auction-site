@@ -72,7 +72,7 @@ app-item {
 
 .tab {
   overflow: hidden;
-  background-color: black;
+  background-color: #ECECEA;
   border: 1px solid #ccc;
 }
 
@@ -89,10 +89,10 @@ app-item {
   margin: 0 0;
   transition: 0.3s;
   font-size: 17px;
-  color: white;
+  color: #555459;
 }
 
-/* Change background color of buttons on hover */
+/* Change background colour of buttons on hover */
 
 .tab button:hover {
   background-color: #ddd;
@@ -118,4 +118,3 @@ app-item {
 .activetab {
   display: block;
 }
-
