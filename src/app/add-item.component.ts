@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LoginComponent } from './login.component';
 import { DialogComponent } from './dialog.component';
-import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { User, UserService } from './shared/services/user.service';
 import { Category } from './shared/services/item.service';
@@ -38,9 +38,17 @@ export class AddItemComponent implements OnInit {
 
   private imageAdded: boolean;
 
-  public uploader: FileUploader = new FileUploader({
+  public uploader1: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo'
+    itemAlias: 'photo1'
+  });
+  public uploader2: FileUploader = new FileUploader({
+    url: 'https://php-group30.azurewebsites.net/upload_image.php',
+    itemAlias: 'photo2'
+  });
+  public uploader3: FileUploader = new FileUploader({
+    url: 'https://php-group30.azurewebsites.net/upload_image.php',
+    itemAlias: 'photo3'
   });
 
   constructor(
@@ -53,17 +61,16 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.user = this.getUser();
     this.getCategories();
 
-    this.uploader.onAfterAddingFile = file => {
+    this.uploader1.onAfterAddingFile = file => {
       file.withCredentials = false;
       this.imageAdded = true;
     };
     // Overriding the default onCompleteItem property of the uploader,
     // so we are able to deal with the server response.
-    this.uploader.onCompleteItem = (
+    this.uploader1.onCompleteItem = (
       item: any,
       response: any,
       status: any,
@@ -71,7 +78,40 @@ export class AddItemComponent implements OnInit {
     ) => {
       this.photo1 = response;
 
-      //PHOTO2 AND PHOTO3
+      this.uploader2.uploadAll();
+    };
+
+    this.uploader2.onAfterAddingFile = file => {
+      file.withCredentials = false;
+      this.imageAdded = true;
+    };
+    // Overriding the default onCompleteItem property of the uploader,
+    // so we are able to deal with the server response.
+    this.uploader2.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      this.photo2 = response;
+
+      this.uploader3.uploadAll();
+    };
+
+    this.uploader3.onAfterAddingFile = file => {
+      file.withCredentials = false;
+      this.imageAdded = true;
+    };
+    // Overriding the default onCompleteItem property of the uploader,
+    // so we are able to deal with the server response.
+    this.uploader3.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      this.photo3 = response;
+
       this.addItem();
     };
   }
@@ -205,7 +245,7 @@ export class AddItemComponent implements OnInit {
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.
-    this.uploader.uploadAll();
+    this.uploader1.uploadAll();
     return true;
   }
 
@@ -229,7 +269,7 @@ export class AddItemComponent implements OnInit {
   }
 
   goBack(): void {
-      this.router.navigate(['/my-items']);
+    this.router.navigate(['/my-items']);
   }
 
   goToMyProfile(): void {

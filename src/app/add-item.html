@@ -29,46 +29,46 @@
 
     <div class="row">
       <h4>Item Name</h4>
-        <div class="input col">
-          <input type="text" [(ngModel)]="name" name="name" placeholder="Add item name" class="item-name"/>
-        </div>
+      <div class="input col">
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Add item name" class="item-name" />
+      </div>
     </div>
 
     <div class="row">
       <h4>Item Description</h4>
-        <div class="input col">
-          <textarea [(ngModel)]="description" name="description" placeholder="Add item description" class="item-description"></textarea>
-        </div>
+      <div class="input col">
+        <textarea [(ngModel)]="description" name="description" placeholder="Add item description" class="item-description"></textarea>
+      </div>
     </div>
 
     <br>
 
     <div class="row">
-  <div class="col-half">
-    <div class="align">
-        <label for="category">Category: </label>
-        
-        <select [(ngModel)]="selectedCategory" name="category" class="input-item">
-          <option *ngFor="let category of categories" [ngValue]="category.categoryName">{{category.categoryName}}</option>
-        </select>
-      </div>
+      <div class="col-half">
+        <div class="align">
+          <label for="category">Category: </label>
+
+          <select [(ngModel)]="selectedCategory" name="category" class="input-item">
+            <option *ngFor="let category of categories" [ngValue]="category.categoryName">{{category.categoryName}}</option>
+          </select>
+        </div>
       </div>
       <div class="col-half">
-      <div class="align">
-        <label for="condition">Condition: </label>
-        <select type="text inline-block" [(ngModel)]="condition" name="condition" id="condition" class="input-item">
-          <option value='New'>New</option>
-          <option value='Used'>Used</option>
-        </select>
-      </div>
+        <div class="align">
+          <label for="condition">Condition: </label>
+          <select type="text inline-block" [(ngModel)]="condition" name="condition" id="condition" class="input-item">
+            <option value='New'>New</option>
+            <option value='Used'>Used</option>
+          </select>
+        </div>
       </div>
     </div>
 
     <div class="row">
 
-        <div class="align">
+      <div class="align">
         <label for="quantity">Quantity: </label>
-        <input  type="number" [(ngModel)]="quantity" value="1" min="0" max="100" step="1" id="quantity" class="input-q" name="quantity">
+        <input type="number" [(ngModel)]="quantity" value="1" min="0" max="100" step="1" id="quantity" class="input-q" name="quantity">
       </div>
     </div>
     <br>
@@ -76,70 +76,73 @@
     <div class="row ">
       <div class="inline-block">
         <div class="align">
-          <label for="endDate" >End Date: </label>
+          <label for="endDate">End Date: </label>
           <input type="date" [(ngModel)]="endDate" name="endDate" id="endDate" class="time-input-date">
-       </div>
-     </div>
+        </div>
+      </div>
 
-<!--
+      <!--
       <mat-form-field class="example-full-width">
       <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 -->
-            <div class="inline-block">
+      <div class="inline-block">
         <div class="align">
           <label for="endTime">End Time: </label>
           <input type="time" [(ngModel)]="endTime" name="endTime" id="endTime" class="time-input-t">
-       </div>
+        </div>
+      </div>
     </div>
-    </div>
-<br>
+    <br>
     <h3 class="centred">Auction Pricing</h3>
     <div class="row">
       <div class="col-half">
         <div class="input">
           <div class="align">
-          <label for="startPrice">Start Price: £</label>
-          <input type="number" class="inline-block" [(ngModel)]="startPrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)" name="startPrice" class="price-input"/>
+            <label for="startPrice">Start Price: £</label>
+            <input type="number" class="inline-block" [(ngModel)]="startPrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+              name="startPrice" class="price-input" />
+          </div>
         </div>
       </div>
-        </div>
-    
-      
-     <div class="col-half">
-   
+
+
+      <div class="col-half">
+
         <div class="input" title="If this price threshold is not met when the auction ends, the auction will expire without a winner.">
           <div class="align">
-          <label for="reservePrice">Reserve Price: £</label>
-          <input type="number" class="inline-block" [(ngModel)]="reservePrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)" name="reservePrice" class="price-input"/>
+            <label for="reservePrice">Reserve Price: £</label>
+            <input type="number" class="inline-block" [(ngModel)]="reservePrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+              name="reservePrice" class="price-input" />
+          </div>
         </div>
       </div>
-    </div>
     </div>
 
-     
-      
+
+
     <div class="row">
-        <div class="input right">
-          <div class="align">
+      <div class="input right">
+        <div class="align">
           <label for="buyNowPrice">Buy-it-now Price: £</label>
-          <input type="number" class="inline-block" [(ngModel)]="buyNowPrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)" name="buyNowPrice" placeholder="(Optional)" class="price-input"/>
+          <input type="number" class="inline-block" [(ngModel)]="buyNowPrice" min="0" step=".01" onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"
+            name="buyNowPrice" placeholder="(Optional)" class="price-input" />
         </div>
       </div>
-     
+
     </div>
 
     <br>
 
     <div class="row">
       <h3 class="centred">Item Photos</h3>
-      <input type="file" name="photo1" ng2FileSelect [uploader]="uploader" />
+      <input type="file" name="photo1" ng2FileSelect [uploader]="uploader1" />
       <br>
-         <input type="file" name="photo2" ng2FileSelect [uploader]="uploader" />
+      <input type="file" name="photo2" ng2FileSelect [uploader]="uploader2" />
       <br>
-         <input type="file" name="photo3" ng2FileSelect [uploader]="uploader" />
+      <input type="file" name="photo3" ng2FileSelect [uploader]="uploader3" />
       <br>
       <br>
       <div class="col-half">
