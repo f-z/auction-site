@@ -72,8 +72,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.getAuctionInformation();
 
     this.getSellerRating(this.itemService.getItem().sellerID);
-    
     this.showSlides(1);
+
   }
 
   ngOnDestroy() {
