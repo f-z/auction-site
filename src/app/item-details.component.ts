@@ -46,6 +46,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   private isWatching: boolean;
   private isOutbid: boolean;
 
+  slideIndex: number = 1;
+
   constructor(
     private userService: UserService,
     private itemService: ItemService,
@@ -69,6 +71,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.getAuctionInformation();
 
     this.getSellerRating(this.itemService.getItem().sellerID);
+    
+    this.showSlides(1);
   }
 
   ngOnDestroy() {
@@ -665,5 +669,37 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.user = null;
     this.setUser(null);
     this.router.navigate(['/search']);
+  }
+
+
+
+  //Image carosel
+
+   plusSlides(n: number):void {
+    this.showSlides(this.slideIndex += n);
+  }
+
+  currentSlide(n: number):void {
+    this.showSlides(this.slideIndex = n);
+  }
+
+  showSlides(n: number):void {
+    var i;
+    var slides = document.getElementsByClassName("mySlides") as HTMLCollectionOf<HTMLElement>;
+    var dots = document.getElementsByClassName("dot") as HTMLCollectionOf<HTMLElement>;
+    
+    if (n > slides.length) {
+       this.slideIndex = 1}    
+    if (n < 1) {
+      this.slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[this.slideIndex - 1].style.display = "block"; 
+    (dots)[this.slideIndex - 1].className += " active";
   }
 }
