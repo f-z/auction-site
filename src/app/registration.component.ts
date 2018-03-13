@@ -114,6 +114,7 @@ export class RegistrationComponent {
     const month = date.getMonth();
     const day = date.getDate();
     const maxBirthDate = new Date(year + 18, month, day);
+    const minBirthDate = new Date(year + 110, month, day);
 
     if (
       this.firstName == null ||
@@ -143,7 +144,8 @@ export class RegistrationComponent {
       this.confirmedPassword.trim().length === 0 ||
       this.phone === 0 ||
       this.phone.toString().length < 8 ||
-      this.phone.toString().length > 10
+      this.phone.toString().length > 10 ||
+      minBirthDate < new Date()
     ) {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
