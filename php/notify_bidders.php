@@ -33,6 +33,7 @@ $sql = 'SELECT u.firstName, u.email, i.name, b.auctionID, b.buyerID
         FROM user u
         JOIN bid b ON b.buyerID = u.userID
         AND b.price != (SELECT max(b2.price) FROM bid b2, auction a2 WHERE b2.auctionID = b.auctionID)
+        AND b.price > 0
         JOIN auction a ON a.auctionID = b.auctionID
         AND b.isNotified = 0
         AND a.endTime < NOW()
@@ -62,7 +63,7 @@ foreach($bidders as $bidder){
         $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
         $mail->SMTPAuth = true;
         $mail->Username = 'uclbay.gc06@gmail.com';
-        $mail->Password = 'uclbay_gc06';
+        $mail->Password = 'uclbay@gc06';
         // walkaround to bypass server errors
         $mail->SMTPOptions = array(
         'ssl' => array(
@@ -73,7 +74,7 @@ foreach($bidders as $bidder){
         );
         $mail->Subject = 'UCL Databases';
         $mail->Debugoutput = 'html';
-        $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+        $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
         $mail->addAddress($email, $firstname);
         $mail->Subject = ''.$item_name.' was sold';
         $mail->Debugoutput = 'html';

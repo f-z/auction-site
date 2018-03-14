@@ -45,7 +45,7 @@
     $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
     $mail->SMTPAuth = true;
     $mail->Username = 'uclbay.gc06@gmail.com';
-    $mail->Password = 'uclbay_gc06';
+    $mail->Password = 'uclbay@gc06';
     // walkaround to bypass server errors
     $mail->SMTPOptions = array(
     'ssl' => array(
@@ -54,17 +54,17 @@
         'allow_self_signed' => true
       )
     );
-    $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+    $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
     $mail->addAddress($emailCur, $firstname);
 
-    $mail->Subject = 'UCL Databases';
+    $mail->Subject = 'Your bid is winning';
     $mail->Debugoutput = 'html';
     $mail->Body = 'Hi '.$firstname.'
-                    Your bid has been accepted. You are currently the highest bidder ('.$time.')!';  
+                    Thanks for placing a bid. It has been accepted. You are currently the highest bidder ('.$time.')!';  
         
-    $mail->send();
-    
-    echo json_encode($emailCur);
+    if($mail->send()) {
+      echo json_encode('Email to current bidder has been sent!');
+    }
     } catch (Exception $e) {
        echo json_encode('Message could not be sent! Mailer Error: ', $mail->ErrorInfo);
        die();

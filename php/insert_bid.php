@@ -5,6 +5,12 @@
   $json    =  file_get_contents('php://input');
   $obj     =  json_decode($json);
 
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+
+  // Load composer's autoloader.
+  require_once('./vendor/autoload.php');
+
   $buyerID =  filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
   $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_FLOAT);
@@ -30,19 +36,7 @@
     $insertBid->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
     $insertBid->execute();
-    
-    // Sending email to current highest bidder
-    $mail->addAddress($email, $firstname);
-
-    $mail->Subject = 'Risk Assessment Update (NHS Falls)';
-    
-    $mail->Body    = '
-    Hi '.$firstname.',
-
-    Thanks for placing a bid. You are the highest bidder on '.$time;  
-
-    $mail->send();
-    echo json_encode('Congratulations! Your bid has been added!');
+  
   } catch (Exception $e) {
       $error = $e->getMessage(); 
   }

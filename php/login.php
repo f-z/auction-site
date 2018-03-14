@@ -8,6 +8,7 @@
     // Sanitising URL supplied values.
     $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    $hashedPass = sha1($password);
     
     $query = 'SELECT userID, username, password, role, email, firstName, lastName, photo FROM user WHERE username = :username LIMIT 1';
 
@@ -31,7 +32,7 @@
         $storedPass = $row->password;
 
         // If password is verified as true, then the user can successfully log in.
-        if ($password === $storedPass) {
+        if ($hashedPass === $storedPass) {
             // Returning data as JSON.
             echo json_encode($row);
             exit;

@@ -33,6 +33,7 @@ $sql = 'SELECT u.firstName, u.email, i.name, b.auctionID, b.buyerID, b.price, a.
         FROM user u
         JOIN bid b ON b.buyerID = u.userID
         AND b.price = (SELECT max(b2.price) FROM bid b2, auction a2 WHERE b2.auctionID = b.auctionID)
+        AND b.price > 0
         JOIN auction a ON a.auctionID = b.auctionID
         AND b.isNotified = 0
         AND a.endTime < NOW()

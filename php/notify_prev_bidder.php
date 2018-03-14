@@ -3,9 +3,12 @@
   
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
+
     // Load composer's autoloader.
     require_once('./vendor/autoload.php');
+
     $mail = new PHPMailer(true);
+    
     // Retrieving the posted data.
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
@@ -34,7 +37,7 @@
             $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
             $mail->SMTPAuth = true;
             $mail->Username = 'uclbay.gc06@gmail.com';
-            $mail->Password = 'uclbay_gc06';
+            $mail->Password = 'uclbay@gc06';
             // walkaround to bypass server errors
             $mail->SMTPOptions = array(
             'ssl' => array(
@@ -43,18 +46,17 @@
                 'allow_self_signed' => true
                 )
             );
-            $mail->Subject = 'UCL Databases';
             $mail->Debugoutput = 'html';
-            $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+            $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
             $mail->addAddress($emailPrev, $namePrev);
-            $mail->Subject = 'UCL Databases';
+            $mail->Subject = 'You were outbid!';
             $mail->Debugoutput = 'html';
             $mail->Body = 'Hi '.$namePrev.', 
                              You were outbid! Do not hesitate to jump back in! The item is still up for grabs!';  
                  
-            $mail->send();
-            //   echo json_encode($mail);
-            echo json_encode('Email to previous bidder has been sent!');
+            if ($mail->send()){
+                echo json_encode('Email to previous bidder has been sent!');
+            }
         }
     } catch (Exception $e) {
         echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);

@@ -63,6 +63,7 @@ if (!empty($sellers)) {
                         AND a.auctionID = b.auctionID
                         AND b.auctionID = :auctionID
                         AND b.price = (SELECT max(b2.price) FROM bid b2, auction a2 WHERE b2.auctionID = b.auctionID)
+                        AND b.price > 0
                         AND a.endTime < NOW()';
 
         $stmt2 = $pdo->prepare($selectWinners);
@@ -102,7 +103,7 @@ if (!empty($sellers)) {
 
         // echo $mail->Username;
 
-        if ($price == null){
+        if ($price == null || $price == 0){
 
             $mail->Subject = 'Auction for '.$item_name.' ended';
             $mail->Body = 'Hi '.$firstname.', 
