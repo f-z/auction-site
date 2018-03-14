@@ -774,7 +774,7 @@ export class ItemDetailsComponent implements OnDestroy {
     dots[this.slideIndex - 1].className += ' active';
   }
 
-  getAuctionRecommendations(auctionID): void {
+  getAuctionRecommendations(auctionID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),

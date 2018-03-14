@@ -11,7 +11,7 @@
 
     try {
 
-        $query = 'SELECT * FROM `viewings` WHERE auctionID = :auctionID AND userID = :userID';
+        $query = 'SELECT * FROM `viewing` WHERE auctionID = :auctionID AND userID = :userID';
         $findViews = $pdo->prepare($query);
         $findViews->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
         $findViews->bindParam(':userID', $userID, PDO::PARAM_INT);
@@ -20,7 +20,7 @@
 
         if (empty($result)) { // If user has not viewed the auction before
 
-            $incrementQuery =  'INSERT INTO `viewings` (auctionID, userID, viewCount) 
+            $incrementQuery =  'INSERT INTO `viewing` (auctionID, userID, viewCount) 
                                 VALUES (:auctionID, :userID, 1)';
 
             $incrementViewings = $pdo->prepare($incrementQuery);
@@ -30,7 +30,7 @@
 
          }else { // If user has already viewed the auction
 
-            $incrementQuery = 'UPDATE viewings 
+            $incrementQuery = 'UPDATE viewing 
                             SET viewCount = viewCount + 1 
                              WHERE auctionID = :auctionID AND userID = :userID';
 
@@ -41,7 +41,7 @@
         }
 
         $query = 'SELECT COUNT(userID) AS distinctViewings, SUM(viewCount) AS totalViewings 
-                    FROM `viewings` WHERE auctionID=:auctionID';
+                    FROM `viewing` WHERE auctionID=:auctionID';
         
         $findViews = $pdo->prepare($query);
         $findViews->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
