@@ -59,7 +59,7 @@
 
     $mail->Subject = 'Your bid is winning';
     $mail->Debugoutput = 'html';
-    $mail->Body = 'Hi '.$firstname.'
+    $mail->Body = 'Hi '.$firstname.',
                     Thanks for placing a bid. It has been accepted. You are currently the highest bidder ('.$time.')!';  
         
     if($mail->send()) {
