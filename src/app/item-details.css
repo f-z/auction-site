@@ -268,3 +268,7 @@ h3 {
   z-index: 4;
   border: none;
 }
+
+.recommended{
+  font-size: 1.2em;
+}

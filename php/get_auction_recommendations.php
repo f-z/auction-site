@@ -18,6 +18,7 @@
 		JOIN viewings AS viewings1 ON `user`.userID = viewings1.userID
 		JOIN auction AS auction1 ON viewings1.auctionID = auction1.auctionID
 		WHERE auction1.auctionID = :auctionID AND auction.auctionID != auction1.auctionID 
+        AND auction.endTime > NOW()
 		GROUP BY auction.auctionID
 		ORDER BY userCount DESC
         LIMIT 3

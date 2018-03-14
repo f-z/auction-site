@@ -172,8 +172,9 @@
 
 
 
-<div class="grid-list-container tabcontent" id="watching">
-  <h2>User who viewed this auction also viewed:</h2>
+<div class="grid-list-container tabcontent">
+  <h3 class="recommended">Users who viewed this auction also viewed:</h3>
+  <br>
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of recommendedAuctions">
       <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">

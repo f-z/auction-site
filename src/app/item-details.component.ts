@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { User, UserService } from './shared/services/user.service';
 import {
@@ -60,6 +60,14 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
+    //Scroll to top of page when page refreshes 
+     this.router.events.subscribe((evt) => {
+            if (!(evt instanceof NavigationEnd)) {
+                return;
+            }
+            window.scrollTo(0, 0)
+        });
+
     this.slideIndex = 1;
     route.params.subscribe(val => {
       this.sub = this.route.params.subscribe(params => {
@@ -81,18 +89,6 @@ export class ItemDetailsComponent implements OnDestroy {
   setItem(item: Item): void {
     this.itemService.setItem(item);
   }
-
-  /*ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.itemID = +params['itemID']; // (+) converts string 'id' to a number
-      this.item = this.getItem();
-      this.user = this.getUser();
-    });
-
-    this.getAuctionInformation();
-
-    this.getSellerRating(this.itemService.getItem().sellerID);
-  }*/
 
   ngOnDestroy() {
     let countdownText = document.getElementById('countdown');
