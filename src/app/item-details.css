@@ -257,3 +257,14 @@ h3 {
     font-size: 11px
   }
 }
+
+.grid-list-container {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 16px;
+  z-index: 4;
+  border: none;
+}

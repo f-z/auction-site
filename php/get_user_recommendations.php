@@ -1,6 +1,4 @@
 <?php 
-
-
 $sql = 'SELECT other_user_views.userID AS other_user_id ,COUNT(*) AS same_auction_count
 	FROM viewings AS other_user_views 
   JOIN viewings AS current_user_views 
@@ -10,5 +8,4 @@ $sql = 'SELECT other_user_views.userID AS other_user_id ,COUNT(*) AS same_auctio
     
     GROUP BY other_user_views.userID
 	ORDER BY same_auction_count DESC'
-
-  ?>
+?>
