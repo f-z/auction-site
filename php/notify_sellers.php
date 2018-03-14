@@ -30,7 +30,7 @@ use PHPMailer\PHPMailer\Exception;
 // Load composer's autoloader.
 require_once('./vendor/autoload.php');
 
-$sql = 'SELECT a.auctionID, u.firstName, u.email, i.itemid, i.name
+$selectSellers = 'SELECT a.auctionID, u.firstName, u.email, i.itemid, i.name
         FROM user u, item i, auction a
         WHERE u.userid = i.sellerID 
         AND i.itemID = a.itemID 
@@ -41,14 +41,32 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $sellers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach($sellers as $seller) {
+if (!empty($sellers)) {
 
-    $firstname = $seller['firstName'];
-    $email = $seller['email'];
-    $item_name = $seller['name'];
-    $auctionID = $seller['auctionID'];
+    foreach($sellers as $seller) {
 
-    try {
+        $firstname = $seller['firstName'];
+        $email = $seller['email'];
+        $item_name = $seller['name'];
+        $auctionID = $seller['auctionID'];
+
+        $selectWinners = 'SELECT u.username, u.email, b.auctionID, b.buyerID, b.price, a.reservePrice
+                        FROM user u, bid b, auction a
+                        WHERE b.buyerID = u.userID
+                        AND a.auctionID = b.auctionID
+                        AND b.auctionID = :auctionID
+                        AND b.price = (SELECT max(b2.price) FROM bid b2, auction a2 WHERE b2.auctionID = b.auctionID)
+                        AND a.endTime < NOW()';
+
+        $stmt2 = $pdo->prepare($selectWinners);
+        $stmt2->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+        $stmt2->execute();
+        $winner = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $price = $winner['price'];
+        $reservePrice = $winner['reservePrice'];
+        $itemName = $winner['name'];
+
         $mail = new PHPMailer(true);
 
         //Server settings
@@ -68,24 +86,43 @@ foreach($sellers as $seller) {
             'allow_self_signed' => true
             )
         );
-        $mail->Subject = 'UCL Databases';
         $mail->Debugoutput = 'html';
         $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
         $mail->addAddress($email, $firstname);
-        $mail->Subject = 'Auction Expired';
-        $mail->Debugoutput = 'html';
-        $mail->Body = 'Hi '.$firstname.', 
-                         Your auction for '.$item_name.' has ended!';
-             
-        if ($mail->send()){
-            $sql2 = 'UPDATE auction SET isNotified = 1 WHERE auctionID = :auctionID;';
-            $stmt2 = $pdo->prepare($sql2);
-            $stmt2->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
-            $stmt2->execute();
+
+        if ($price == null){
+
+            $mail->Subject = 'Auction for '.$itemName.' ended';
+            $mail->Body = 'Hi '.$firstname.', 
+            Unfortunately, '.$item_name.' did not sell. Please relist your item for other users to be able to bid on it';
+        } else if ($price >= $reservePrice) {
+
+            $winnerName = $winner['username'];
+
+            $mail->Subject = ''.$itemName.' was Sold!';
+            $mail->Body = 'Hi '.$firstname.', 
+                         '.$item_name.' has been sold for '.$price.'! The winner is '.$winnerName.'.';
+
+        } else {
+
+            $mail->Subject = 'Auction for '.$itemName.' ended';
+            $mail->Body = 'Hi '.$firstname.', 
+            Unfortunately, '.$item_name.' did not sell. The highest bid of '.$price.' did not exceed your reserve price.';
+
         }
-    } catch (Exception $e) {
-        echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
-        die();
+        try {
+        
+             
+            if ($mail->send()){
+                $sql2 = 'UPDATE auction SET isNotified = 1 WHERE auctionID = :auctionID;';
+                $stmt2 = $pdo->prepare($sql2);
+                $stmt2->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
+                $stmt2->execute();
+            }
+        } catch (Exception $e) {
+            echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
+            die();
+        }
     }
 
 }
