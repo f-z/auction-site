@@ -73,14 +73,14 @@ foreach($bidders as $bidder){
             )
         );
         $mail->Debugoutput = 'html';
-        $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
+        $mail->setFrom('uclbay.gc06@gmail.com', '');
 
         $mail->addAddress($email, $firstname);
         $mail->Subject = 'Auction for '.$item_name.' has ended';
 
         if ($price >= $reservePrice) {
-            $mail->Body = 'Hi '. $firstname. ', 
-                          Congratualtions, you have won the auction for '.$item_name.'!';
+            $mail->Body = '<p>Hi '. $firstname.'</p>, 
+                          <p>Congratualtions, you have won the auction for '.$item_name.'!</p>';
         
             if ($mail->send()){
                 $sql2 = 'UPDATE bid SET isNotified = 1 WHERE auctionID = :auctionID AND buyerID = :buyerID;';
