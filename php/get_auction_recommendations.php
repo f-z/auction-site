@@ -20,7 +20,7 @@
 		WHERE auction1.auctionID = :auctionID AND auction.auctionID != auction1.auctionID 
 		GROUP BY auction.auctionID
 		ORDER BY userCount DESC
-        LIMIT 6
+        LIMIT 3
 ');
        
         // Binding the provided username to our prepared statement.

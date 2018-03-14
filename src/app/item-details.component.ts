@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './item-details.html',
   styleUrls: ['./item-details.css']
 })
-export class ItemDetailsComponent implements OnInit, OnDestroy {
+export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
   private auction: Auction;
   private distinctViewers: number;
@@ -61,13 +61,30 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     this.slideIndex = 1;
+    route.params.subscribe(val => {
+
+          this.sub = this.route.params.subscribe(params => {
+      this.itemID = +params['itemID']; // (+) converts string 'id' to a number
+      this.item = this.getItem();
+      this.user = this.getUser();
+    });
+
+    this.getAuctionInformation();
+
+    this.getSellerRating(this.itemService.getItem().sellerID);
+
+    });
   }
 
   getItem(): Item {
     return this.itemService.getItem();
   }
 
-  ngOnInit() {
+  setItem(item: Item): void {
+    this.itemService.setItem(item);
+  }
+
+  /*ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.itemID = +params['itemID']; // (+) converts string 'id' to a number
       this.item = this.getItem();
@@ -77,7 +94,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.getAuctionInformation();
 
     this.getSellerRating(this.itemService.getItem().sellerID);
-  }
+  }*/
 
   ngOnDestroy() {
     let countdownText = document.getElementById('countdown');
@@ -91,6 +108,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   setUser(user: User): void {
     this.userService.setUser(user);
   }
+
 
   getSellerRating(sellerID: number): void {
     const headers: any = new HttpHeaders({
@@ -796,11 +814,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog(
-          'Error getting Auction recommendations...',
-          '',
-          false
-        );
+        console.log(error);
       }
     );
     return null;
