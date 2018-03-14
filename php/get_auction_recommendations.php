@@ -13,10 +13,10 @@
         $stmnt = $pdo->prepare('SELECT DISTINCT auction.*, item.*, COUNT(`user`.userID) AS userCount
 		FROM auction
 		JOIN item ON auction.itemID = item.itemID
-		JOIN viewings ON auction.auctionID = viewings.auctionID
-		JOIN `user` ON viewings.userID = `user`.userID
-		JOIN viewings AS viewings1 ON `user`.userID = viewings1.userID
-		JOIN auction AS auction1 ON viewings1.auctionID = auction1.auctionID
+		JOIN viewing ON auction.auctionID = viewing.auctionID
+		JOIN `user` ON viewing.userID = `user`.userID
+		JOIN viewing AS viewing1 ON `user`.userID = viewing1.userID
+		JOIN auction AS auction1 ON viewing1.auctionID = auction1.auctionID
 		WHERE auction1.auctionID = :auctionID AND auction.auctionID != auction1.auctionID 
         AND auction.endTime > NOW()
 		GROUP BY auction.auctionID
