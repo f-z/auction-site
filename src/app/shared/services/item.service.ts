@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
 const ITEM_KEY = 'item_key';
@@ -30,6 +30,30 @@ export class ItemService {
     this.item = item;
     this.saveState();
   }
+
+
+  setItemFromID(itemID:number):void{
+     const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        itemID: itemID,
+      },
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_item.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        this.item = data;
+        this.saveState();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+    return null;
+  }
+
 
   removeItem(itemId: string): void {
     delete this.item[itemId];

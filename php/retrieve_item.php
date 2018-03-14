@@ -10,14 +10,13 @@
 
     try {
         // Retrieving item.
-        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, MAX(b.price) AS highestBid 
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
+             CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
                 ON a.auctionID = b.auctionID 
                 WHERE i.itemID = a.itemID
-                AND a.auctionID = :auctionID
-                AND b.price = (SELECT MAX(price) FROM bid 
-                    WHERE auctionID = a.auctionID)');
+                AND a.auctionID = :auctionID');
        
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

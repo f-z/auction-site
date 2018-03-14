@@ -715,7 +715,7 @@ export class ItemDetailsComponent implements OnDestroy {
   }
 
   goBack(): void {
-    window.history.back();
+    this.router.navigate(['/my-items']);
   }
 
   goToMyProfile(): void {
