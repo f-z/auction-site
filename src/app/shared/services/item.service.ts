@@ -94,8 +94,8 @@ export class ItemService {
   }
 
 
-  removeItem(itemId: string): void {
-    delete this.item[itemId];
+  removeItem(): void {
+    delete this.item[ITEM_KEY];
     this.saveState();
   }
 }

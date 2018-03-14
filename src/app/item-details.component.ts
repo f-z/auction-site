@@ -21,6 +21,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
+
+  loadComplete: boolean = false;
+
   private auction: Auction;
   private distinctViewers: number;
   private totalViews: number;
@@ -35,7 +38,6 @@ export class ItemDetailsComponent implements OnDestroy {
   private sellerRating: number;
   private sellerFeedbackCount: number;
 
-  private counter: any;
 
   private itemID: number;
   private sub: any;
@@ -62,9 +64,25 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
-    this.counter = null;
-    //let countdownText = document.getElementById('countdown');
-    //countdownText = null;
+
+      route.params.subscribe(val => {
+      
+      this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
+
+       this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
+       this.item = this.getItem();
+       this.user = this.getUser();
+
+      this.getAuctionInformation();
+
+      this.getSellerRating(this.itemService.getItem().sellerID);
+
+
+    let countdownText = document.getElementById('countdown');
+    countdownText = null;
+
+    });
+
 
     //Scroll to top of page when page refreshes 
      this.router.events.subscribe((evt) => {
@@ -74,20 +92,8 @@ export class ItemDetailsComponent implements OnDestroy {
             window.scrollTo(0, 0)
         });
 
+
     this.slideIndex = 1;
-
-    route.params.subscribe(val => {
-      this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
-      this.sub = this.route.params.subscribe(params => {
-        this.itemID = +params['itemID']; // (+) converts string 'id' to a number
-        this.item = this.getItem();
-        this.user = this.getUser();
-      });
-
-      this.getAuctionInformation();
-
-      this.getSellerRating(this.itemService.getItem().sellerID);
-    });
   }
 
   getItem(): Item {
@@ -101,7 +107,6 @@ export class ItemDetailsComponent implements OnDestroy {
   ngOnDestroy() {
     let countdownText = document.getElementById('countdown');
     countdownText = null;
-    clearInterval(this.counter);
   }
 
   getUser(): User {
@@ -645,8 +650,10 @@ export class ItemDetailsComponent implements OnDestroy {
   countDown(auction_endTime: string): void {
     // Set the date we're counting down to.
     const countDownDate = new Date(auction_endTime).getTime();
+   
 
-    // Update the count down every 1 second
+    window.clearInterval(localStorage['counter'])
+
     const counter = setInterval(
       (window.onload = function() {
         // Get todays date and time
@@ -704,7 +711,7 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       1000
     );
-    this.counter = counter;
+    window.localStorage['counter'] = counter;
   }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
