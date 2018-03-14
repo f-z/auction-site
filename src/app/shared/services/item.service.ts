@@ -40,7 +40,7 @@ export class ItemService {
         itemID: itemID,
       },
       url: any =
-        'https://php-group30.azurewebsites.net/retrieve_item.php';
+        'https://php-group30.azurewebsites.net/retrieve_item_from_itemID.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {

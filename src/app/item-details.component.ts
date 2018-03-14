@@ -60,6 +60,8 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
+
+
     //Scroll to top of page when page refreshes 
      this.router.events.subscribe((evt) => {
             if (!(evt instanceof NavigationEnd)) {
@@ -69,7 +71,9 @@ export class ItemDetailsComponent implements OnDestroy {
         });
 
     this.slideIndex = 1;
+    
     route.params.subscribe(val => {
+      this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
       this.sub = this.route.params.subscribe(params => {
         this.itemID = +params['itemID']; // (+) converts string 'id' to a number
         this.item = this.getItem();
