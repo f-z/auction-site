@@ -361,7 +361,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
-          this.notifyCurrentBidder(this.auction.auctionID, this.user.userID);
+          this.notifyCurrentBidder(
+            this.auction.auctionID, 
+            this.user.userID, 
+            this.newBid);
           this.notifyPrevBidder(
             this.auction.auctionID,
             this.highestBidderID,
@@ -458,13 +461,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     return true; // if bid is valid
   }
 
-  notifyCurrentBidder(auctionID, buyerID): void {
+  notifyCurrentBidder(auctionID, buyerID, newBid): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options1: any = {
         auctionID: auctionID,
-        buyerID: buyerID
+        buyerID: buyerID,
+        highestBid: newBid
       },
       url: any =
         'https://php-group30.azurewebsites.net/notify_current_bidder.php';
@@ -510,7 +514,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       }),
       options1: any = {
         auctionID: auctionID,
-        highestBid: newBid,
+        highestBid: newBid
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_watchers.php';
 

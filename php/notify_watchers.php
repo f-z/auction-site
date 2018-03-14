@@ -50,6 +50,7 @@
             $mail->SMTPDebug = 2;
             $mail->Host = 'smtp.gmail.com';
             $mail->Port = 587;
+            $mail->CharSet = 'UTF-8';
             $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
             $mail->SMTPAuth = true;
             $mail->Username = 'uclbay.gc06@gmail.com';
@@ -68,7 +69,7 @@
             $mail->Subject = 'Someone made a bid on '.$item_name.'';
             $mail->Debugoutput = 'html';
             $mail->Body = 'Hi '. $watcher_firstname. ', 
-                            We are contacting you because you are watching '.$item_name.'. A new bid of £'.$newBid.' was submitted!';
+                            We are contacting you because you are watching '.$item_name.'. A new bid worth '.$newBid.' pounds was submitted!';
 
             if ($mail->send()){
             echo ('Congratulations! '.$watcher_firstname.' has been notified!');
