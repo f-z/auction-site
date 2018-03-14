@@ -8,6 +8,7 @@
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
   $currentBuyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
   $newBid = filter_var($obj->highestBid, FILTER_SANITIZE_NUMBER_INT);
+  $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT);
 
   try {
     // Retrieving contact details of new highest bidder.
@@ -31,11 +32,81 @@
      
     // Include file with mailer settings
     require_once('email_server.php');
+
+    $body = '<!doctype html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body class="">
+      <table border="0" cellpadding="0" cellspacing="0" class="body">
+        <tr>
+          <td>&nbsp;</td>
+          <td class="container">
+            <div class="content">
+    
+              <table class="main">
+                <tr>
+                  <td class="wrapper">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                          <p>Hi '.$firstname.',</p>
+                          <p>You are currently the highest bidder ('.$time.')!</p>
+                          <p>Looking good so far. It is almost yours, but you could still be outbid. You can improve your chances by increasing your max bid.</p>
+                          <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                              <tr>
+                                <td align="left">
+                                  <table border="0" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                      <tr>
+                                        <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <br>
+              <div class="footer">
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="content-block">
+                      <span>
+                          <b>UCLBay</b>
+                          <br>
+                          Gower Street
+                          <br>
+                          London
+                          <br>
+                          WC1B 6BE</span>
+                    </td>
+                  </tr>
+                  </tr>
+                </table>
+              </div>
+    
+            </div>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </body>
+    </html>';
     
     $mail->addAddress($emailCur, $firstname);
     $mail->Subject = 'Your bid is winning';
-    $mail->Body = 'Hi '.$firstname.',
-                    Thanks for placing a bid of '.$newBid.' pounds. It has been accepted. You are currently the highest bidder ('.$time.')!';  
+    $mail->IsHTML(true);
+    $mail->Body = $body;
         
     if($mail->send()) {
       echo json_encode('Email to current bidder has been sent!');
