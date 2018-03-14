@@ -64,7 +64,7 @@ foreach($bidders as $bidder){
         $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
         $mail->SMTPAuth = true;
         $mail->Username = 'uclbay.gc06@gmail.com';
-        $mail->Password = 'uclbay_gc06';
+        $mail->Password = 'uclbay@gc06';
         // walkaround to bypass server errors
         $mail->SMTPOptions = array(
         'ssl' => array(
@@ -73,9 +73,8 @@ foreach($bidders as $bidder){
             'allow_self_signed' => true
             )
         );
-        $mail->Subject = 'UCL Databases';
         $mail->Debugoutput = 'html';
-        $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+        $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
         $mail->addAddress($email, $firstname);
         $mail->Subject = 'Auction for '.$item_name.' has ended';
         $mail->Debugoutput = 'html';
