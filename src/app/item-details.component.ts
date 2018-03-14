@@ -35,6 +35,8 @@ export class ItemDetailsComponent implements OnDestroy {
   private sellerRating: number;
   private sellerFeedbackCount: number;
 
+  private counter: any;
+
   private itemID: number;
   private sub: any;
   private user: User;
@@ -60,7 +62,9 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
-
+    this.counter = null;
+    //let countdownText = document.getElementById('countdown');
+    //countdownText = null;
 
     //Scroll to top of page when page refreshes 
      this.router.events.subscribe((evt) => {
@@ -71,7 +75,7 @@ export class ItemDetailsComponent implements OnDestroy {
         });
 
     this.slideIndex = 1;
-    
+
     route.params.subscribe(val => {
       this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
       this.sub = this.route.params.subscribe(params => {
@@ -97,6 +101,7 @@ export class ItemDetailsComponent implements OnDestroy {
   ngOnDestroy() {
     let countdownText = document.getElementById('countdown');
     countdownText = null;
+    clearInterval(this.counter);
   }
 
   getUser(): User {
@@ -699,6 +704,7 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       1000
     );
+    this.counter = counter;
   }
 
   openDialog(message: string, username: string, succeeded: boolean): void {
