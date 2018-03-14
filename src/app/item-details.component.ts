@@ -367,6 +367,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
             this.highestBidderID,
             this.user.userID
           );
+          this.notifyWatchers(this.auction.auctionID, this.newBid);
           this.openDialog(
             'Congratulations, you have successfully placed your bid!',
             '',
@@ -490,6 +491,28 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         newBuyer: newBuyer
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
+
+    this.http.post(url, JSON.stringify(options1), headers).subscribe(
+      (data: any) => {
+        // console.log(data);
+      },
+      (error: any) => {}
+    );
+
+    return null;
+  }
+
+  notifyWatchers(auctionID, newBid): void {
+    console.log('AuctionID: ' + auctionID);
+    console.log('Bid: ' + newBid);
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options1: any = {
+        auctionID: auctionID,
+        highestBid: newBid,
+      },
+      url: any = 'https://php-group30.azurewebsites.net/notify_watchers.php';
 
     this.http.post(url, JSON.stringify(options1), headers).subscribe(
       (data: any) => {

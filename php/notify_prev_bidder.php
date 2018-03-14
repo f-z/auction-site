@@ -57,6 +57,8 @@
             if ($mail->send()){
                 echo json_encode('Email to previous bidder has been sent!');
             }
+        } else {
+            echo json_encode('You are previous bidder');
         }
     } catch (Exception $e) {
         echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
