@@ -55,21 +55,11 @@
                           <p>Hi '.$firstname.',</p>
                           <p>You are currently the highest bidder ('.$time.')!</p>
                           <p>Looking good so far. It is almost yours, but you could still be outbid. You can improve your chances by increasing your max bid.</p>
-                          <table border="0" cellpadding="0" cellspacing="0">
                             <tbody>
-                              <tr>
-                                <td align="left">
-                                  <table border="0" cellpadding="0" cellspacing="0">
-                                    <tbody>
-                                      <tr>
-                                        <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
+                                <tr>
+                                  <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
+                                </tr>
                             </tbody>
-                          </table>
                         </td>
                       </tr>
                     </table>
@@ -78,21 +68,15 @@
               </table>
               <br>
               <div class="footer">
-                <table border="0" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-block">
-                      <span>
-                          <b>UCLBay</b>
-                          <br>
-                          Gower Street
-                          <br>
-                          London
-                          <br>
-                          WC1B 6BE</span>
-                    </td>
-                  </tr>
-                  </tr>
-                </table>
+                <span>
+                    <b>UCLBay</b>
+                    <br>
+                    Gower Street
+                    <br>
+                    London
+                    <br>
+                    WC1B 6BE
+                    </span>
               </div>
     
             </div>
