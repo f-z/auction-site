@@ -223,9 +223,12 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { 'auctionID': auctionID,
-                       'userID': this.user.userID },
-      url: any = 'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
+      options: any = {
+        auctionID: auctionID,
+        userID: this.user.userID
+      },
+      url: any =
+        'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -236,7 +239,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         }
       },
       (error: any) => {
-          console.log(error);
+        console.log(error);
       }
     );
 
@@ -377,35 +380,39 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   buyItNow(): void {
-    const headers: any = new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      options: any = {
-        buyerID: this.user.userID,
-        auctionID: this.auction.auctionID,
-        price: this.buyItNowPrice
-      },
-      url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
+    if (this.buyItNowPrice > 0) {
+      const headers: any = new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        options: any = {
+          buyerID: this.user.userID,
+          auctionID: this.auction.auctionID,
+          price: this.buyItNowPrice
+        },
+        url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
 
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        this.endAuction();
-        this.openDialog(
-          'Congratulations, you have won this auction!',
-          '',
-          true
-        );
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops, something went wrong... Please try again!',
-          '',
-          true
-        );
-      }
-    );
-    return null;
+      this.http.post(url, JSON.stringify(options), headers).subscribe(
+        (data: any) => {
+          this.endAuction();
+          this.openDialog(
+            'Congratulations, you have won this auction!',
+            '',
+            true
+          );
+        },
+        (error: any) => {
+          // If there is an error, return to main search page.
+          this.openDialog(
+            'Oops, something went wrong... Please try again!',
+            '',
+            true
+          );
+        }
+      );
+      return null;
+    } else {
+      this.openDialog('The seller did not specify a buy-it-now price!', '', true);
+    }
   }
 
   endAuction(): void {
@@ -673,11 +680,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   // Image carousel
   plusSlides(n: number): void {
-    this.showSlides(this.slideIndex += n);
+    this.showSlides((this.slideIndex += n));
   }
 
   currentSlide(n: number): void {
-    this.showSlides(this.slideIndex = n);
+    this.showSlides((this.slideIndex = n));
   }
 
   showSlides(n: number): void {

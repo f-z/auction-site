@@ -36,8 +36,6 @@ export class AddItemComponent implements OnInit {
   private categories: Observable<Category[]> = null;
   private selectedCategory: string;
 
-  private imageAdded: boolean;
-
   public uploader1: FileUploader = new FileUploader({
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
     itemAlias: 'photo'
@@ -57,7 +55,9 @@ export class AddItemComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router
   ) {
-    this.imageAdded = false;
+    this.photo1 = null;
+    this.photo2 = null;
+    this.photo3 = null;
   }
 
   ngOnInit(): void {
@@ -66,7 +66,7 @@ export class AddItemComponent implements OnInit {
 
     this.uploader1.onAfterAddingFile = file => {
       file.withCredentials = false;
-      this.imageAdded = true;
+      this.uploader1.uploadAll();
     };
     // Overriding the default onCompleteItem property of the uploader,
     // so we are able to deal with the server response.
@@ -77,13 +77,11 @@ export class AddItemComponent implements OnInit {
       headers: any
     ) => {
       this.photo1 = response;
-
-      this.uploader2.uploadAll();
     };
 
     this.uploader2.onAfterAddingFile = file => {
       file.withCredentials = false;
-      this.imageAdded = true;
+      this.uploader2.uploadAll();
     };
     // Overriding the default onCompleteItem property of the uploader,
     // so we are able to deal with the server response.
@@ -94,13 +92,11 @@ export class AddItemComponent implements OnInit {
       headers: any
     ) => {
       this.photo2 = response;
-
-      this.uploader3.uploadAll();
     };
 
     this.uploader3.onAfterAddingFile = file => {
       file.withCredentials = false;
-      this.imageAdded = true;
+      this.uploader3.uploadAll();
     };
     // Overriding the default onCompleteItem property of the uploader,
     // so we are able to deal with the server response.
@@ -111,8 +107,6 @@ export class AddItemComponent implements OnInit {
       headers: any
     ) => {
       this.photo3 = response;
-
-      this.addItem();
     };
   }
 
@@ -231,20 +225,20 @@ export class AddItemComponent implements OnInit {
       this.quantity <= 0 ||
       this.startPrice <= 0 ||
       this.reservePrice < this.startPrice ||
-      this.buyNowPrice < this.reservePrice
+      (this.buyNowPrice != null && this.buyNowPrice < this.reservePrice)
     ) {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
       return false;
-    } else if (!this.imageAdded) {
+    } else if (this.photo1 == null && this.photo2 == null && this.photo3 == null) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
-      this.openDialog('Please add an item photo!', '', false);
+      this.openDialog('Please add at least one item photo!', '', false);
       return false;
     }
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.
-    this.uploader1.uploadAll();
+    this.addItem();
     return true;
   }
 

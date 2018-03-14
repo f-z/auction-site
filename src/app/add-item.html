@@ -140,9 +140,9 @@
       <h3 class="centred">Item Photos</h3>
       <input type="file" name="photo1" ng2FileSelect [uploader]="uploader1" />
       <br>
-      <input type="file" name="photo2" ng2FileSelect [uploader]="uploader2" />
+      <input type="file" name="photo2" ng2FileSelect [uploader]="uploader2" *ngIf="this.photo1 != null" />
       <br>
-      <input type="file" name="photo3" ng2FileSelect [uploader]="uploader3" />
+      <input type="file" name="photo3" ng2FileSelect [uploader]="uploader3" *ngIf="this.photo1 != null" />
       <br>
       <br>
       <div class="col-half">
