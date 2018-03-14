@@ -42,6 +42,7 @@
     else {
         try {
             $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $hashedPass = sha1($password);
             $firstName = filter_var($obj->firstName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $lastName = filter_var($obj->lastName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $street = filter_var($obj->street, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
@@ -59,7 +60,7 @@
             // Binding parameter values to prepared statement.
             $insert->bindParam(':username', $username, PDO::PARAM_STR);
             $insert->bindParam(':email', $email, PDO::PARAM_STR);
-            $insert->bindParam(':password', $password, PDO::PARAM_STR);
+            $insert->bindParam(':password', $hashedPass, PDO::PARAM_STR);
             $insert->bindParam(':role', $userRole, PDO::PARAM_STR);
             $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
             $insert->bindParam(':firstname', $firstName, PDO::PARAM_STR);
