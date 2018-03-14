@@ -15,7 +15,6 @@ export class ItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.timeRemaining(this.item.endTime);
-    
   }
 
   // Displays time remaining on auction.
@@ -52,11 +51,4 @@ export class ItemComponent implements OnInit {
       this.timeLeft = 'EXPIRED';
     }
   }
-
-
-
- 
-
-
-
 }

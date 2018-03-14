@@ -200,6 +200,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
         this.buyItNowPrice = data[0].buyNowPrice;
+        if (this.buyItNowPrice === 0) {
+          this.buyItNowPrice = null;
+        }
         this.reservePrice = data[0].reservePrice;
 
         if (this.item.photo2 != null && this.item.photo3 != null) {
