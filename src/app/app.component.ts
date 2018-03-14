@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Item, ItemService } from './shared/services/item.service';
 import { User, UserService } from './shared/services/user.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material';
@@ -21,6 +21,7 @@ import { DialogComponent } from './dialog.component';
 export class AppComponent implements OnInit {
   item: Item;
   items: Observable<Item[]> = null;
+  recommendedItems: Observable<Item[]> = null;
   public selectedCategory: string;
   private user: User;
   private term: string;
@@ -65,6 +66,7 @@ export class AppComponent implements OnInit {
     this.term = 'All';
     this.user = this.getUser();
     this.getItems();
+    this.getUserRecommendations();
   }
 
   getItems(): void {
@@ -116,6 +118,73 @@ export class AppComponent implements OnInit {
           console.dir(error);
         }
       );
+  }
+
+  getUserRecommendations():void{
+
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { userID: this.user.userID },
+      url: any =
+        'https://php-group30.azurewebsites.net/get_user_recommendations.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.recommendedItems = data;
+           //photos
+            for (let i = 0; i < data.length; i++) {
+            this.recommendedItems[i].photo1 =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.recommendedItems[i].photo1.substring(
+                5,
+                this.recommendedItems[i].photo1.length - 5
+              );
+
+            if (
+              this.recommendedItems[i].photo2 != null &&
+              this.recommendedItems[i].photo2 !== ''
+            ) {
+              this.recommendedItems[i].photo2 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.recommendedItems[i].photo2.substring(
+                  5,
+                  this.recommendedItems[i].photo2.length - 5
+                );
+            } else {
+              this.recommendedItems[i].photo2 = null;
+            }
+
+            if (
+              this.recommendedItems[i].photo3 != null &&
+              this.recommendedItems[i].photo3 !== ''
+            ) {
+              this.recommendedItems[i].photo3 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.recommendedItems[i].photo3.substring(
+                  5,
+                  this.recommendedItems[i].photo3.length - 5
+                );
+            } else {
+              this.recommendedItems[i].photo3 = null;
+            }
+          }
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        //this.openDialog(
+         // 'Oops! Something went wrong; redirecting you to safety...',
+          //'',
+         //false
+        //);
+        console.log(error);
+      }
+    );
+    return null;
+
   }
 
   setItem(item: Item): void {
