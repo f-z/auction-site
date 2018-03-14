@@ -228,7 +228,6 @@ export class AddItemComponent implements OnInit {
       this.condition.trim().length === 0 ||
       this.endDate.trim().length === 0 ||
       new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
-      new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
       this.startPrice <= 0 ||
@@ -237,6 +236,9 @@ export class AddItemComponent implements OnInit {
     ) {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
+      return false;
+    } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
+      this.openDialog('The auction end date cannot be more than 6 months into the future!', '', false);
       return false;
     } else if (this.photo1 == null && this.photo2 == null && this.photo3 == null) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
