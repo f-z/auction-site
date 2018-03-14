@@ -33,10 +33,12 @@
             $similarUserIds[] = $row[0];
         }
 
+
+
         //data containing objects
         $data = array();
 
-        for($i = 0; $i < 3; $i++){
+        foreach($similarUserIds AS $value){
 
                 $stmnt = $pdo->prepare('SELECT v.auctionID, i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                         a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
@@ -46,21 +48,23 @@
                     LEFT JOIN item AS i ON a.itemID = i.itemID 
                     LEFT JOIN bid as b ON v.auctionID = b.auctionID
                     WHERE v.userID = :other_userID
-                    AND v.auctionID NOT IN(
+                    AND v.auctionID NOT IN (
                         SELECT auctionID
                         FROM viewing AS v1
                         WHERE v1.userID = :userID)
                     GROUP BY b.auctionID');
 
                 $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
-                $stmnt->bindParam(':other_userID', $similarUserIds[$i], PDO::PARAM_INT);
+                $stmnt->bindParam(':other_userID', $value, PDO::PARAM_INT);
                 $stmnt->execute();
 
-                $data[] = $stmnt->fetch(PDO::FETCH_OBJ);
+                $result = $stmnt->fetch(PDO::FETCH_OBJ);
+
+                $data[] = $result;
 
         }
 
-        echo json_encode($data);
+        echo json_encode($data); 
 
 }  catch(PDOException $e) {
         echo $e->getMessage();

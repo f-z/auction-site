@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        // Set the date we're counting down to.
+        console.log(data);
         if (data != null) {
           this.recommendedItems = data;
            //photos
