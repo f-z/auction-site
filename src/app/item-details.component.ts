@@ -225,10 +225,6 @@ export class ItemDetailsComponent implements OnDestroy {
         }
         this.reservePrice = data[0].reservePrice;
 
-        if (this.item.photo2 != null && this.item.photo3 != null) {
-          this.showSlides(1);
-        }
-
         this.getAuctionRecommendations(data[0].auctionID);
       },
       (error: any) => {
@@ -789,40 +785,12 @@ export class ItemDetailsComponent implements OnDestroy {
         if (data != null) {
           this.recommendedAuctions = data;
           for (let i = 0; i < data.length; i++) {
-            this.recommendedAuctions[i].photo1 =
+            this.recommendedAuctions[i].photo =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.recommendedAuctions[i].photo1.substring(
+              this.recommendedAuctions[i].photo.substring(
                 5,
-                this.recommendedAuctions[i].photo1.length - 5
+                this.recommendedAuctions[i].photo.length - 5
               );
-
-            if (
-              this.recommendedAuctions[i].photo2 != null &&
-              this.recommendedAuctions[i].photo2 !== ''
-            ) {
-              this.recommendedAuctions[i].photo2 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.recommendedAuctions[i].photo2.substring(
-                  5,
-                  this.recommendedAuctions[i].photo2.length - 5
-                );
-            } else {
-              this.recommendedAuctions[i].photo2 = null;
-            }
-
-            if (
-              this.recommendedAuctions[i].photo3 != null &&
-              this.recommendedAuctions[i].photo3 !== ''
-            ) {
-              this.recommendedAuctions[i].photo3 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.recommendedAuctions[i].photo3.substring(
-                  5,
-                  this.recommendedAuctions[i].photo3.length - 5
-                );
-            } else {
-              this.recommendedAuctions[i].photo3 = null;
-            }
           }
         }
       },

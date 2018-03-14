@@ -24,9 +24,7 @@ export class AddItemComponent implements OnInit {
   private condition: string;
   private quantity: number;
   private category: string;
-  private photo1: string;
-  private photo2: string;
-  private photo3: string;
+  private photo: string;
   private endDate: string;
   private endTime: string;
   private startPrice: number;
@@ -40,14 +38,6 @@ export class AddItemComponent implements OnInit {
     url: 'https://php-group30.azurewebsites.net/upload_image.php',
     itemAlias: 'photo'
   });
-  public uploader2: FileUploader = new FileUploader({
-    url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo'
-  });
-  public uploader3: FileUploader = new FileUploader({
-    url: 'https://php-group30.azurewebsites.net/upload_image.php',
-    itemAlias: 'photo'
-  });
 
   constructor(
     private userService: UserService,
@@ -55,9 +45,7 @@ export class AddItemComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router
   ) {
-    this.photo1 = null;
-    this.photo2 = null;
-    this.photo3 = null;
+    this.photo = null;
   }
 
   ngOnInit(): void {
@@ -76,37 +64,7 @@ export class AddItemComponent implements OnInit {
       status: any,
       headers: any
     ) => {
-      this.photo1 = response;
-    };
-
-    this.uploader2.onAfterAddingFile = file => {
-      file.withCredentials = false;
-      this.uploader2.uploadAll();
-    };
-    // Overriding the default onCompleteItem property of the uploader,
-    // so we are able to deal with the server response.
-    this.uploader2.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
-    ) => {
-      this.photo2 = response;
-    };
-
-    this.uploader3.onAfterAddingFile = file => {
-      file.withCredentials = false;
-      this.uploader3.uploadAll();
-    };
-    // Overriding the default onCompleteItem property of the uploader,
-    // so we are able to deal with the server response.
-    this.uploader3.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
-    ) => {
-      this.photo3 = response;
+      this.photo = response;
     };
   }
 
@@ -125,9 +83,7 @@ export class AddItemComponent implements OnInit {
         startPrice: this.startPrice,
         reservePrice: this.reservePrice,
         buyNowPrice: this.buyNowPrice,
-        photo1: this.photo1,
-        photo2: this.photo2,
-        photo3: this.photo3,
+        photo: this.photo,
         sellerID: this.user.userID
       },
       url: any = 'https://php-group30.azurewebsites.net/insert_item.php';
@@ -240,9 +196,9 @@ export class AddItemComponent implements OnInit {
     } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
       this.openDialog('The auction end date cannot be more than 6 months into the future!', '', false);
       return false;
-    } else if (this.photo1 == null && this.photo2 == null && this.photo3 == null) {
+    } else if (this.photo == null) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
-      this.openDialog('Please add at least one item photo!', '', false);
+      this.openDialog('Please add an item photo!', '', false);
       return false;
     }
 

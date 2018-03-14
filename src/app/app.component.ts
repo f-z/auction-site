@@ -84,34 +84,12 @@ export class AppComponent implements OnInit {
             // Find the distance between now and the end date.
             const distance = endDate - now;
 
-            this.items[i].photo1 =
+            this.items[i].photo =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo1.substring(
+              this.items[i].photo.substring(
                 5,
-                this.items[i].photo1.length - 5
+                this.items[i].photo.length - 5
               );
-
-            if (this.items[i].photo2 != null && this.items[i].photo2 !== '') {
-              this.items[i].photo2 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.items[i].photo2.substring(
-                  5,
-                  this.items[i].photo2.length - 5
-                );
-            } else {
-              this.items[i].photo2 = null;
-            }
-
-            if (this.items[i].photo3 != null && this.items[i].photo3 !== '') {
-              this.items[i].photo3 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.items[i].photo3.substring(
-                  5,
-                  this.items[i].photo3.length - 5
-                );
-            } else {
-              this.items[i].photo3 = null;
-            }
           }
         },
         (error: any) => {
@@ -120,7 +98,7 @@ export class AppComponent implements OnInit {
       );
   }
 
-  getUserRecommendations():void{
+  getUserRecommendations(): void {
 
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -134,52 +112,18 @@ export class AppComponent implements OnInit {
         // Set the date we're counting down to.
         if (data != null) {
           this.recommendedItems = data;
-           //photos
+           // photo
             for (let i = 0; i < data.length; i++) {
-            this.recommendedItems[i].photo1 =
+            this.recommendedItems[i].photo =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.recommendedItems[i].photo1.substring(
+              this.recommendedItems[i].photo.substring(
                 5,
-                this.recommendedItems[i].photo1.length - 5
+                this.recommendedItems[i].photo.length - 5
               );
-
-            if (
-              this.recommendedItems[i].photo2 != null &&
-              this.recommendedItems[i].photo2 !== ''
-            ) {
-              this.recommendedItems[i].photo2 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.recommendedItems[i].photo2.substring(
-                  5,
-                  this.recommendedItems[i].photo2.length - 5
-                );
-            } else {
-              this.recommendedItems[i].photo2 = null;
-            }
-
-            if (
-              this.recommendedItems[i].photo3 != null &&
-              this.recommendedItems[i].photo3 !== ''
-            ) {
-              this.recommendedItems[i].photo3 =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.recommendedItems[i].photo3.substring(
-                  5,
-                  this.recommendedItems[i].photo3.length - 5
-                );
-            } else {
-              this.recommendedItems[i].photo3 = null;
-            }
           }
         }
       },
       (error: any) => {
-        // If there is an error, return to main search page.
-        //this.openDialog(
-         // 'Oops! Something went wrong; redirecting you to safety...',
-          //'',
-         //false
-        //);
         console.log(error);
       }
     );

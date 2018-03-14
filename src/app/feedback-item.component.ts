@@ -27,12 +27,11 @@ export class FeedbackItemComponent implements OnInit {
     this.getItem(this.feedback.auctionID);
   }
 
-  visitProfile():void{
+  visitProfile(): void {
     this.router.navigate(['/profile', this.feedback.userID]);
   }
 
   setItem(): void {
-    console.log(this.item);
     this.itemService.setItem(this.item);
   }
 
@@ -49,16 +48,8 @@ export class FeedbackItemComponent implements OnInit {
         // Set the date we're counting down to.
         if (data != null) {
           this.item = data;
-          this.item.photo1 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.item.photo1.substring(5, this.item.photo1.length - 5);
-
-            if(this.item.photo2 != null){
-                this.item.photo2 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.item.photo2.substring(5, this.item.photo2.length - 5);}
-
-            if(this.item.photo3 != null){
-                this.item.photo3 = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.item.photo3.substring(5, this.item.photo3.length - 5);}
+          this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
+            this.item.photo.substring(5, this.item.photo.length - 5);
         }
       },
       (error: any) => {

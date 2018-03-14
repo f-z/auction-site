@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card login">
-    <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
+    <img class="profilePhoto" src="{{ this.user.photo }}" *ngIf="user!=null" (click)="goToMyProfile();">
     <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
     <h1 class="headline">UCL Bay</h1>
     <button class="button" routerLink="/register" *ngIf="user==null">
@@ -137,12 +137,8 @@
     <br>
 
     <div class="row">
-      <h3 class="centred">Item Photos</h3>
+      <h3 class="centred">Item Photo</h3>
       <input type="file" name="photo1" ng2FileSelect [uploader]="uploader1" />
-      <br>
-      <input type="file" name="photo2" ng2FileSelect [uploader]="uploader2" *ngIf="this.photo1 != null" />
-      <br>
-      <input type="file" name="photo3" ng2FileSelect [uploader]="uploader3" *ngIf="this.photo1 != null" />
       <br>
       <br>
       <div class="col-half">

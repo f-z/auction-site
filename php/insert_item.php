@@ -7,9 +7,7 @@
 
     // Sanitising URL supplied values.
     $name = filter_var($obj->name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    $photo1 = filter_var($obj->photo1, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    $photo2 = filter_var($obj->photo2, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-    $photo3 = filter_var($obj->photo3, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+    $photo = filter_var($obj->photo, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $description = filter_var($obj->description, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $condition = filter_var($obj->condition, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
     $quantity = filter_var($obj->quantity, FILTER_SANITIZE_NUMBER_INT);
@@ -17,14 +15,12 @@
     $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $itemQuery = "INSERT INTO `compgc06_group30`.`item` (`name`, `photo1`, `photo2`, `photo3`, `description`, `condition`, `quantity`, `categoryName`, `sellerID`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $itemQuery = "INSERT INTO `compgc06_group30`.`item` (`name`, `photo`, `description`, `condition`, `quantity`, `categoryName`, `sellerID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $insertItem = $pdo->prepare($itemQuery);
 
         $insertItem->bindParam(1, $name, PDO::PARAM_STR);
         $insertItem->bindParam(2, $photo1, PDO::PARAM_STR);
-        $insertItem->bindParam(3, $photo2, PDO::PARAM_STR);
-        $insertItem->bindParam(4, $photo3, PDO::PARAM_STR);
         $insertItem->bindParam(5, $description, PDO::PARAM_STR);
         $insertItem->bindParam(6, $condition, PDO::PARAM_STR);
         $insertItem->bindParam(7, $quantity,  PDO::PARAM_INT);
