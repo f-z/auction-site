@@ -190,12 +190,6 @@ export class RegistrationComponent {
       }
     });
 
-    dialogRef.afterOpen().subscribe(result => {
-      if (succeeded) {
-        setTimeout(dialogRef.close(), 4000);
-      }
-    });
-
     dialogRef.afterClosed().subscribe(result => {
       if (succeeded) {
         this.router.navigate(['/login']);

@@ -16,6 +16,7 @@
 
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
   $currentBuyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
+  $newBid = filter_var($obj->highestBid, FILTER_SANITIZE_NUMBER_INT);
 
   try {
     // Retrieving contact details of new highest bidder.
@@ -60,7 +61,7 @@
     $mail->Subject = 'Your bid is winning';
     $mail->Debugoutput = 'html';
     $mail->Body = 'Hi '.$firstname.',
-                    Thanks for placing a bid. It has been accepted. You are currently the highest bidder ('.$time.')!';  
+                    Thanks for placing a bid of '.$newBid.' pounds. It has been accepted. You are currently the highest bidder ('.$time.')!';  
         
     if($mail->send()) {
       echo json_encode('Email to current bidder has been sent!');
