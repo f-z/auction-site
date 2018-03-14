@@ -71,6 +71,11 @@ img.item-photo {
   margin-top: 20px;
 }
 
+.reserve-notification {
+  text-align: center;
+  margin-top: 20px;
+}
+
 .info-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
