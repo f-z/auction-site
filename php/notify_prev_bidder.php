@@ -22,8 +22,25 @@
             $emailPrev = $prevBidder['email'];
             $namePrev = $prevBidder['firstName'];
                 
-            // Include file with mailer settings
-            require_once('email_server.php');
+            $mail = new PHPMailer(true);
+            
+            //Server settings
+            $mail->isSMTP();
+            $mail->SMTPDebug = 2;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 587;
+            $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
+            $mail->SMTPAuth = true;
+            $mail->Username = 'uclbay.gc06@gmail.com';
+            $mail->Password = 'uclbay@gc06';
+            // walkaround to bypass server errors
+            $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+                )
+            );
 
             $body = '<!doctype html>
             <html>
