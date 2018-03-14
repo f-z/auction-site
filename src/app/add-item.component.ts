@@ -200,6 +200,13 @@ export class AddItemComponent implements OnInit {
   }
 
   validate(): boolean {
+     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
+     const date = new Date(Date.now());
+     const year = date.getFullYear();
+     const month = date.getMonth();
+     const day = date.getDate();
+     const maxAuctionDate = new Date(year, month + 6, day);
+
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (
       this.name == null ||
@@ -221,6 +228,7 @@ export class AddItemComponent implements OnInit {
       this.condition.trim().length === 0 ||
       this.endDate.trim().length === 0 ||
       new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
+      new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate ||
       this.endTime.trim().length === 0 ||
       this.quantity <= 0 ||
       this.startPrice <= 0 ||
