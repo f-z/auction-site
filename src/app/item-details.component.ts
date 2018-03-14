@@ -50,7 +50,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   slideIndex: number;
 
-  recommendedAuctions: Observable<Item[]> = null; 
+  recommendedAuctions: Observable<Item[]> = null;
 
   constructor(
     private userService: UserService,
@@ -210,7 +210,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         if (this.item.photo2 != null && this.item.photo3 != null) {
           this.showSlides(1);
         }
-        
+
         this.getAuctionRecommendations(data[0].auctionID);
       },
       (error: any) => {
@@ -362,9 +362,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.notifyCurrentBidder(
-            this.auction.auctionID, 
-            this.user.userID, 
-            this.newBid);
+            this.auction.auctionID,
+            this.user.userID,
+            this.newBid
+          );
           this.notifyPrevBidder(
             this.auction.auctionID,
             this.highestBidderID,
@@ -422,7 +423,11 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       );
       return null;
     } else {
-      this.openDialog('The seller did not specify a buy-it-now price!', '', true);
+      this.openDialog(
+        'The seller did not specify a buy-it-now price!',
+        '',
+        true
+      );
     }
   }
 
@@ -751,7 +756,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         'Content-Type': 'application/json'
       }),
       options: any = {
-        auctionID: auctionID,
+        auctionID: auctionID
       },
       url: any =
         'https://php-group30.azurewebsites.net/get_auction_recommendations.php';
@@ -759,52 +764,48 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null) {
-         this.recommendedAuctions = data;
-         for (let i = 0; i < data.length; i++) {
-          this.recommendedAuctions[i].photo1 =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.recommendedAuctions[i].photo1.substring(
-              5,
-              this.recommendedAuctions[i].photo1.length - 5
-            );
-
-          if (
-            this.recommendedAuctions[i].photo2 != null &&
-            this.recommendedAuctions[i].photo2 !== ''
-          ) {
-            this.recommendedAuctions[i].photo2 =
+          this.recommendedAuctions = data;
+          for (let i = 0; i < data.length; i++) {
+            this.recommendedAuctions[i].photo1 =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.recommendedAuctions[i].photo2.substring(
+              this.recommendedAuctions[i].photo1.substring(
                 5,
-                this.recommendedAuctions[i].photo2.length - 5
+                this.recommendedAuctions[i].photo1.length - 5
               );
-          } else {
-            this.recommendedAuctions[i].photo2 = null;
-          }
 
-          if (
-            this.recommendedAuctions[i].photo3 != null &&
-            this.recommendedAuctions[i].photo3 !== ''
-          ) {
-            this.recommendedAuctions[i].photo3 =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.recommendedAuctions[i].photo3.substring(
-                5,
-                this.recommendedAuctions[i].photo3.length - 5
-              );
-          } else {
-            this.recommendedAuctions[i].photo3 = null;
+            if (
+              this.recommendedAuctions[i].photo2 != null &&
+              this.recommendedAuctions[i].photo2 !== ''
+            ) {
+              this.recommendedAuctions[i].photo2 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.recommendedAuctions[i].photo2.substring(
+                  5,
+                  this.recommendedAuctions[i].photo2.length - 5
+                );
+            } else {
+              this.recommendedAuctions[i].photo2 = null;
+            }
+
+            if (
+              this.recommendedAuctions[i].photo3 != null &&
+              this.recommendedAuctions[i].photo3 !== ''
+            ) {
+              this.recommendedAuctions[i].photo3 =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.recommendedAuctions[i].photo3.substring(
+                  5,
+                  this.recommendedAuctions[i].photo3.length - 5
+                );
+            } else {
+              this.recommendedAuctions[i].photo3 = null;
+            }
           }
         }
-      } 
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog(
-          'Error getting Auction recommendations...',
-          '',
-          false
-        );
+        this.openDialog('Error getting Auction recommendations...', '', false);
       }
     );
     return null;

@@ -10,6 +10,8 @@ import { MatIconRegistry } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DomSanitizer } from '@angular/platform-browser';
 import { query } from '@angular/animations';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private userService: UserService,
+    public dialog: MatDialog,
     private router: Router,
     private http: HttpClient,
     iconRegistry: MatIconRegistry,
@@ -78,8 +81,6 @@ export class AppComponent implements OnInit {
             const now = new Date().getTime();
             // Find the distance between now and the end date.
             const distance = endDate - now;
-
-            // if (distance >=0) {}
 
             this.items[i].photo1 =
               'https://php-group30.azurewebsites.net/uploads/' +
@@ -144,7 +145,26 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.user = null;
-    this.setUser(null);
+    this.openDialog('Logging you out...', '', true);
+  }
+
+  openDialog(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterOpen().subscribe(result => {
+      setTimeout(dialogRef.close(), 4000);
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (succeeded) {
+        this.user = null;
+        this.setUser(null);
+      }
+    });
   }
 }
