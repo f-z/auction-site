@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable';
 export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
 
-  loadComplete: boolean = false;
+  loadComplete = false;
 
   private auction: Auction;
   private distinctViewers: number;
@@ -37,7 +37,6 @@ export class ItemDetailsComponent implements OnDestroy {
   private seller: User;
   private sellerRating: number;
   private sellerFeedbackCount: number;
-
 
   private itemID: number;
   private sub: any;
@@ -64,34 +63,28 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
-
-      route.params.subscribe(val => {
-      
+    route.params.subscribe(val => {
       this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
 
-       this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
-       this.item = this.getItem();
-       this.user = this.getUser();
+      this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
+      this.item = this.getItem();
+      this.user = this.getUser();
 
       this.getAuctionInformation();
 
       this.getSellerRating(this.itemService.getItem().sellerID);
 
-
-    let countdownText = document.getElementById('countdown');
-    countdownText = null;
-
+      let countdownText = document.getElementById('countdown');
+      countdownText = null;
     });
 
-
-    //Scroll to top of page when page refreshes 
-     this.router.events.subscribe((evt) => {
-            if (!(evt instanceof NavigationEnd)) {
-                return;
-            }
-            window.scrollTo(0, 0)
-        });
-
+    // Scroll to top of page when page refreshes.
+    this.router.events.subscribe(evt => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
 
     this.slideIndex = 1;
   }
@@ -216,7 +209,6 @@ export class ItemDetailsComponent implements OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data);
         this.auction = data[0];
         if (this.item.sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
@@ -491,7 +483,6 @@ export class ItemDetailsComponent implements OnDestroy {
 
     return true; // if bid is valid
   }
-
   notifyCurrentBidder(auctionID, buyerID, newBid): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -524,7 +515,8 @@ export class ItemDetailsComponent implements OnDestroy {
       options1: any = {
         auctionID: auctionID,
         prevBidderID: this.highestBidderID,
-        newBuyer: newBuyer
+        newBuyer: newBuyer,
+        itemID: this.itemID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
 
@@ -546,7 +538,8 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       options1: any = {
         auctionID: auctionID,
-        highestBid: newBid
+        highestBid: newBid,
+        itemID: this.itemID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_watchers.php';
 
@@ -559,6 +552,7 @@ export class ItemDetailsComponent implements OnDestroy {
 
     return null;
   }
+
 
   watchAuction(): void {
     const headers: any = new HttpHeaders({
@@ -652,9 +646,8 @@ export class ItemDetailsComponent implements OnDestroy {
   countDown(auction_endTime: string): void {
     // Set the date we're counting down to.
     const countDownDate = new Date(auction_endTime).getTime();
-   
 
-    window.clearInterval(localStorage['counter'])
+    window.clearInterval(localStorage['counter']);
 
     const counter = setInterval(
       (window.onload = function() {

@@ -7,6 +7,7 @@
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
     $highestBidderID = filter_var($obj->prevBidderID, FILTER_SANITIZE_NUMBER_INT);
     $newBuyerID = filter_var($obj->newBuyer, FILTER_SANITIZE_NUMBER_INT);
+    $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
         if (!($highestBidderID == $newBuyerID)) {
@@ -24,9 +25,66 @@
             // Include file with mailer settings
             require_once('email_server.php');
 
+            $body = '<!doctype html>
+            <html>
+              <head>
+                <meta name="viewport" content="width=device-width" />
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            </head>
+            <body class="">
+              <table border="0" cellpadding="0" cellspacing="0" class="body">
+                <tr>
+                  <td>&nbsp;</td>
+                  <td class="container">
+                    <div class="content">
+            
+                      <table class="main">
+                        <tr>
+                          <td class="wrapper">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td>
+                                  <p>Hi '.$namePrev.',</p>
+                                  <p>You were outbid! Do not hesitate to jump back in! The item is still up for grabs!</p>
+                                  <p>Follow the link below to make a new bid.</p>
+                                    <tbody>
+                                        <tr>
+                                          <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
+                                        </tr>
+                                    </tbody>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      <br>
+                      <div class="footer">
+                        <span>
+                            <b>UCLBay</b>
+                            <br>
+                            Gower Street
+                            <br>
+                            London
+                            <br>
+                            WC1B 6BE
+                            </span>
+                      </div>
+            
+                    </div>
+                  </td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </body>
+            </html>';
+
             $mail->addAddress($emailPrev, $namePrev);
             $mail->Subject = 'You were outbid!';
-            $mail->Body = 'Hi '.$namePrev.', 
+            $mail->IsHTML(true);
+            $mail->Body = $body;
+            
+            'Hi '.$namePrev.', 
                              You were outbid! Do not hesitate to jump back in! The item is still up for grabs!';  
                  
             if ($mail->send()){

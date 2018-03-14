@@ -42,7 +42,7 @@
 </div>
 </div>
 
-
+<h2 *ngIf="userAuctions !== null && userAuctions.length !== 0">Items that you are selling:</h2>
 <div class="grid-list-container tabcontent activetab" id="auctions">
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of userAuctions">
@@ -53,7 +53,7 @@
 </div>
 
 <div class="tabcontent" id="bids">
-  <h2>Auctions where you are the current top bidder</h2>
+  <h2 *ngIf="userTopBids !== null && userTopBids.length !== 0">Auctions where you are the current top bidder:</h2>
   <div class="grid-list-container">
     <mat-grid-list cols="3" gutterSize="16">
       <mat-grid-tile *ngFor="let item of userTopBids">
@@ -63,7 +63,7 @@
     </mat-grid-list>
   </div>
 
-  <h2>Auctions where you have been outbid</h2>
+  <h2 *ngIf="userOutbid !== null && userOutbid.length !== 0">Auctions where you have been outbid:</h2>
   <div class="grid-list-container">
     <mat-grid-list cols="3" gutterSize="16">
       <mat-grid-tile *ngFor="let item of userOutbid">
@@ -75,6 +75,7 @@
 
 </div>
 
+<h2 *ngIf="userWatching !== null && userWatching.length !== 0">Auctions that you are watching:</h2>
 <div class="grid-list-container tabcontent" id="watching">
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of userWatching">

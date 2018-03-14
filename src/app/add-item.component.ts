@@ -200,6 +200,13 @@ export class AddItemComponent implements OnInit {
   }
 
   validate(): boolean {
+     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
+     const date = new Date(Date.now());
+     const year = date.getFullYear();
+     const month = date.getMonth();
+     const day = date.getDate();
+     const maxAuctionDate = new Date(year, month + 6, day);
+
     // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
     if (
       this.name == null ||
@@ -229,6 +236,9 @@ export class AddItemComponent implements OnInit {
     ) {
       // If there are any incorrect details entered, notify the user.
       this.openDialog('Please fill in the correct details!', '', false);
+      return false;
+    } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
+      this.openDialog('The auction end date cannot be more than 6 months into the future!', '', false);
       return false;
     } else if (this.photo1 == null && this.photo2 == null && this.photo3 == null) {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
