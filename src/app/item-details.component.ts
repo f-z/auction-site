@@ -60,12 +60,12 @@ export class ItemDetailsComponent implements OnDestroy {
     public http: HttpClient,
     public dialog: MatDialog
   ) {
-    //Scroll to top of page when page refreshes 
+    // Scroll to top of page when page refreshes.
      this.router.events.subscribe((evt) => {
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            window.scrollTo(0, 0)
+            window.scrollTo(0, 0);
         });
 
     this.slideIndex = 1;
