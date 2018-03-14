@@ -49,13 +49,6 @@ if (!empty($sellers)) {
         $email = $seller['email'];
         $item_name = $seller['name'];
         $auctionID = $seller['auctionID'];
-        // echo "name: ";
-        // echo $item_name;
-        // echo ", id: ";
-        // echo $auctionID;
-
-        // echo " ";
-        // echo " ";
 
         $selectWinners = 'SELECT u.username, u.email, b.auctionID, b.buyerID, b.price, a.reservePrice
                         FROM user u, bid b, auction a
@@ -75,11 +68,6 @@ if (!empty($sellers)) {
         $reservePrice = $winner['reservePrice'];
         $itemName = $winner['name'];
 
-        // echo "Price: ";
-        // echo $price;
-
-        $mail = new PHPMailer(true);
-
         //Server settings
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
@@ -98,10 +86,9 @@ if (!empty($sellers)) {
             )
         );
         $mail->Debugoutput = 'html';
-        $mail->setFrom('uclbay.gc06@gmail.com', 'UCL Databases');
-        $mail->addAddress($email, $firstname);
+        $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
 
-        // echo $mail->Username;
+        $mail->addAddress($email, $firstname);
 
         if ($price == null || $price == 0){
 

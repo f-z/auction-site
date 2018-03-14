@@ -55,8 +55,6 @@ foreach($bidders as $bidder){
 
     try {
 
-        $mail = new PHPMailer(true);
-
         //Server settings
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
@@ -76,9 +74,9 @@ foreach($bidders as $bidder){
         );
         $mail->Debugoutput = 'html';
         $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
+
         $mail->addAddress($email, $firstname);
         $mail->Subject = 'Auction for '.$item_name.' has ended';
-        $mail->Debugoutput = 'html';
 
         if ($price >= $reservePrice) {
             $mail->Body = 'Hi '. $firstname. ', 
