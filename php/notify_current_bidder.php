@@ -57,14 +57,14 @@
     $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
     $mail->addAddress($emailCur, $firstname);
 
-    $mail->Subject = 'Your bid was accepted';
+    $mail->Subject = 'Your bid is winning';
     $mail->Debugoutput = 'html';
     $mail->Body = 'Hi '.$firstname.'
                     Thanks for placing a bid. It has been accepted. You are currently the highest bidder ('.$time.')!';  
         
-    $mail->send();
-    
-    echo json_encode($emailCur);
+    if($mail->send()) {
+      echo json_encode('Email to current bidder has been sent!');
+    }
     } catch (Exception $e) {
        echo json_encode('Message could not be sent! Mailer Error: ', $mail->ErrorInfo);
        die();

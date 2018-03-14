@@ -3,9 +3,12 @@
   
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
+
     // Load composer's autoloader.
     require_once('./vendor/autoload.php');
+
     $mail = new PHPMailer(true);
+    
     // Retrieving the posted data.
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
@@ -51,9 +54,9 @@
             $mail->Body = 'Hi '.$namePrev.', 
                              You were outbid! Do not hesitate to jump back in! The item is still up for grabs!';  
                  
-            $mail->send();
-            //   echo json_encode($mail);
-            echo json_encode('Email to previous bidder has been sent!');
+            if ($mail->send()){
+                echo json_encode('Email to previous bidder has been sent!');
+            }
         }
     } catch (Exception $e) {
         echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
