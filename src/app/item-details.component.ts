@@ -483,7 +483,6 @@ export class ItemDetailsComponent implements OnDestroy {
 
     return true; // if bid is valid
   }
-
   notifyCurrentBidder(auctionID, buyerID, newBid): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -516,7 +515,8 @@ export class ItemDetailsComponent implements OnDestroy {
       options1: any = {
         auctionID: auctionID,
         prevBidderID: this.highestBidderID,
-        newBuyer: newBuyer
+        newBuyer: newBuyer,
+        itemID: this.itemID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
 
@@ -538,7 +538,8 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       options1: any = {
         auctionID: auctionID,
-        highestBid: newBid
+        highestBid: newBid,
+        itemID: this.itemID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_watchers.php';
 
@@ -551,6 +552,7 @@ export class ItemDetailsComponent implements OnDestroy {
 
     return null;
   }
+
 
   watchAuction(): void {
     const headers: any = new HttpHeaders({
