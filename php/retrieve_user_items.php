@@ -20,7 +20,7 @@
 
          if($includeExpired == TRUE) {
             $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
@@ -32,7 +32,7 @@
                 GROUP BY a.auctionID');
         } else {
             $auctionStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings,
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
@@ -58,7 +58,7 @@
         $data['topbids']=array();
 
          $bidsStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, b.price AS highestBid 
+            a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, b.price AS highestBid 
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
@@ -83,7 +83,7 @@
         $data['watching']=array();
 
          $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime,
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
             FROM item AS i, auction as a 
             LEFT JOIN bid AS b 
@@ -114,7 +114,7 @@
         $data['outbid'] = array();
 
         $outbidStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, a.viewings, 
+                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime,  
                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 

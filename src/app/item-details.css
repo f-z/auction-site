@@ -1,6 +1,9 @@
 .item-details {
   margin-bottom: 30px;
   background: white;
+  width: 80%;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .img-container {
