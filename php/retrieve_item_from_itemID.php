@@ -6,7 +6,7 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values.
-    $itemID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT); 
+    $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT); 
 
     try {
         // Retrieving item.
