@@ -1,14 +1,6 @@
 <?php
   require_once('connect_azure_db.php');
-  
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
 
-    // Load composer's autoloader.
-    require_once('./vendor/autoload.php');
-
-    $mail = new PHPMailer(true);
-    
     // Retrieving the posted data.
     $json    =  file_get_contents('php://input');
     $obj     =  json_decode($json);
@@ -29,28 +21,11 @@
             $emailPrev = $prevBidder['email'];
             $namePrev = $prevBidder['firstName'];
                 
-            //Server settings
-            $mail->isSMTP();
-            $mail->SMTPDebug = 2;
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
-            $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
-            $mail->SMTPAuth = true;
-            $mail->Username = 'uclbay.gc06@gmail.com';
-            $mail->Password = 'uclbay@gc06';
-            // walkaround to bypass server errors
-            $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-                )
-            );
-            $mail->Debugoutput = 'html';
-            $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
+            // Include file with mailer settings
+            require_once('email_server.php');
+
             $mail->addAddress($emailPrev, $namePrev);
             $mail->Subject = 'You were outbid!';
-            $mail->Debugoutput = 'html';
             $mail->Body = 'Hi '.$namePrev.', 
                              You were outbid! Do not hesitate to jump back in! The item is still up for grabs!';  
                  

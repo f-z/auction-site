@@ -216,6 +216,7 @@ export class ItemDetailsComponent implements OnDestroy {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
+        console.log(data);
         this.auction = data[0];
         if (this.item.sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
@@ -498,7 +499,8 @@ export class ItemDetailsComponent implements OnDestroy {
       options1: any = {
         auctionID: auctionID,
         buyerID: buyerID,
-        highestBid: newBid
+        highestBid: newBid,
+        itemID: this.itemID
       },
       url: any =
         'https://php-group30.azurewebsites.net/notify_current_bidder.php';

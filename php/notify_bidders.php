@@ -53,8 +53,6 @@ foreach($bidders as $bidder){
     $buyerID = $bidder['buyerID'];
 
     try {
-        $mail = new PHPMailer(true);
-
         //Server settings
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
@@ -72,12 +70,11 @@ foreach($bidders as $bidder){
             'allow_self_signed' => true
             )
         );
-        $mail->Subject = 'UCL Databases';
         $mail->Debugoutput = 'html';
         $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
+
         $mail->addAddress($email, $firstname);
         $mail->Subject = ''.$item_name.' was sold';
-        $mail->Debugoutput = 'html';
         $mail->Body = 'Hi '. $firstname. ', 
                           This item is unfortunately now sold, but there is more!';
              

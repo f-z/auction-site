@@ -1,11 +1,5 @@
 <?php
   require_once('connect_azure_db.php');
-  
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\Exception;
-
-  // Load composer's autoloader.
-  require_once('./vendor/autoload.php');
 
   // Retrieving the posted data.
   $json    =  file_get_contents('php://input');
@@ -41,33 +35,11 @@
             $auctionID = $watcher['auctionID'];
             $watcher_buyerID = $watcher['buyerID'];
 
-            // echo $watcher_firstname;
+            // Include file with mailer settings
+            require_once('email_server.php');
 
-            $mail = new PHPMailer(true);
-
-            //Server settings
-            $mail->isSMTP();
-            $mail->SMTPDebug = 2;
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
-            $mail->CharSet = 'UTF-8';
-            $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
-            $mail->SMTPAuth = true;
-            $mail->Username = 'uclbay.gc06@gmail.com';
-            $mail->Password = 'uclbay@gc06';
-            // walkaround to bypass server errors
-            $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-                )
-            );
-            $mail->Debugoutput = 'html';
-            $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
             $mail->addAddress($watcher_email, $watcher_firstname);
             $mail->Subject = 'Someone made a bid on '.$item_name.'';
-            $mail->Debugoutput = 'html';
             $mail->Body = 'Hi '. $watcher_firstname. ', 
                             We are contacting you because you are watching '.$item_name.'. A new bid worth '.$newBid.' pounds was submitted!';
 
