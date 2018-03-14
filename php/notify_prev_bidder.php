@@ -34,7 +34,7 @@
             $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
             $mail->SMTPAuth = true;
             $mail->Username = 'uclbay.gc06@gmail.com';
-            $mail->Password = 'uclbay_gc06';
+            $mail->Password = 'uclbay@gc06';
             // walkaround to bypass server errors
             $mail->SMTPOptions = array(
             'ssl' => array(
@@ -43,11 +43,10 @@
                 'allow_self_signed' => true
                 )
             );
-            $mail->Subject = 'UCL Databases';
             $mail->Debugoutput = 'html';
-            $mail->setFrom('uclbay.gc06@gmail.com', 'uclbay_gc06');
+            $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
             $mail->addAddress($emailPrev, $namePrev);
-            $mail->Subject = 'UCL Databases';
+            $mail->Subject = 'You were outbid!';
             $mail->Debugoutput = 'html';
             $mail->Body = 'Hi '.$namePrev.', 
                              You were outbid! Do not hesitate to jump back in! The item is still up for grabs!';  
