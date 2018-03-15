@@ -22,9 +22,9 @@
         $endTime = filter_var($obj->endTime, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $endTime = $endDate . " " . $endTime;
 
-        $startPrice = filter_var($obj->startPrice, FILTER_SANITIZE_NUMBER_FLOAT);
-        $reservePrice = filter_var($obj->reservePrice, FILTER_SANITIZE_NUMBER_FLOAT);
-        $buyNowPrice = filter_var($obj->buyNowPrice, FILTER_SANITIZE_NUMBER_FLOAT);
+        $startPrice = filter_var($obj->startPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $reservePrice = filter_var($obj->reservePrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $buyNowPrice = filter_var($obj->buyNowPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
         $auctionQuery = "INSERT INTO `auction` (`startPrice`, `reservePrice`, `buyNowPrice`, `startTime`, `endTime`, `isNotified`, `itemID`) VALUES (?, ?, ?, ?, ?, 0, ?);";
 

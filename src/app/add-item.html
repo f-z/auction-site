@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card login">
-    <img class="profilePhoto" src="{{ this.user.photo }}" *ngIf="user!=null" (click)="goToMyProfile();">
-    <label class="welcome-label" *ngIf="user!=null">Welcome, {{user.firstName}}!</label>
+    <img class="profile-photo" src="{{ this.user.photo }}" *ngIf="user!=null" (click)="goToMyProfile();">
+    <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
     <h1 class="headline">UCL Bay</h1>
     <button class="button" routerLink="/register" *ngIf="user==null">
       <span>Register</span>
@@ -108,7 +108,6 @@
         </div>
       </div>
 
-
       <div class="col-half">
 
         <div class="input" title="If this price threshold is not met when the auction ends, the auction will expire without a winner.">
@@ -120,8 +119,6 @@
         </div>
       </div>
     </div>
-
-
 
     <div class="row">
       <div class="input right">
@@ -138,7 +135,7 @@
 
     <div class="row">
       <h3 class="centred">Item Photo</h3>
-      <input type="file" name="photo1" ng2FileSelect [uploader]="uploader1" />
+      <input type="file" name="photo" ng2FileSelect [uploader]="uploader1" />
       <br>
       <br>
       <div class="col-half">

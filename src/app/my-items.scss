@@ -2,7 +2,6 @@
   position: relative;
   text-align: center;
   font-size: 16px;
-  width: 170px;
   cursor: pointer;
   padding: 10px 10px;
   opacity: .95;
@@ -18,15 +17,12 @@
 
 .my-items {
   margin-top: 5%;
-  margin-right: 15%;
-  margin-left: 15%;
-  width: 70%;
+  width: 100%;
   background-color: #ECECEA;
 }
 
 .my-items .add-item-button span {
   cursor: pointer;
-  display: inline-block;
   transition: 0.5s;
 }
 
@@ -45,9 +41,8 @@
 }
 
 .grid-list-container {
-  width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
+  width: 100%;
+  margin: auto;
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 16px;
@@ -60,61 +55,10 @@ app-item {
   cursor: pointer;
 }
 
-/*Tabs*/
-
-/* Style the tab */
-
-.tabwrapper {
-  text-align: center;
-  margin-left: 15%;
-  margin-right: 15%;
+.tab-group {
+  // background-color: white;
 }
 
 .tab {
-  overflow: hidden;
-  background-color: #ECECEA;
-  border: 1px solid #ccc;
-}
-
-/* Style the buttons inside the tab */
-
-.tab button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 0;
-  margin: 0 0;
-  width: 33.3%;
-  margin: 0 0;
-  transition: 0.3s;
-  font-size: 17px;
-  color: #555459;
-}
-
-/* Change background colour of buttons on hover */
-
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-/* Style the tab content */
-
-.activetab {
-  display: block;
+  // background-color: black;
 }
