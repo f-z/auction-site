@@ -2,7 +2,6 @@
   position: relative;
   text-align: center;
   font-size: 16px;
-  width: 170px;
   cursor: pointer;
   padding: 10px 10px;
   opacity: .95;
@@ -18,15 +17,12 @@
 
 .my-items {
   margin-top: 5%;
-  margin-right: 15%;
-  margin-left: 15%;
-  width: 70%;
+  width: 100%;
   background-color: #ECECEA;
 }
 
 .my-items .add-item-button span {
   cursor: pointer;
-  display: inline-block;
   transition: 0.5s;
 }
 
@@ -45,9 +41,8 @@
 }
 
 .grid-list-container {
-  width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
+  width: 100%;
+  margin: auto;
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 16px;
@@ -66,19 +61,19 @@ app-item {
 
 .tabwrapper {
   text-align: center;
-  margin-left: 15%;
-  margin-right: 15%;
+  width: 100%;
 }
 
-.tab {
+.tabs {
   overflow: hidden;
   background-color: #ECECEA;
   border: 1px solid #ccc;
+  width: 100%;
 }
 
 /* Style the buttons inside the tab */
 
-.tab button {
+.tabs button {
   background-color: inherit;
   border: none;
   outline: none;
@@ -90,17 +85,19 @@ app-item {
   transition: 0.3s;
   font-size: 17px;
   color: #555459;
+  display: inline-block;
+  width: 33.1%;
 }
 
 /* Change background colour of buttons on hover */
 
-.tab button:hover {
+.tabs button:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
 
-.tab button.active {
+.tabs button.active {
   background-color: #ccc;
 }
 

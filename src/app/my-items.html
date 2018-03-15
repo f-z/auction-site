@@ -19,7 +19,7 @@
   </button>
 </div>
 
-<!-- itemdetails -->
+<!-- item details -->
 <section class="card my-items" *ngIf="user!=null">
   <br>
   <div class="space-bot text-center">
@@ -35,11 +35,15 @@
 
 <!-- item grid -->
 <div class="tabwrapper">
-<div class="tab">
-  <button id="auctions-btn" class="tablinks active" (click)="openTab('auctions-btn', 'auctions')">My Auctions</button><!--
-  --><button id="bids-btn" class="tablinks" (click)="openTab('bids-btn', 'bids')">My Bids</button><!--
-  --><button id="watching-btn" class="tablinks" (click)="openTab('watching-btn', 'watching')">Watching</button>
-</div>
+  <div class="tabs">
+    <button id="auctions-btn" class="tablinks active" (click)="openTab('auctions-btn', 'auctions')">My Auctions</button>
+    <!--
+  -->
+    <button id="bids-btn" class="tablinks" (click)="openTab('bids-btn', 'bids')">My Bids</button>
+    <!--
+  -->
+    <button id="watching-btn" class="tablinks" (click)="openTab('watching-btn', 'watching')">Watching</button>
+  </div>
 </div>
 
 <div class="grid-list-container tabcontent activetab" id="auctions">
@@ -76,8 +80,7 @@
 </div>
 
 <div class="grid-list-container tabcontent" id="watching">
-<h2 *ngIf="userWatching !== null && userWatching.length !== 0">Auctions that you are watching:</h2>
-
+  <h2 *ngIf="userWatching !== null && userWatching.length !== 0">Auctions that you are watching:</h2>
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of userWatching">
       <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
@@ -85,3 +88,4 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
