@@ -2,7 +2,7 @@
 
 <!-- card logout -->
 <div class="card login">
-  <img class="profilePhoto" src="{{this.user.photo}}" *ngIf="user!=null" (click)="goToMyProfile();">
+  <img class="profilePhoto" src="{{ this.user.photo }}" *ngIf="user!=null" (click)="goToMyProfile();">
   <label class="welcome-label" *ngIf="user!=null">Welcome, {{ user.firstName }}!</label>
   <h1 class="headline">UCL Bay</h1>
   <button class="button" routerLink="/register" *ngIf="user==null">
@@ -38,36 +38,11 @@
           <div class="slideshow-container">
 
             <div class="mySlides fade">
-              <!-- <div class="numbertext" *ngIf="(item?.photo2 != null && item?.photo3 == null) || (item?.photo3 != null && item?.photo2 == null)">1 / 2</div>
-         <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 != null">1 / 3</div>-->
-              <img class="item-photo" src="{{ item?.photo1 }}" alt="{{ item?.itemID }}">
-            </div>
-
-            <div class="mySlides fade">
-              <div *ngIf=" item?.photo2 != null">
-                <!--  <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 == null">2 / 2</div>
-        <div class="numbertext" *ngIf="item?.photo2 != null  && item?.photo3 != null">2 / 3</div>-->
-                <img class="item-photo" src="{{item?.photo2}}" *ngIf="item?.photo2 != null">
-              </div>
-            </div>
-
-            <div class="mySlides fade">
-              <div *ngIf=" item?.photo3 != null">
-                <!-- <div class="numbertext" *ngIf="item?.photo2 != null && item?.photo3 != null">3 / 3</div>
-        <div class="numbertext" *ngIf="item?.photo3 != null && item?.photo2 == null">2 / 2</div>-->
-
-                <img class="item-photo" src="{{item?.photo3}}" *ngIf="item?.photo3 != null">
-              </div>
+              <img class="item-photo" src="{{ item?.photo }}" alt="{{ item?.itemID }}">
             </div>
 
           </div>
           <br>
-
-          <div style="text-align:center" *ngIf="item?.photo2 != null || item?.photo3 != null">
-            <span class="dot" (click)="currentSlide(1)"></span>
-            <span class="dot" (click)="currentSlide(2)"></span>
-            <span class="dot" (click)="currentSlide(3)"></span>
-          </div>
 
         </div>
 
@@ -172,13 +147,13 @@
 
 
 
-<div class="grid-list-container tabcontent">
-  <h3 class="recommended">Users who viewed this auction also viewed:</h3>
-  <br>
-  <mat-grid-list cols="3" gutterSize="16">
-    <mat-grid-tile *ngFor="let item of recommendedAuctions">
-      <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-      </app-item>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+  <div class="grid-list-container tabcontent">
+    <h3 class="recommended">Users who viewed this auction also viewed:</h3>
+    <br>
+    <mat-grid-list cols="3" gutterSize="16">
+      <mat-grid-tile *ngFor="let item of recommendedAuctions">
+        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+        </app-item>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>

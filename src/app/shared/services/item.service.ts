@@ -31,60 +31,25 @@ export class ItemService {
     this.saveState();
   }
 
-
-  setItemFromID(itemID: number): void{
-     const headers: any = new HttpHeaders({
+  setItemFromID(itemID: number): void {
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options: any = {
-        itemID: itemID,
+        itemID: itemID
       },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_item_from_itemID.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        
         this.item = data;
-       
-          this.item.photo1 =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.item.photo1.substring(
-              5,
-              this.item.photo1.length - 5
-            );
-          if (
-            this.item.photo2 != null &&
-            this.item.photo2 !== ''
-          ) {
-            this.item.photo2 =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.item.photo2.substring(
-                5,
-                this.item.photo2.length - 5
-              );
-          } else {
-            this.item.photo2 = null;
-          }
 
-          if (
-            this.item.photo3 != null &&
-            this.item.photo3 !== ''
-          ) {
-            this.item.photo3 =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.item.photo3.substring(
-                5,
-                this.item.photo3.length - 5
-              );
-          } else {
-            this.item.photo3 = null;
-          }
-        
+        this.item.photo =
+          'https://php-group30.azurewebsites.net/uploads/' +
+          this.item.photo.substring(5, this.item.photo.length - 5);
 
         this.saveState();
-
-
       },
       (error: any) => {
         console.log(error);
@@ -92,7 +57,6 @@ export class ItemService {
     );
     return null;
   }
-
 
   removeItem(): void {
     delete this.item[ITEM_KEY];
@@ -103,9 +67,7 @@ export class ItemService {
 export interface Item {
   itemID: number;
   name: string;
-  photo1: string;
-  photo2: string;
-  photo3: string;
+  photo: string;
   description: string;
   condition: string;
   quantity: number;

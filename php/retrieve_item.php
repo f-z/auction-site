@@ -10,7 +10,7 @@
 
     try {
         // Retrieving item.
-        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo1, i.photo2, i.photo3, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
              CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                 FROM item AS i, auction as a 
                 LEFT JOIN bid AS b 
