@@ -169,7 +169,6 @@ export class AddItemComponent implements OnInit {
       this.description == null ||
       this.condition == null ||
       this.quantity == null ||
-      this.selectedCategory == null ||
       this.endDate == null ||
       this.endTime == null ||
       this.startPrice == null ||
