@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Item, ItemService } from './shared/services/item.service';
 import { User, UserService } from './shared/services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-my-items',

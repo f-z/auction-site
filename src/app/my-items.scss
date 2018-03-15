@@ -55,63 +55,10 @@ app-item {
   cursor: pointer;
 }
 
-/*Tabs*/
-
-/* Style the tab */
-
-.tabwrapper {
-  text-align: center;
-  width: 100%;
+.tab-group {
+  // background-color: white;
 }
 
-.tabs {
-  overflow: hidden;
-  background-color: #ECECEA;
-  border: 1px solid #ccc;
-  width: 100%;
-}
-
-/* Style the buttons inside the tab */
-
-.tabs button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 0;
-  margin: 0 0;
-  width: 33.3%;
-  margin: 0 0;
-  transition: 0.3s;
-  font-size: 17px;
-  color: #555459;
-  display: inline-block;
-  width: 33.1%;
-}
-
-/* Change background colour of buttons on hover */
-
-.tabs button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-
-.tabs button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-/* Style the tab content */
-
-.activetab {
-  display: block;
+.tab {
+  // background-color: black;
 }

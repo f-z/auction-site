@@ -34,58 +34,43 @@
 </section>
 
 <!-- item grid -->
-<div class="tabwrapper">
-  <div class="tabs">
-    <button id="auctions-btn" class="tablinks active" (click)="openTab('auctions-btn', 'auctions')">My Auctions</button>
-    <!--
-  -->
-    <button id="bids-btn" class="tablinks" (click)="openTab('bids-btn', 'bids')">My Bids</button>
-    <!--
-  -->
-    <button id="watching-btn" class="tablinks" (click)="openTab('watching-btn', 'watching')">Watching</button>
-  </div>
-</div>
-
-<div class="grid-list-container tabcontent activetab" id="auctions">
-  <h2 *ngIf="userAuctions !== null && userAuctions.length !== 0">Items that you are selling:</h2>
-  <mat-grid-list cols="3" gutterSize="16">
-    <mat-grid-tile *ngFor="let item of userAuctions">
-      <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-      </app-item>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
-
-<div class="tabcontent" id="bids">
-  <h2 *ngIf="userTopBids !== null && userTopBids.length !== 0">Auctions where you are the current top bidder:</h2>
-  <div class="grid-list-container">
-    <mat-grid-list cols="3" gutterSize="16">
-      <mat-grid-tile *ngFor="let item of userTopBids">
-        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-        </app-item>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-
-  <h2 *ngIf="userOutbid !== null && userOutbid.length !== 0">Auctions where you have been outbid:</h2>
-  <div class="grid-list-container">
-    <mat-grid-list cols="3" gutterSize="16">
-      <mat-grid-tile *ngFor="let item of userOutbid">
-        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-        </app-item>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-
-</div>
-
-<div class="grid-list-container tabcontent" id="watching">
-  <h2 *ngIf="userWatching !== null && userWatching.length !== 0">Auctions that you are watching:</h2>
-  <mat-grid-list cols="3" gutterSize="16">
-    <mat-grid-tile *ngFor="let item of userWatching">
-      <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
-      </app-item>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
-
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group class="tab-group" mat-stretch-tabs>
+      <mat-tab label="My Auctions" class="tab">
+        <h2 *ngIf="userAuctions !== null && userAuctions.length !== 0">Items that you are selling:</h2>
+        <mat-grid-list class="grid-list-container" cols="3" gutterSize="16">
+          <mat-grid-tile *ngFor="let item of userAuctions">
+            <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+            </app-item>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+      <mat-tab label="My Bids" class="tab">
+        <h2 *ngIf="userTopBids !== null && userTopBids.length !== 0">Auctions where you are the current top bidder:</h2>
+        <mat-grid-list class="grid-list-container" cols="3" gutterSize="16">
+          <mat-grid-tile *ngFor="let item of userTopBids">
+            <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+            </app-item>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <h2 *ngIf="userOutbid !== null && userOutbid.length !== 0">Auctions where you have been outbid:</h2>
+        <mat-grid-list class="grid-list-container" cols="3" gutterSize="16">
+          <mat-grid-tile *ngFor="let item of userOutbid">
+            <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+            </app-item>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+      <mat-tab label="Watching" class="tab">
+        <h2 *ngIf="userWatching !== null && userWatching.length !== 0">Auctions that you are watching:</h2>
+        <mat-grid-list class="grid-list-container" cols="3" gutterSize="16">
+          <mat-grid-tile *ngFor="let item of userWatching">
+            <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+            </app-item>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
