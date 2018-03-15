@@ -1,72 +1,72 @@
 <?php
-    require_once('connect_azure_db.php');
-    $target_dir = "./uploads/";
-    $result="";
-    $status=200;//:number;
-    $error=true;//:boolean;
-    $imagename=generateRandomString(20);
-    $target_file = $target_dir . $imagename.basename($_FILES["photo"]["name"]);
+    require_once("connect_azure_db.php");
+    $targetDir = "./uploads/";
+    $result = "";
+    $status = 200;
+    $error = true;
+    $imageName = generateRandomString(20);
+    $targetFile = $targetDir . $imageName.basename($_FILES["photo"]["name"]);
     $uploadOk = 1;
-    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    $imageFileType = pathinfo($targetFile, PATHINFO_EXTENSION);
      
-    // Checking if image file is a actual image or a fake one.
-    $check = getimagesize($_FILES["photo"]["tmp_name"]);
-    if($check !== false) {
-        // echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1; 
-        // Checking if the file already exists.
-        if (file_exists($target_file)) {
-            $result= "Sorry, file already exists!";
-            $error=true;   
+    // Validating that the image file is a real image.
+    $validate = getimagesize($_FILES["photo"]["tmp_name"]);
+    if($validate !== false) {
+        $uploadOk = 1;
+        // Checking if the image already exists in our server.
+        if (file_exists($targetFile)) {
+            $result = "Error: the image already exists!";
+            $error = true;   
             $uploadOk = 0;
         } else {
-            // Checking file size.
+            // Checking that the image size is not too large.
             if ($_FILES["photo"]["size"] > 5000000) {
-                $result.= "Sorry, your file is too large!"; 
-                $error=true;   
+                $result .= "Error: the image is too large!"; 
+                $error =true;
                 $uploadOk = 0;
             } else {
-                // Allowing certain file formats.
-                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"&& $imageFileType != "gif" ) {
-                    $error=true;
-                    $result.= "Sorry, only JPG, JPEG, PNG & GIF files are allowed!";
+                // Checking that the image is in one of the accepted file formats.
+                if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
+                    $error = true;
+                    $result .= "Error: please upload a JPG, JPEG, PNG, or GIF file!";
                     $uploadOk = 0;
                 } else {
-                    // Checking if $uploadOk is set to 0 by an error.
+                    // Checking if there has been some other type of error.
                     if ($uploadOk == 0) {
-                        $result .= "Sorry, your file was not uploaded!";
+                        $result .= "Error: the file has not been uploaded!";
                         $error = true;
                     } else {
-                        // if everything is ok, try to upload file
-                        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
-                           $result = $imagename.basename( $_FILES["photo"]["name"]);
-                           $status = 200;
+                        // If all checks pass, attempt to upload the image.
+                        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
+                            $result = $imageName.basename( $_FILES["photo"]["name"]);
+                            $status = 200;
                             $error = false;       
                         } else {
                             $error = true;
-                            $result .= "Sorry, there was an error uploading your file!";
+                            $result .= "Error: could not upload the image!";
                         }
                     }
                 }
             }     
         } 
-    } 
+    }
     else {
-        $result = "File is not an image!";
+        $result = "The file provided is not a real image!";
         $error = true;
         $uploadOk = 0;
     }
 
-    // $res=array("result"=>$result,"error"=>$error,"status"=>$status);
     echo json_encode($result);
 
-    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    function generateRandomString($length = 20) {
+        $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $charactersLength = strlen($characters);
-        $randomString = '';
+        $randomString = "";
+
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
+
         return $randomString;
     }
 ?>
