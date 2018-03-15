@@ -33,14 +33,13 @@
             $similarUserIds[] = $row[0];
         }
 
-
-
         //data containing objects
         $data = array();
+        $limit = 4;
 
         foreach($similarUserIds AS $value){
 
-                $stmnt = $pdo->prepare('SELECT v.auctionID, i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
+            $stmnt = $pdo->prepare('SELECT v.auctionID, i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
                         a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
                         CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                     FROM viewing AS v
@@ -52,19 +51,33 @@
                         SELECT auctionID
                         FROM viewing AS v1
                         WHERE v1.userID = :userID)
-                    GROUP BY b.auctionID');
+                    GROUP BY b.auctionID
+                    LIMIT :returnLimit');
 
-                $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
-                $stmnt->bindParam(':other_userID', $value, PDO::PARAM_INT);
-                $stmnt->execute();
+            $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmnt->bindParam(':other_userID', $value, PDO::PARAM_INT);
+            $stmnt->bindParam(':returnLimit', $limit, PDO::PARAM_INT);
+            $limit = $limit - 1;
+            $stmnt->execute();
 
-                $result = $stmnt->fetch(PDO::FETCH_OBJ);
+            $results = array();
 
-                $data[] = $result;
-
+            while( $row = $stmnt->fetch(PDO::FETCH_OBJ)){
+                $results[] = $row;
+            }
+                
+            if(empty($data)){
+                $data = $results;
+            } elseif(!empty($results)) {
+                $data = array_merge($data, $results);
+            }
         }
+    
+        $data = array_filter($data);
+        $data = array_unique($data, SORT_REGULAR);
+        $data = array_values($data);
 
-        echo json_encode($data); 
+        echo json_encode($data);
 
 }  catch(PDOException $e) {
         echo $e->getMessage();

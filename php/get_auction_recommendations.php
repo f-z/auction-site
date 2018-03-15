@@ -10,8 +10,10 @@
 
     try {
         // Retrieving item.
-        $stmnt = $pdo->prepare('SELECT DISTINCT auction.*, item.*, COUNT(`user`.userID) AS userCount
+        $stmnt = $pdo->prepare('SELECT DISTINCT auction.*, item.*, COUNT(`user`.userID) AS userCount,
+        CASE WHEN MAX(bid.price) > 0 THEN MAX(bid.price) END AS highestBid
 		FROM auction
+        LEFT JOIN bid ON auction.auctionID = bid.auctionID
 		JOIN item ON auction.itemID = item.itemID
 		JOIN viewing ON auction.auctionID = viewing.auctionID
 		JOIN `user` ON viewing.userID = `user`.userID
