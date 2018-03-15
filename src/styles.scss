@@ -734,12 +734,13 @@ select:last-of-type {
 .login .button {
   background-color: #1A1A1D;
   color: white;
-  text-align: center;
+  text-align: right;
   font-size: 16px;
   width: 150px;
   cursor: pointer;
   padding: 10px 10px;
   opacity: .95;
+  border: none;
   box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
   float: right;
   margin-top: 1%;
