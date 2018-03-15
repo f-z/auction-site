@@ -69,6 +69,8 @@ export class AddItemComponent implements OnInit {
   }
 
   addItem(): void {
+
+    console.log(this.startPrice);
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -178,21 +180,34 @@ export class AddItemComponent implements OnInit {
       this.openDialog('Please fill in all the fields!', '', false);
       return false;
     } else if (
-      this.name.trim().length === 0 ||
-      this.description.trim().length === 0 ||
-      this.condition.trim().length === 0 ||
-      this.endDate.trim().length === 0 ||
-      new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now()) ||
-      this.endTime.trim().length === 0 ||
-      this.quantity <= 0 ||
-      this.startPrice <= 0 ||
-      this.reservePrice < this.startPrice ||
-      (this.buyNowPrice != null && this.buyNowPrice < this.reservePrice)
-    ) {
-      // If there are any incorrect details entered, notify the user.
-      this.openDialog('Please fill in the correct details!', '', false);
-      return false;
-    } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
+      this.name.trim().length === 0) {
+        this.openDialog('Please add your name', '', false);
+        return false;
+      } else if (this.description.trim().length === 0) {
+        this.openDialog('Please add description', '', false);
+        return false;
+      } else if (this.condition.trim().length === 0) {
+        this.openDialog('Please include item condition', '', false);
+        return false;
+      } else if (this.endDate.trim().length === 0 || this.endTime.trim().length === 0 ) {
+        this.openDialog('Please add auction end date and time', '', false);
+        return false;
+      } else if (new Date(this.endDate + 'T' + this.endTime) <= new Date(Date.now())) {
+        this.openDialog('End date and time cannot be in the past', '', false);
+        return false;
+      } else if (this.quantity <= 0 || !Number.isInteger(this.quantity)) {
+        this.openDialog('Quantity should be positive round number', '', false);
+        return false;
+      } else if (this.startPrice <= 0) {
+        this.openDialog('Start price should be larger than 0.00', '', false);
+        return false;
+      } else if (this.reservePrice < this.startPrice) {
+        this.openDialog('Reserve price cannot be smaller than start price', '', false);
+        return false;
+      } else if (this.buyNowPrice != null && (this.buyNowPrice < this.reservePrice || this.buyNowPrice < this.startPrice)) {
+        this.openDialog('Buy it now price cannot be less than reserve price or start price', '', false);
+        return false;
+      } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
       this.openDialog('The auction end date cannot be more than 6 months into the future!', '', false);
       return false;
     } else if (this.photo == null) {
