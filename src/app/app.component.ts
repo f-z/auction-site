@@ -99,7 +99,6 @@ export class AppComponent implements OnInit {
   }
 
   getUserRecommendations(): void {
-
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),

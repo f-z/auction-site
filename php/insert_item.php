@@ -20,12 +20,12 @@
         $insertItem = $pdo->prepare($itemQuery);
 
         $insertItem->bindParam(1, $name, PDO::PARAM_STR);
-        $insertItem->bindParam(2, $photo1, PDO::PARAM_STR);
-        $insertItem->bindParam(5, $description, PDO::PARAM_STR);
-        $insertItem->bindParam(6, $condition, PDO::PARAM_STR);
-        $insertItem->bindParam(7, $quantity,  PDO::PARAM_INT);
-        $insertItem->bindParam(8, $categoryName, PDO::PARAM_STR);
-        $insertItem->bindParam(9, $sellerID, PDO::PARAM_INT);
+        $insertItem->bindParam(2, $photo, PDO::PARAM_STR);
+        $insertItem->bindParam(3, $description, PDO::PARAM_STR);
+        $insertItem->bindParam(4, $condition, PDO::PARAM_STR);
+        $insertItem->bindParam(5, $quantity,  PDO::PARAM_INT);
+        $insertItem->bindParam(6, $categoryName, PDO::PARAM_STR);
+        $insertItem->bindParam(7, $sellerID, PDO::PARAM_INT);
 
         $insertItem->execute();
 
