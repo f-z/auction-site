@@ -15,10 +15,10 @@
                                 a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
                                 CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                                 FROM auction as a 
-                                LEFT JOIN bid AS b 
-                                ON a.auctionID = b.auctionID 
                                 LEFT JOIN item as i
                                 ON a.itemID = i.itemID
+                                LEFT JOIN bid AS b 
+                                ON a.auctionID = b.auctionID 
                                 WHERE a.auctionID = :auctionID');
         
         // Binding the provided item ID to our prepared statement.
