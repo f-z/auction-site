@@ -85,6 +85,7 @@ export class AddItemComponent implements OnInit {
   addItem(): void {
 
     let phpurl = '';
+
     if( this.item === null ){
         phpurl = 'https://php-group30.azurewebsites.net/insert_item.php';
     } else {
@@ -106,13 +107,15 @@ export class AddItemComponent implements OnInit {
         reservePrice: this.reservePrice,
         buyNowPrice: this.buyNowPrice,
         photo: this.photo,
-        sellerID: this.user.userID
+        sellerID: this.user.userID,
+        itemID: this.item.itemID
       },
       url: any = phpurl;
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.addAuction(data);
+        console.log(data);
       },
       (error: any) => {
         // If there is an error, notify the user.
@@ -221,10 +224,7 @@ export class AddItemComponent implements OnInit {
       } else if (this.startPrice <= 0) {
         this.openDialog('Start price should be larger than £0.00', '', false);
         return false;
-      } else if (this.reservePrice < this.startPrice) {
-        this.openDialog('Reserve price cannot be smaller than start price', '', false);
-        return false;
-      } else if (this.buyNowPrice != null && (this.buyNowPrice < this.reservePrice || this.buyNowPrice < this.startPrice)) {
+      } else if (this.buyNowPrice != null && (+this.buyNowPrice < +this.reservePrice || +this.buyNowPrice < +this.startPrice)) {
         this.openDialog('Buy-it-now price cannot be less than reserve price or start price', '', false);
         return false;
       } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
@@ -234,7 +234,10 @@ export class AddItemComponent implements OnInit {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
       this.openDialog('Please add an item photo!', '', false);
       return false;
-    }
+    } else if (+this.startPrice > +this.reservePrice) {
+        this.openDialog('Reserve price cannot be smaller than start price', '', false);
+        return false;
+      } 
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.

@@ -14,8 +14,6 @@
   $quantity = filter_var($obj->quantity, FILTER_SANITIZE_NUMBER_INT);
   $categoryName = filter_var($obj->categoryName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
   $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
-
-  try {
                 
     // Inserting new bid
        try {

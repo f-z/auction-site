@@ -11,7 +11,10 @@
     // Attempting to query database table
     // and retrieve auction information for the specified item from the database.
     try {
-        $stmnt = $pdo->prepare('SELECT * FROM auction WHERE itemID = :itemID');
+        $stmnt = $pdo->prepare('SELECT * FROM auction AS a 
+                                WHERE a.itemID = :itemID
+                                AND a.endTime = (SELECT MAX(a2.endTime) FROM auction AS a2 
+                                                WHERE a2.itemID = a.itemID)');
         
         // Binding the provided item ID to our prepared statement.
         $stmnt->bindParam(':itemID', $itemID, PDO::PARAM_INT);
