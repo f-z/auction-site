@@ -107,19 +107,21 @@ export class AppComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        if (data != null) {
+        if (data != null && data.length > 0) {
            this.recommendedItems = data;
                for(let i = 0; i < data.length; i++){
                   this.recommendedItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
                     this.recommendedItems[i].photo.substring(5,this.recommendedItems[i].photo.length - 5);
                }
              }
+            console.log(this.recommendedItems);
       },
       (error: any) => {
         console.log(error);
       }
     );
     return null;
+
 
   }
 

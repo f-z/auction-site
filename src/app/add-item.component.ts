@@ -24,7 +24,7 @@ export class AddItemComponent implements OnInit {
   private name: string;
   private description: string;
   private condition: string;
-  private quantity: number;
+  private quantity: number = 1;
   private category: string;
   private photo: string;
   private endDate: string;
@@ -85,9 +85,9 @@ export class AddItemComponent implements OnInit {
   addItem(): void {
 
     let phpurl = '';
-
-    if( this.item === null ){
+    if(!this.item.name){
         phpurl = 'https://php-group30.azurewebsites.net/insert_item.php';
+        console.log(!this.item.name);
     } else {
        phpurl = 'https://php-group30.azurewebsites.net/update_item.php';
     }

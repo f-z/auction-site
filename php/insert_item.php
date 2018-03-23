@@ -15,7 +15,7 @@
     $sellerID = filter_var($obj->sellerID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $itemQuery = "INSERT INTO `compgc06_group30`.`item` (`name`, `photo`, `description`, `condition`, `quantity`, `categoryName`, `sellerID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $itemQuery = "INSERT INTO item (`name`, `photo`, `description`, `condition`, `quantity`, `categoryName`, `sellerID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $insertItem = $pdo->prepare($itemQuery);
 

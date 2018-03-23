@@ -73,7 +73,7 @@
 </div>
 
 <div class="grid-list-container" *ngIf="!term">
-  <h2> Recommended items </h2>
+  <h2 *ngIf="recommendedItems">Items we recommend for you</h2>
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of recommendedItems">
       <app-item [item]="item" (click)="setItem(item)">
