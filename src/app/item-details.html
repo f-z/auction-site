@@ -123,8 +123,6 @@
 
     <h3 class="reserve-notification" *ngIf="isExpired &&  highestBid < reservePrice">The reserve price has not been met, so there is no winner for the auction!&nbsp;</h3>
 
-    <br>
-    <br>
 
     <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">
       <div class="bid-box">
@@ -139,7 +137,7 @@
       </div>
     </form>
   
-  <button class="add-item-button" (click)="reauction()"  *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item.sellerID === user.userID">
+  <button class="reauction-button" (click)="reauction()"  *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item.sellerID === user.userID">
     <span>Reauction Item</span>
   </button>
 

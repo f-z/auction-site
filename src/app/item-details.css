@@ -276,3 +276,25 @@ h3 {
 .stopwatching {
   width: 200px;
 }
+
+.reauction-button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 30px;
+}
+
+.reauction-button span {
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.reauction-button span:after {
+  content: '\00bb';
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.reauction-button:hover span:after {
+  opacity: 1;
+}
