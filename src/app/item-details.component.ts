@@ -24,7 +24,6 @@ export class ItemDetailsComponent implements OnDestroy {
 
   loadComplete = false;
 
-  private auction: Auction;
   private distinctViewers: number;
   private totalViews: number;
   private numberBids: number;
@@ -38,6 +37,7 @@ export class ItemDetailsComponent implements OnDestroy {
   private sellerRating: number;
   private sellerFeedbackCount: number;
 
+  private auctionID: number;
   private itemID: number;
   private sub: any;
   private user: User;
@@ -64,15 +64,15 @@ export class ItemDetailsComponent implements OnDestroy {
     public dialog: MatDialog
   ) {
     route.params.subscribe(val => {
-      this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
+      //this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
 
-      this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
-      this.item = this.getItem();
+      this.auctionID = +this.route.snapshot.url[1].path;
+
+    //  this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
+    //  this.item = this.getItem();
       this.user = this.getUser();
-
       this.getAuctionInformation();
 
-      this.getSellerRating(this.itemService.getItem().sellerID);
 
       let countdownText = document.getElementById('countdown');
       countdownText = null;
@@ -89,7 +89,6 @@ export class ItemDetailsComponent implements OnDestroy {
     this.slideIndex = 1;
 
   }
-
 
   reauction():void{
       this.router.navigate(['add-item']);
@@ -185,7 +184,7 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       options: any = {
         buyerID: this.user.userID,
-        auctionID: this.auction.auctionID
+        auctionID: this.item.auctionID
       },
       url: any = 'https://php-group30.azurewebsites.net/stop_watching.php';
 
@@ -209,16 +208,19 @@ export class ItemDetailsComponent implements OnDestroy {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { itemID: this.itemID },
+      options: any = { auctionID: +this.route.snapshot.url[1].path },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_auction_information.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        this.auction = data[0];
-        if (this.item.sellerID !== this.user.userID) {
+        this.item = data[0];
+        this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
+                    this.item.photo.substring(5,this.item.photo.length - 5);
+        if (data[0].sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
         }
+        this.getSellerRating(data[0].sellerID);
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
         this.setIsExpired(data[0].endTime);
@@ -374,7 +376,7 @@ export class ItemDetailsComponent implements OnDestroy {
         }),
         options: any = {
           buyerID: this.user.userID,
-          auctionID: this.auction.auctionID,
+          auctionID: this.item.auctionID,
           price: this.newBid
         },
         url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
@@ -382,16 +384,16 @@ export class ItemDetailsComponent implements OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.notifyCurrentBidder(
-            this.auction.auctionID,
+            this.item.auctionID,
             this.user.userID,
             this.newBid
           );
           this.notifyPrevBidder(
-            this.auction.auctionID,
+            this.item.auctionID,
             this.highestBidderID,
             this.user.userID
           );
-          this.notifyWatchers(this.auction.auctionID, this.newBid);
+          this.notifyWatchers(this.item.auctionID, this.newBid);
           this.openDialog(
             'Congratulations, you have successfully placed your bid!',
             '',
@@ -418,7 +420,7 @@ export class ItemDetailsComponent implements OnDestroy {
         }),
         options: any = {
           buyerID: this.user.userID,
-          auctionID: this.auction.auctionID,
+          auctionID: this.item.auctionID,
           price: this.buyItNowPrice
         },
         url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';
@@ -456,7 +458,7 @@ export class ItemDetailsComponent implements OnDestroy {
         'Content-Type': 'application/json'
       }),
       options: any = {
-        auctionID: this.auction.auctionID
+        auctionID: this.item.auctionID
       },
       url: any = 'https://php-group30.azurewebsites.net/end_auction.php';
 
@@ -474,7 +476,7 @@ export class ItemDetailsComponent implements OnDestroy {
       this.openDialog('Please enter your bid amount!', '', true);
       return false;
     } else if (this.highestBid == null) {
-      if (this.newBid < this.auction.startPrice) {
+      if (this.newBid < this.item.startPrice) {
         this.openDialog('Please enter more than the start price!', '', true);
         return false;
       }
@@ -534,8 +536,6 @@ export class ItemDetailsComponent implements OnDestroy {
   }
 
   notifyWatchers(auctionID, newBid): void {
-    console.log('AuctionID: ' + auctionID);
-    console.log('Bid: ' + newBid);
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -563,7 +563,7 @@ export class ItemDetailsComponent implements OnDestroy {
       }),
       options: any = {
         buyerID: this.user.userID,
-        auctionID: this.auction.auctionID,
+        auctionID: this.item.auctionID,
         price: 0
       },
       url: any = 'https://php-group30.azurewebsites.net/insert_bid.php';

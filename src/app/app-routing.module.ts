@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'add-item', component: AddItemComponent },
-  { path: 'items/:itemID', component: ItemDetailsComponent },
+  { path: 'items/:auctionID', component: ItemDetailsComponent },
   { path: 'my-items', component: MyItemsComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'profile/:userID', component: ProfileComponent },

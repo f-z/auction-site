@@ -6,18 +6,23 @@
     $obj     =  json_decode($json);
 
     // Sanitising URL supplied values.
-    $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT);
+    $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
 
     // Attempting to query database table
     // and retrieve auction information for the specified item from the database.
     try {
-        $stmnt = $pdo->prepare('SELECT * FROM auction AS a 
-                                WHERE a.itemID = :itemID
-                                AND a.endTime = (SELECT MAX(a2.endTime) FROM auction AS a2 
-                                                WHERE a2.itemID = a.itemID)');
+        $stmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.condition, i.quantity, i.categoryName, i.sellerID, 
+                                a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
+                                CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
+                                FROM auction as a 
+                                LEFT JOIN bid AS b 
+                                ON a.auctionID = b.auctionID 
+                                LEFT JOIN item as i
+                                ON a.itemID = i.itemID
+                                WHERE a.auctionID = :auctionID');
         
         // Binding the provided item ID to our prepared statement.
-        $stmnt->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+        $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 
         $stmnt->execute();
         

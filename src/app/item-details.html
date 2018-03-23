@@ -68,17 +68,17 @@
       </div>
 
       <div class="right-items">
-        <h3 class="item-right" *ngIf=" item.quantity > 1 ">Quantity: {{ item?.quantity }}</h3>
-        <br *ngIf="item.quantity > 1">
-        <br *ngIf="item.quantity > 1">
+        <h3 class="item-right" *ngIf=" item?.quantity > 1 ">Quantity: {{ item?.quantity }}</h3>
+        <br *ngIf="item?.quantity > 1">
+        <br *ngIf="item?.quantity > 1">
 
         <h3 class="item-right" *ngIf="highestBid != null">Current bid: £{{ highestBid }} </h3>
         <br *ngIf="highestBid != null">
         <br *ngIf="highestBid != null">
 
-        <h3 class="item-right" *ngIf="auction != null && highestBid == null">Start price: £{{ auction.startPrice }}</h3>
-        <br *ngIf="auction != null && highestBid == null">
-        <br *ngIf="auction != null && highestBid == null">
+        <h3 class="item-right" *ngIf="item != null && highestBid == null">Start price: £{{ item?.startPrice }}</h3>
+        <br *ngIf="item != null && highestBid == null">
+        <br *ngIf="item != null && highestBid == null">
 
         <h3 class="item-right" *ngIf="buyItNowPrice != null && buyItNowPrice !=0 && (buyItNowPrice > highestBid || highestBid == null)">Buy-it-now price: £{{ buyItNowPrice }} </h3>
         <br *ngIf="buyItNowPrice != null && buyItNowPrice !=0 && (highestBid == null || buyItNowPrice > highestBid)">
@@ -102,7 +102,7 @@
         <br *ngIf="distinctViewers != null">
         <br *ngIf="distinctViewers != null">
 
-        <h3 class="item-right" id="countdown" *ngIf="auction != null"></h3>
+        <h3 class="item-right" id="countdown" *ngIf="item != null"></h3>
 
         <br *ngIf="isExpired &&  highestBidderID != null">
         <br *ngIf="isExpired &&  highestBidderID != null">
@@ -115,16 +115,16 @@
       </div>
     </div>
 
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder?.username" [sellerID]="item.sellerID" [item]="item"
-      *ngIf="isExpired && highestBidderID != null && highestBid >= reservePrice && sellerFeedbackGiven == false && item.sellerID === user.userID"></app-feedback>
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="highestBidder?.username" [sellerID]="item?.sellerID" [item]="item"
+      *ngIf="isExpired && highestBidderID != null && highestBid >= reservePrice && sellerFeedbackGiven == false && item?.sellerID === user.userID"></app-feedback>
 
-    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller?.username" [sellerID]="item.sellerID" [item]="item"
+    <app-feedback [user]="user" [buyerID]="highestBidderID" [subject]="seller?.username" [sellerID]="item?.sellerID" [item]="item"
       *ngIf="isExpired && buyerFeedbackGiven == false && highestBid >= reservePrice && highestBidderID === user.userID"></app-feedback>
 
     <h3 class="reserve-notification" *ngIf="isExpired &&  highestBid < reservePrice">The reserve price has not been met, so there is no winner for the auction!&nbsp;</h3>
 
 
-    <form *ngIf="user != null && item.sellerID != user.userID && isExpired == false" id="bid-form">
+    <form *ngIf="user != null && item?.sellerID != user.userID && isExpired == false" id="bid-form">
       <div class="bid-box">
         <input type="number" [(ngModel)]="newBid" name="newBid" id="newBid" placeholder="Enter bid amount (£)">
         <input type="submit" value="Bid" id="submit-bid" (click)="bid()">
@@ -137,7 +137,7 @@
       </div>
     </form>
   
-  <button class="reauction-button" (click)="reauction()"  *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item.sellerID === user.userID">
+  <button class="reauction-button" (click)="reauction()"  *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item?.sellerID === user.userID">
     <span>Reauction Item</span>
   </button>
 
@@ -155,7 +155,7 @@
     <br>
     <mat-grid-list cols="3" gutterSize="16">
       <mat-grid-tile *ngFor="let item of recommendedAuctions">
-        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item.itemID]">
+        <app-item [item]="item" (click)="setItem(item)" [routerLink]="['/items', item?.auctionID]">
         </app-item>
       </mat-grid-tile>
     </mat-grid-list>

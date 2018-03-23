@@ -87,7 +87,6 @@ export class AddItemComponent implements OnInit {
     let phpurl = '';
     if(!this.item.name){
         phpurl = 'https://php-group30.azurewebsites.net/insert_item.php';
-        console.log(!this.item.name);
     } else {
        phpurl = 'https://php-group30.azurewebsites.net/update_item.php';
     }

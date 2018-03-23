@@ -131,7 +131,8 @@ export class AppComponent implements OnInit {
     if (this.user === null) {
       this.router.navigate(['/login']);
     } else {
-      this.router.navigate(['/items', item.itemID]);
+      console.log(item.auctionID);
+      this.router.navigate(['/items', item.auctionID]);
     }
   }
 
