@@ -25,6 +25,7 @@ export class FeedbackItemComponent implements OnInit {
   ngOnInit(): void {
     this.feedbackPercentage = this.feedback.rating * 20;
     this.getItem(this.feedback.auctionID);
+    console.log(this.feedbackPercentage);
   }
 
   visitProfile(): void {

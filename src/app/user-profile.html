@@ -35,7 +35,7 @@
   <div class="ratings">
     <div class="average-rating">
       <h3 class="vertical-align">Seller Rating:&nbsp;</h3>
-      <div *ngIf="profileUser != null" class="star vertical-align" title="{{ profileUser.username }}'s average rating as a seller">
+      <div *ngIf="profileUser != null && !(averageSellerRating < 1)" class="star vertical-align" title="{{ profileUser.username }}'s average rating as a seller">
         <div class="rating" [style.width.%]="averageSellerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
@@ -47,7 +47,7 @@
     </div>
     <div *ngIf="profileUser != null" class="average-rating">
       <h3 class="vertical-align">Buyer Rating:&nbsp;</h3>
-      <div class="star vertical-align" title="{{ profileUser.username }}'s average buyer rating">
+      <div class="star vertical-align" title="{{ profileUser.username }}'s average buyer rating" *ngIf="profileUser != null && !(averageBuyerRating < 1)">
         <div class="rating" [style.width.%]="averageBuyerRating">
           <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
         </div>
