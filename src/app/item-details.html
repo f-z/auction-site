@@ -86,21 +86,21 @@
 
 
 
-        <h3 class="item-right" *ngIf="distinctViewers != null">Total bids: {{ numberBids }}</h3>
-        <br *ngIf="distinctViewers != null">
-        <br *ngIf="distinctViewers != null">
+        <h3 class="item-right" *ngIf="distinctViewers">Total bids: {{ numberBids }}</h3>
+        <br *ngIf="distinctViewers">
+        <br *ngIf="distinctViewers">
 
         <h3 class="item-right">Condition: {{item?.condition}}</h3>
         <br>
         <br>
 
-        <h3 class="item-right" *ngIf="distinctViewers != null">Total viewings: {{ distinctViewers }}</h3>
-        <br *ngIf="distinctViewers != null">
-        <br *ngIf="distinctViewers != null">
+        <h3 class="item-right" *ngIf="distinctViewers">Total viewings: {{ distinctViewers }}</h3>
+        <br *ngIf="distinctViewers">
+        <br *ngIf="distinctViewers">
 
-        <h3 class="item-right" *ngIf="distinctViewers != null">Buyers watching: {{ watchers }}</h3>
-        <br *ngIf="distinctViewers != null">
-        <br *ngIf="distinctViewers != null">
+        <h3 class="item-right" *ngIf="distinctViewers">Buyers watching: {{ watchers }}</h3>
+        <br *ngIf="distinctViewers">
+        <br *ngIf="distinctViewers">
 
         <h3 class="item-right" id="countdown" *ngIf="item != null"></h3>
 

@@ -24,9 +24,9 @@ export class ItemDetailsComponent implements OnDestroy {
 
   loadComplete = false;
 
-  private distinctViewers: number;
-  private totalViews: number;
-  private numberBids: number;
+  private distinctViewers: number = 0;
+  private totalViews: number = 0;
+  private numberBids: number = 0;
   private highestBid: number;
   private buyItNowPrice: number;
   private reservePrice: number;
@@ -87,6 +87,8 @@ export class ItemDetailsComponent implements OnDestroy {
     });
 
     this.slideIndex = 1;
+
+    console.log(this.distinctViewers);
 
   }
 
