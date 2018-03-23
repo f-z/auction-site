@@ -63,7 +63,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.term = 'All';
     this.user = this.getUser();
     this.getItems();
     this.getUserRecommendations();

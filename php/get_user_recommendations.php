@@ -17,7 +17,6 @@
         ON current_user_views.auctionID =  other_user_views.auctionID 
           AND current_user_views.userID = :userID
             AND current_user_views.userID != other_user_views.userID
-        
         GROUP BY other_user_views.userID
         ORDER BY same_auction_count DESC
         LIMIT 3');
@@ -39,8 +38,7 @@
 
         foreach($similarUserIds AS $value){
 
-            $stmnt = $pdo->prepare('SELECT v.auctionID, i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
-                        a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
+            $stmnt = $pdo->prepare('SELECT v.auctionID, i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, a.auctionID, a.startPrice, a.reservePrice, a.buyNowPrice, a.endTime, 
                         CASE WHEN MAX(b.price) > 0 THEN MAX(b.price) END AS highestBid
                     FROM viewing AS v
                     LEFT JOIN auction AS a ON v.auctionID = a.auctionID
@@ -51,10 +49,13 @@
                         SELECT auctionID
                         FROM viewing AS v1
                         WHERE v1.userID = :userID)
+                    AND a.endTime > NOW()
+                    AND i.sellerID != :userID2
                     GROUP BY b.auctionID
                     LIMIT :returnLimit');
 
             $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmnt->bindParam(':userID2', $userID, PDO::PARAM_INT);
             $stmnt->bindParam(':other_userID', $value, PDO::PARAM_INT);
             $stmnt->bindParam(':returnLimit', $limit, PDO::PARAM_INT);
             $limit = $limit - 1;
