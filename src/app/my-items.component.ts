@@ -33,6 +33,11 @@ export class MyItemsComponent implements OnInit {
     this.getItems();
   }
 
+  additem():void{
+    this.itemService.setItem(null);
+    this.router.navigate(['add-item']);
+  }
+
   getItems(): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'

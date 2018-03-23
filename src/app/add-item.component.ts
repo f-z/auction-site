@@ -8,6 +8,7 @@ import { DialogComponent } from './dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { User, UserService } from './shared/services/user.service';
+import { Item, ItemService } from './shared/services/item.service';
 import { Category } from './shared/services/item.service';
 import { FileUploader } from 'ng2-file-upload';
 
@@ -17,6 +18,7 @@ import { FileUploader } from 'ng2-file-upload';
   styleUrls: ['./add-item.css']
 })
 export class AddItemComponent implements OnInit {
+  item : Item;
   private user: User;
 
   private name: string;
@@ -41,6 +43,7 @@ export class AddItemComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private itemService: ItemService,
     public http: HttpClient,
     public dialog: MatDialog,
     private router: Router
@@ -49,6 +52,17 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.item = this.itemService.getItem();
+    this.name = this.item.name;
+    this.description = this.item.description;
+    this.condition = this.item.condition;
+    this.startPrice = this.item.startPrice;
+    this.reservePrice = this.item.reservePrice;
+    this.buyNowPrice = this.item.buyNowPrice;
+    this.quantity = this.item.quantity;
+    this.photo = this.item.photo;
+    this.selectedCategory = this.item.categoryName;
+
     this.user = this.getUser();
     this.getCategories();
 
@@ -70,7 +84,13 @@ export class AddItemComponent implements OnInit {
 
   addItem(): void {
 
-    console.log(this.startPrice);
+    let phpurl = '';
+    if( this.item === null ){
+        phpurl = 'https://php-group30.azurewebsites.net/insert_item.php';
+    } else {
+       phpurl = 'https://php-group30.azurewebsites.net/update_item.php';
+    }
+
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -88,7 +108,7 @@ export class AddItemComponent implements OnInit {
         photo: this.photo,
         sellerID: this.user.userID
       },
-      url: any = 'https://php-group30.azurewebsites.net/insert_item.php';
+      url: any = phpurl;
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -199,13 +219,13 @@ export class AddItemComponent implements OnInit {
         this.openDialog('Quantity should be positive round number', '', false);
         return false;
       } else if (this.startPrice <= 0) {
-        this.openDialog('Start price should be larger than 0.00', '', false);
+        this.openDialog('Start price should be larger than £0.00', '', false);
         return false;
       } else if (this.reservePrice < this.startPrice) {
         this.openDialog('Reserve price cannot be smaller than start price', '', false);
         return false;
       } else if (this.buyNowPrice != null && (this.buyNowPrice < this.reservePrice || this.buyNowPrice < this.startPrice)) {
-        this.openDialog('Buy it now price cannot be less than reserve price or start price', '', false);
+        this.openDialog('Buy-it-now price cannot be less than reserve price or start price', '', false);
         return false;
       } else if (new Date(this.endDate + 'T' + this.endTime) > maxAuctionDate) {
       this.openDialog('The auction end date cannot be more than 6 months into the future!', '', false);

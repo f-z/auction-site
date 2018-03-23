@@ -272,3 +272,7 @@ h3 {
 .recommended{
   font-size: 1.2em;
 }
+
+.stopwatching {
+  width: 200px;
+}

@@ -87,6 +87,12 @@ export class ItemDetailsComponent implements OnDestroy {
     });
 
     this.slideIndex = 1;
+
+  }
+
+
+  reauction():void{
+      this.router.navigate(['add-item']);
   }
 
   getItem(): Item {
@@ -479,6 +485,7 @@ export class ItemDetailsComponent implements OnDestroy {
 
     return true; // if bid is valid
   }
+
   notifyCurrentBidder(auctionID, buyerID, newBid): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'

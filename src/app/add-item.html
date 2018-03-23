@@ -30,14 +30,14 @@
     <div class="row">
       <h4>Item Name</h4>
       <div class="input col">
-        <input type="text" [(ngModel)]="name" name="name" placeholder="Add item name" class="item-name" />
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Add item name" class="item-name"/>
       </div>
     </div>
 
     <div class="row">
       <h4>Item Description</h4>
       <div class="input col">
-        <textarea [(ngModel)]="description" name="description" placeholder="Add item description" class="item-description"></textarea>
+        <textarea [(ngModel)]="description" name="description" placeholder="Add item description" class="item-description" value="item?.description"></textarea>
       </div>
     </div>
 
