@@ -10,19 +10,20 @@
 
     try {
         // Retrieving item.
-        $stmnt = $pdo->prepare('SELECT DISTINCT auction.*, item.*, COUNT(`user`.userID) AS userCount,
-        CASE WHEN MAX(bid.price) > 0 THEN MAX(bid.price) END AS highestBid
-		FROM auction
-        LEFT JOIN bid ON auction.auctionID = bid.auctionID
-		JOIN item ON auction.itemID = item.itemID
-		JOIN viewing ON auction.auctionID = viewing.auctionID
-		JOIN `user` ON viewing.userID = `user`.userID
-		JOIN viewing AS viewing1 ON `user`.userID = viewing1.userID
-		JOIN auction AS auction1 ON viewing1.auctionID = auction1.auctionID
-		WHERE auction1.auctionID = :auctionID AND auction.auctionID != auction1.auctionID 
+        $stmnt = $pdo->prepare('SELECT DISTINCT auction.*, item.*, COUNT(`user`.userID) AS userCount, b.highestBid
+        FROM auction
+        LEFT JOIN (SELECT b2.auctionID, b2.buyerID, CASE WHEN MAX(b2.price) > 0 THEN MAX(b2.price) END AS highestBid 
+                    FROM bid as b2
+                    GROUP BY b2.auctionID ) AS b ON auction.auctionID = b.auctionID
+        JOIN item ON auction.itemID = item.itemID
+        JOIN viewing ON auction.auctionID = viewing.auctionID
+        JOIN `user` ON viewing.userID = `user`.userID
+        JOIN viewing AS viewing1 ON `user`.userID = viewing1.userID
+        JOIN auction AS auction1 ON viewing1.auctionID = auction1.auctionID
+        WHERE auction1.auctionID = :auctionID AND auction.auctionID != auction1.auctionID 
         AND auction.endTime > NOW()
-		GROUP BY auction.auctionID
-		ORDER BY userCount DESC
+        GROUP BY auction.auctionID
+        ORDER BY userCount DESC
         LIMIT 3
 ');
 
