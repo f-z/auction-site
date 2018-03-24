@@ -64,13 +64,10 @@ export class ItemDetailsComponent implements OnDestroy {
     public dialog: MatDialog
   ) {
     route.params.subscribe(val => {
-      //this.itemService.setItemFromID(+this.route.snapshot.url[1].path);
 
       this.auctionID = +this.route.snapshot.url[1].path;
-
       this.user = this.getUser();
       this.getAuctionInformation();
-
 
       let countdownText = document.getElementById('countdown');
       countdownText = null;
@@ -130,11 +127,7 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
       }
     );
     return null;
@@ -165,11 +158,7 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...','',false);
       }
     );
     return;
@@ -191,11 +180,7 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
+        this.openDialog('Oops! Something went wrong; redirecting you to safety...','',false);
       }
     );
     return;
@@ -281,14 +266,12 @@ export class ItemDetailsComponent implements OnDestroy {
         auctionID: auctionID,
         userID: this.user.userID
       },
-      url: any =
-        'https://php-group30.azurewebsites.net/increment_viewings.php';
+      url: any = 'https://php-group30.azurewebsites.net/increment_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        // Set the date we're counting down to.
         if (data != null) {
-          console.log(data);
+          //console.log(data);
         }
       },
       (error: any) => {
