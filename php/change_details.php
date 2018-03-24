@@ -11,7 +11,7 @@ $username = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCOD
 $oldPassword = filter_var($obj->oldPassword, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 $hashedPass = sha1($oldPassword);
 
-$query = 'SELECT userID, password FROM user WHERE userID = :userID LIMIT 1';
+$query = 'SELECT password FROM user WHERE userID = :userID LIMIT 1';
 
 $checkCredentials = $pdo->prepare($query);
 
@@ -26,6 +26,7 @@ $row = $checkCredentials->fetch(PDO::FETCH_OBJ);
 if ($row === false) {
     // Could not find a user with that username!
     // PS: You might want to handle this error in a more user-friendly manner!
+    echo json_encode(array('message' => 'User does not exist!'));
     die ('User does not exist!');
 } else {
     // Checking to see if the given password matches the hash stored in the user table.
@@ -41,22 +42,24 @@ if ($row === false) {
         $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
         $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);         
 
-        $sql = 'INSERT INTO user(username, DOB, phone, street, city, postcode) VALUES (:username, :DOB,  :phone, :street, :city, :postcode)';
+        $sql = 'UPDATE user SET username = :username, DOB = :DOB, phone = :phone, street =:street, city=:city, postcode=:postcode WHERE userID = :userID';
 
-        $insert = $pdo->prepare($sql);
+        $update = $pdo->prepare($sql);
 
         // Binding parameter values to prepared statement.
-        $insert->bindParam(':username', $username, PDO::PARAM_STR);
-        $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
-        $insert->bindParam(':phone', $phone, PDO::PARAM_INT);
-        $insert->bindParam(':street', $street, PDO::PARAM_STR);
-        $insert->bindParam(':city', $city, PDO::PARAM_STR);
-        $insert->bindParam(':postcode', $postcode, PDO::PARAM_STR);
+        $update->bindParam(':userID', $userID, PDO::PARAM_STR);
+        $update->bindParam(':username', $username, PDO::PARAM_STR);
+        $update->bindParam(':DOB', $DOB, PDO::PARAM_STR);
+        $update->bindParam(':phone', $phone, PDO::PARAM_STR);
+        $update->bindParam(':street', $street, PDO::PARAM_STR);
+        $update->bindParam(':city', $city, PDO::PARAM_STR);
+        $update->bindParam(':postcode', $postcode, PDO::PARAM_STR);
 
-        $insert->execute();
+        $update->execute();
         echo json_encode(array('message' => 'Congratulations, the record ' . $username . ' was added to the database!'));
     } else {
         // incorrect password
+        echo json_encode(array('message' => 'Failed to update details'));
         die ('Incorrect password!');
     }
 }

@@ -26,7 +26,7 @@ export class ProfileComponent {
   private confirmedPassword: string;
   private oldPassword: string;
   private DOB: string;
-  private phone: number;
+  private phone: string;
   private photo: string;
   private imageAdded: boolean;
 
@@ -70,24 +70,24 @@ export class ProfileComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.uploader.onAfterAddingFile = file => {
-      file.withCredentials = false;
-      this.imageAdded = true;
-    };
-    // overriding the default onCompleteItem property of the uploader, so we are
-    // able to deal with the server response.
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
-    ) => {
-      this.photo = response;
-      this.changeDetails();
-      // console.log('ImageUpload:uploaded:', item, status, response);
-    };
-  }
+  // ngOnInit(): void {
+  //   this.uploader.onAfterAddingFile = file => {
+  //     file.withCredentials = false;
+  //     this.imageAdded = true;
+  //   };
+  //   // overriding the default onCompleteItem property of the uploader, so we are
+  //   // able to deal with the server response.
+  //   this.uploader.onCompleteItem = (
+  //     item: any,
+  //     response: any,
+  //     status: any,
+  //     headers: any
+  //   ) => {
+  //     this.photo = response;
+  //     this.changeDetails();
+  //     // console.log('ImageUpload:uploaded:', item, status, response);
+  //   };
+  // }
 
   retrieveProfile(): void {
     const headers: any = new HttpHeaders({
@@ -110,9 +110,9 @@ export class ProfileComponent {
         this.phone = data.phone;
         this.email = data.email;
         this.DOB = data.DOB;
-        console.log(this.DOB);
 
         console.log(this.username);
+        console.log(this.userID);
         if (this.profileUser.photo != null) {
           this.profileUser.photo =
             'http://php-group30.azurewebsites.net/uploads/' +
@@ -233,6 +233,7 @@ export class ProfileComponent {
 
   this.http.post(url, JSON.stringify(options), headers).subscribe(
     (data: any) => {
+      console.log(data);
       // If the request was successful, notify the user.
       this.openDialog(
         'Congratulations, your changes have been saved!',
@@ -243,7 +244,7 @@ export class ProfileComponent {
     (error: any) => {
       // If the supplied username or email already exist in the database, notify the user.
       this.openDialog(
-        'Oops something went wrong!',
+        'Supplied password is not correct!',
         '',
         false
       );
@@ -279,12 +280,10 @@ export class ProfileComponent {
       this.city.trim().length === 0 ||
       this.postcode.trim().length === 0 ||
       this.username.trim().length === 0 ||
-      this.email.trim().length === 0 ||
-      this.password.trim().length === 0 ||
-      this.confirmedPassword.trim().length === 0 ||
-      this.phone === 0 ||
-      this.phone.toString().length < 8 ||
-      this.phone.toString().length > 10 ||
+      this.oldPassword.trim().length === 0 ||
+      // this.phone.trim().length === 0 ||
+      this.phone.toString().length < 10 ||
+      this.phone.toString().length > 13 ||
       minBirthDate < new Date()
     ) {
       // If there are any incorrect details entered, notify the user.
@@ -313,6 +312,8 @@ export class ProfileComponent {
     if (this.imageAdded){
       this.uploader.uploadAll();
     }
+    console.log(this.phone);
+    this.changeDetails();
     return true;
   }
 
