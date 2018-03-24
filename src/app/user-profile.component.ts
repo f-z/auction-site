@@ -70,25 +70,6 @@ export class ProfileComponent {
     });
   }
 
-  // ngOnInit(): void {
-  //   this.uploader.onAfterAddingFile = file => {
-  //     file.withCredentials = false;
-  //     this.imageAdded = true;
-  //   };
-  //   // overriding the default onCompleteItem property of the uploader, so we are
-  //   // able to deal with the server response.
-  //   this.uploader.onCompleteItem = (
-  //     item: any,
-  //     response: any,
-  //     status: any,
-  //     headers: any
-  //   ) => {
-  //     this.photo = response;
-  //     this.changeDetails();
-  //     // console.log('ImageUpload:uploaded:', item, status, response);
-  //   };
-  // }
-
   retrieveProfile(): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -212,44 +193,49 @@ export class ProfileComponent {
   }
 
   changeDetails():void {
-    const headers: any = new HttpHeaders({
-      'Content-Type': 'application/json'
-    }),
-    options: any = {
-      userID: this.userID,
-      street: this.street,
-      city: this.city,
-      postcode: this.postcode,
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      confirmedPassword: this.confirmedPassword,
-      oldPassword: this.oldPassword,
-      phone: this.phone,
-      DOB: this.DOB,
-      photo: this.photo
-    },
-    url: any = 'https://php-group30.azurewebsites.net/change_details.php';
 
-  this.http.post(url, JSON.stringify(options), headers).subscribe(
-    (data: any) => {
-      console.log(data);
-      // If the request was successful, notify the user.
-      this.openDialog(
-        'Congratulations, your changes have been saved!',
-        '',
-        true
-      );
-    },
-    (error: any) => {
-      // If the supplied username or email already exist in the database, notify the user.
-      this.openDialog(
-        'Supplied password is not correct!',
-        '',
-        false
-      );
+    if (this.validate()){
+
+      const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        userID: this.userID,
+        street: this.street,
+        city: this.city,
+        postcode: this.postcode,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        confirmedPassword: this.confirmedPassword,
+        oldPassword: this.oldPassword,
+        phone: this.phone,
+        DOB: this.DOB,
+        photo: this.photo
+      },
+      url: any = 'https://php-group30.azurewebsites.net/change_details.php';
+  
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        console.log(data);
+        // If the request was successful, notify the user.
+        this.openDialog(
+          'Congratulations, your changes have been saved!',
+          '',
+          true
+        );
+      },
+      (error: any) => {
+        // If the supplied username or email already exist in the database, notify the user.
+        this.openDialog(
+          'Supplied password is not correct!',
+          '',
+          false
+        );
+      }
+    );
+
     }
-  );
   }
 
   validate(): boolean {
@@ -275,6 +261,7 @@ export class ProfileComponent {
       return false;
     } else if(this.oldPassword == null){
       this.openDialog('Please type your current password to save changes!', '', false);
+      return false;
     } else if (
       this.street.trim().length === 0 ||
       this.city.trim().length === 0 ||
@@ -282,8 +269,8 @@ export class ProfileComponent {
       this.username.trim().length === 0 ||
       this.oldPassword.trim().length === 0 ||
       // this.phone.trim().length === 0 ||
-      this.phone.toString().length < 10 ||
-      this.phone.toString().length > 13 ||
+      this.phone.length < 10 ||
+      this.phone.length > 13 ||
       minBirthDate < new Date()
     ) {
       // If there are any incorrect details entered, notify the user.
@@ -313,7 +300,6 @@ export class ProfileComponent {
       this.uploader.uploadAll();
     }
     console.log(this.phone);
-    this.changeDetails();
     return true;
   }
 
