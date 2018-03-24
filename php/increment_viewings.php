@@ -39,16 +39,8 @@
             $incrementViewings->bindParam(':userID', $userID, PDO::PARAM_INT); 
             $incrementViewings->execute();
         }
-
-        $query = 'SELECT COUNT(userID) AS distinctViewings, SUM(viewCount) AS totalViewings 
-                    FROM `viewing` WHERE auctionID=:auctionID';
-        
-        $findViews = $pdo->prepare($query);
-        $findViews->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
-        $findViews->execute();
-        $data = $findViews->fetch(PDO::FETCH_OBJ);
   
-        echo json_encode($data);
+        echo json_encode(array('message' => 'Viewings incremented'));
     }
     catch (Exception $e) {
         $error = $e->getMessage();

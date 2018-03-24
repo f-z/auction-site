@@ -68,8 +68,6 @@ export class ItemDetailsComponent implements OnDestroy {
 
       this.auctionID = +this.route.snapshot.url[1].path;
 
-    //  this.itemID = +this.route.snapshot.url[1].path; // (+) converts string 'id' to a number
-    //  this.item = this.getItem();
       this.user = this.getUser();
       this.getAuctionInformation();
 
@@ -87,9 +85,6 @@ export class ItemDetailsComponent implements OnDestroy {
     });
 
     this.slideIndex = 1;
-
-    console.log(this.distinctViewers);
-
   }
 
   reauction():void{
@@ -222,6 +217,7 @@ export class ItemDetailsComponent implements OnDestroy {
         if (data[0].sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
         }
+        this.getViewings();
         this.getSellerRating(data[0].sellerID);
         this.getHighestBid(data[0].auctionID);
         this.countDown(data[0].endTime);
@@ -250,6 +246,33 @@ export class ItemDetailsComponent implements OnDestroy {
     return null;
   }
 
+  getViewings():void{
+     const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = {
+        auctionID: +this.route.snapshot.url[1].path,
+        userID: this.user.userID
+      },
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_viewings.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        // Set the date we're counting down to.
+        if (data != null) {
+          this.distinctViewers = data.distinctViewings;
+          this.totalViews = data.totalViewings;
+        }
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+
+    return null;
+  }
+
   incrementViewings(auctionID: number): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -259,14 +282,13 @@ export class ItemDetailsComponent implements OnDestroy {
         userID: this.user.userID
       },
       url: any =
-        'https://php-group30.azurewebsites.net/increment_and_retrieve_viewings.php';
+        'https://php-group30.azurewebsites.net/increment_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.distinctViewers = data.distinctViewings;
-          this.totalViews = data.totalViewings;
+          console.log(data);
         }
       },
       (error: any) => {
