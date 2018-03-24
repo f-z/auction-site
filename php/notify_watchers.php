@@ -10,7 +10,6 @@
   $itemID = filter_var($obj->itemID, FILTER_SANITIZE_NUMBER_INT);
 
   try {
-
     // Search users who are watching this item
     $searchWatchers = 'SELECT u.firstName, u.email, i.name, b.auctionID, b.buyerID, b.price
     FROM user u
@@ -27,16 +26,14 @@
     $watchers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (!empty($watchers)) {
-
         foreach ($watchers as $watcher) {
-
             $watcher_firstname = $watcher['firstName'];
             $watcher_email = $watcher['email'];
             $item_name = $watcher['name'];
             $auctionID = $watcher['auctionID'];
             $watcher_buyerID = $watcher['buyerID'];
 
-            // Include file with mailer settings
+            // Include file with mailer settings.
             require_once('email_server.php');
 
             $body = '
@@ -101,7 +98,7 @@
             $mail->Body = $body;
             $mail->IsHTML(true);
 
-            if ($mail->send()){
+            if ($mail->send()) {
             echo ('Congratulations! '.$watcher_firstname.' has been notified!');
             }
         }

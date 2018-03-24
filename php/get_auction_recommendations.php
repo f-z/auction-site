@@ -25,7 +25,7 @@
 		ORDER BY userCount DESC
         LIMIT 3
 ');
-       
+
         // Binding the provided username to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
 

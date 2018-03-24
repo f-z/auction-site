@@ -1,5 +1,4 @@
 <?php
-
   require_once('connect_azure_db.php');
 
   // Retrieving the posted data.

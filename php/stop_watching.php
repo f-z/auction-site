@@ -1,5 +1,4 @@
 <?php
-
   require_once('connect_azure_db.php');
 
   // Retrieving the posted data.
@@ -11,7 +10,6 @@
   $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
 
   try {
-    
     $sql = 'DELETE FROM `bid` WHERE auctionID = :auctionID AND buyerID = :buyerID';
     $query = $pdo->prepare($sql);
     $query->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

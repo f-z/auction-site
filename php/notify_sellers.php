@@ -104,16 +104,14 @@ if (!empty($sellers)) {
                          '.$item_name.' has been sold for '.$price.'! The winner is '.$winnerName.'.';
 
         } else {
-
             $mail->Subject = 'Auction for '.$item_name.' ended';
             $mail->Body = 'Hi '.$firstname.', 
             Unfortunately, '.$item_name.' did not sell. The highest bid of '.$price.' did not exceed your reserve price.';
 
         }
         try {
-        
-            //  echo $mail->Body;
-            if ($mail->send()){
+            // echo $mail->Body;
+            if ($mail->send()) {
                 $sql2 = 'UPDATE auction SET isNotified = 1 WHERE auctionID = :auctionID;';
                 $stmt2 = $pdo->prepare($sql2);
                 $stmt2->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
@@ -124,6 +122,5 @@ if (!empty($sellers)) {
             die();
         }
     }
-
 }
 ?>

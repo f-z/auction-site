@@ -9,17 +9,15 @@
     $buyerID = filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT); 
     $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT); 
 
-
     try {
-        //Retrieving item: 
-         
+        // Retrieving item:
         $stmnt = $pdo->prepare('SELECT MAX(b.price) AS maxbid FROM auction as a 
             LEFT JOIN bid AS b 
             ON a.auctionID = b.auctionID 
             WHERE b.buyerID = :buyerID AND a.auctionID = :auctionID 
             AND price = 0');
        
-        // Binding the provided username to our prepared statement.
+        // Binding the provided parameters to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
         $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
 
@@ -29,7 +27,6 @@
          while($row = $stmnt->fetch(PDO::FETCH_OBJ)){
             $data['watching'][] = $row;
          }
-
 
         $stmnt = $pdo->prepare('SELECT MAX(b.price) as outbid 
                                 FROM auction as a 
@@ -41,7 +38,7 @@
                                                                 WHERE b3.auctionID = b.auctionID)
                                                 )');
        
-        // Binding the provided username to our prepared statement.
+        // Binding the provided parameters to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
         $stmnt->bindParam(':buyerID', $buyerID, PDO::PARAM_INT);
 
@@ -52,8 +49,6 @@
             $data['outbid'][] = $row;
          }
 
-
-     
         // Returning data as JSON.
         echo json_encode($data);
     }

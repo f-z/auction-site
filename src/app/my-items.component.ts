@@ -33,7 +33,7 @@ export class MyItemsComponent implements OnInit {
     this.getItems();
   }
 
-  additem():void{
+  additem(): void {
     this.itemService.setItem(null);
     this.router.navigate(['add-item']);
   }

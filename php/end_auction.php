@@ -25,7 +25,6 @@
         $stmnt->execute();
 
         json_encode($endTime);
-
     }
     catch(PDOException $e) {
         echo $e->getMessage();

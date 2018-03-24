@@ -64,7 +64,6 @@ foreach($bidders as $bidder){
         $maxBid = $bid['maxBid'];
 
     try {
-
         $mail = new PHPMailer(true);
         //Server settings
         $mail->isSMTP();

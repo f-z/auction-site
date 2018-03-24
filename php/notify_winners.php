@@ -43,8 +43,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $bidders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach($bidders as $bidder){
-
+foreach($bidders as $bidder) {
     $firstname = $bidder['firstName'];
     $email = $bidder['email'];
     $item_name = $bidder['name'];
@@ -54,17 +53,16 @@ foreach($bidders as $bidder){
     $reservePrice = $bidder['reservePrice'];
 
     try {
-
-        //Server settings
+        // Server settings.
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
-        $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
+        $mail->SMTPSecure = 'tls'; // enabling 'tls' to prevent security issues
         $mail->SMTPAuth = true;
         $mail->Username = 'uclbay.gc06@gmail.com';
         $mail->Password = 'uclbay@gc06';
-        // walkaround to bypass server errors
+        // Walk-around to bypass server errors.
         $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
@@ -91,10 +89,9 @@ foreach($bidders as $bidder){
             }
 
         } else {
-
             $mail->Body = 'Hi '. $firstname. ', 
                           You made the highest bid. Unfortunately, it did not meet the reserve price provided by the seller.';
-        
+
             if ($mail->send()){
                 $sql2 = 'UPDATE bid SET isNotified = 1 WHERE auctionID = :auctionID AND buyerID = :buyerID;';
                 $stmt2 = $pdo->prepare($sql2);
@@ -103,12 +100,9 @@ foreach($bidders as $bidder){
                 $stmt2->execute();
             }
         }
-
     } catch (Exception $e) {
         echo json_encode('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
         die();
     }
-
 }
-             
 ?>

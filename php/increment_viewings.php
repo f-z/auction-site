@@ -18,7 +18,7 @@
         $findViews->execute();
         $result = $findViews->fetch(PDO::FETCH_OBJ);
 
-        if (empty($result)) { // If user has not viewed the auction before
+        if (empty($result)) { // If the user has not viewed the auction before:
 
             $incrementQuery =  'INSERT INTO `viewing` (auctionID, userID, viewCount) 
                                 VALUES (:auctionID, :userID, 1)';
@@ -28,11 +28,11 @@
             $incrementViewings->bindParam(':userID', $userID, PDO::PARAM_INT); 
             $incrementViewings->execute();
 
-         }else { // If user has already viewed the auction
+         } else { // If the user has already viewed the auction:
 
             $incrementQuery = 'UPDATE viewing 
-                            SET viewCount = viewCount + 1 
-                             WHERE auctionID = :auctionID AND userID = :userID';
+                               SET viewCount = viewCount + 1 
+                               WHERE auctionID = :auctionID AND userID = :userID';
 
             $incrementViewings = $pdo->prepare($incrementQuery);
             $incrementViewings->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);

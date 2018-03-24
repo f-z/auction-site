@@ -81,7 +81,7 @@
             $data['topbids'][] = $row;
         }
 
-        //retieving user watchingbid
+        // Retrieving watching user.
         $data['watching']=array();
 
          $watchingStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
@@ -112,7 +112,7 @@
             $data['watching'][] = $row;
         }
 
-          //retieving user outbid
+        // Retrieving outbid user.
         $data['outbid'] = array();
 
         $outbidStmnt = $pdo->prepare('SELECT i.itemID, i.name, i.photo, i.description, i.`condition`, i.quantity, i.categoryName, i.sellerID, 
@@ -141,7 +141,7 @@
 
         $outbidStmnt->execute();
 
-     // Fetching the row.
+        // Fetching the row.
         while($row = $outbidStmnt->fetch(PDO::FETCH_OBJ)) {
             // Assigning each row of data to an associative array.
             $data['outbid'][] = $row;

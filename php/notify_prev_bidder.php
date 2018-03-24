@@ -11,7 +11,7 @@
 
     try {
         if (!($highestBidderID == $newBuyerID)) {
-            // Retrieving userID of previous highest bidder
+            // Retrieving userID of previous highest bidder.
             $sql = 'SELECT firstName, email FROM user
             WHERE userID = :buyerID';
             $retrieveBidder = $pdo->prepare($sql);
@@ -24,16 +24,16 @@
                 
             $mail = new PHPMailer(true);
             
-            //Server settings
+            // Server settings
             $mail->isSMTP();
             $mail->SMTPDebug = 2;
             $mail->Host = 'smtp.gmail.com';
             $mail->Port = 587;
-            $mail->SMTPSecure = 'tls'; // enable 'tls'  to prevent security issues
+            $mail->SMTPSecure = 'tls'; // enabling 'tls' to prevent security issues
             $mail->SMTPAuth = true;
             $mail->Username = 'uclbay.gc06@gmail.com';
             $mail->Password = 'uclbay@gc06';
-            // walkaround to bypass server errors
+            // Walk-around to bypass server errors.
             $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,

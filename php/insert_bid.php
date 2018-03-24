@@ -17,7 +17,7 @@
 
   try {
                 
-    // Inserting new bid
+    // Inserting new bid.
     $sql3 = 'INSERT INTO `bid` (price, `time`, buyerID, auctionID) VALUES (:price, :time, :buyerID, :auctionID)';
 
     $insertBid = $pdo->prepare($sql3);
