@@ -9,7 +9,7 @@
     $userID = filter_var($obj->userID, FILTER_SANITIZE_NUMBER_INT);
 
     try {
-        $stmnt = $pdo->prepare('SELECT username, userID, photo, role, firstName, lastName, email, city FROM user WHERE userID = :userID'); 
+        $stmnt = $pdo->prepare('SELECT username, userID, photo, role, firstName, lastName, email, city, street, postcode, DOB, phone FROM user WHERE userID = :userID'); 
         $stmnt->bindParam(':userID', $userID, PDO::PARAM_INT);
         $stmnt->execute();
         $data = $stmnt->fetch(PDO::FETCH_OBJ);

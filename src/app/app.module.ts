@@ -57,7 +57,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ProfileComponent,
     SearchPipe,
     DialogComponent,
-    FileSelectDirective
+    FileSelectDirective,
   ],
   bootstrap: [HomeComponent],
   providers: [
