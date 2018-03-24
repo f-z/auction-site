@@ -64,6 +64,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.getUser();
+    this.term = 'All';
     this.getItems();
     this.getUserRecommendations();
   }
@@ -85,10 +86,7 @@ export class AppComponent implements OnInit {
 
             this.items[i].photo =
               'https://php-group30.azurewebsites.net/uploads/' +
-              this.items[i].photo.substring(
-                5,
-                this.items[i].photo.length - 5
-              );
+              this.items[i].photo.substring(5, this.items[i].photo.length - 5);
           }
         },
         (error: any) => {
@@ -108,21 +106,26 @@ export class AppComponent implements OnInit {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         if (data != null && data.length > 0) {
-           this.recommendedItems = data;
-               for(let i = 0; i < data.length; i++){
-                  this.recommendedItems[i].photo = 'https://php-group30.azurewebsites.net/uploads/' +
-                    this.recommendedItems[i].photo.substring(5,this.recommendedItems[i].photo.length - 5);
-               }
-             }
-            console.log(this.recommendedItems);
+          this.recommendedItems = data;
+          if (this.recommendedItems != null) {
+            for (let i = 0; i < data.length; i++) {
+              this.recommendedItems[i].photo =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.recommendedItems[i].photo.substring(
+                  5,
+                  this.recommendedItems[i].photo.length - 5
+                );
+            }
+
+            this.term = null;
+          }
+        }
       },
       (error: any) => {
         console.log(error);
       }
     );
     return null;
-
-
   }
 
   setItem(item: Item): void {
@@ -131,7 +134,6 @@ export class AppComponent implements OnInit {
     if (this.user === null) {
       this.router.navigate(['/login']);
     } else {
-      console.log(item.auctionID);
       this.router.navigate(['/items', item.auctionID]);
     }
   }

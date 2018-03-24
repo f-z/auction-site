@@ -25,7 +25,6 @@ export class FeedbackItemComponent implements OnInit {
   ngOnInit(): void {
     this.feedbackPercentage = this.feedback.rating * 20;
     this.getItem(this.feedback.auctionID);
-    console.log(this.feedbackPercentage);
   }
 
   visitProfile(): void {
@@ -46,7 +45,7 @@ export class FeedbackItemComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        // Set the date we're counting down to.
+        // Set the date we are counting down to.
         if (data != null) {
           this.item = data;
           this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
@@ -54,12 +53,7 @@ export class FeedbackItemComponent implements OnInit {
         }
       },
       (error: any) => {
-      //  // If there is an error, return to main search page.
-       // this.openDialog(
-        //  'Oops! Something went wrong; redirecting you to safety...',
-         // '',
-         // false
-       // );
+        console.log(error);
       }
     );
     return null;
@@ -80,12 +74,7 @@ export class FeedbackItemComponent implements OnInit {
        this.feedbackUser = data;
       },
       (error: any) => {
-        // If there is an error, return to main search page.
-       // this.openDialog(
-        //  'Oops! Something went wrong; redirecting you to safety...',
-         // '',
-        // false
-        // );
+        console.log(error);
       }
     );
     return null;
