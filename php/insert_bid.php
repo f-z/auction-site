@@ -13,7 +13,7 @@
 
   $buyerID =  filter_var($obj->buyerID, FILTER_SANITIZE_NUMBER_INT);
   $auctionID = filter_var($obj->auctionID, FILTER_SANITIZE_NUMBER_INT);
-  $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_FLOAT);
+  $price = filter_var($obj->price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
   try {
                 
