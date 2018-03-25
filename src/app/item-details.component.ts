@@ -471,11 +471,7 @@ export class ItemDetailsComponent implements OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.endAuction();
-          this.openDialog(
-            'Congratulations, you have won this auction!',
-            '',
-            true
-          );
+          this.openDialog('Congratulations, you have won this auction!','',true);
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -508,6 +504,7 @@ export class ItemDetailsComponent implements OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         console.log(data);
+        this.isExpired = true;
       },
       (error: any) => {}
     );

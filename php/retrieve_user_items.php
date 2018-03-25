@@ -29,6 +29,7 @@
                     WHERE auctionID = a.auctionID
                 )
                 WHERE i.itemID = a.itemID AND (sellerID = :sellerID) 
+                AND a.endTime > NOW()
                 AND a.endTime = (SELECT MAX(a2.endTime) FROM auction AS a2 
                                                 WHERE a2.itemID = a.itemID)
                 GROUP BY a.auctionID');
