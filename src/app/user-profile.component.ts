@@ -227,7 +227,7 @@ export class ProfileComponent {
         this.openDialog(
           'Congratulations, your changes have been saved!',
           '',
-          true
+          false
         );
       },
       (error: any) => {
@@ -237,9 +237,8 @@ export class ProfileComponent {
           '',
           false
         );
-      }
+      },
     );
-
     }
   }
 
@@ -309,11 +308,17 @@ export class ProfileComponent {
       }
     });
 
+    dialogRef.afterOpen().subscribe(result => {
+      setTimeout(dialogRef.close(), 5000);
+      });
+
     dialogRef.afterClosed().subscribe(result => {
-      if (succeeded) {
-        this.router.navigate(['/login']);
-      }
+        this.refresh();
     });
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   setItem(item: Item): void {
