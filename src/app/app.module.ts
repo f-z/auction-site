@@ -15,7 +15,7 @@ import { AddItemComponent } from './add-item.component';
 import { FeedbackComponent } from './feedback.component';
 import { ProfileComponent } from './user-profile.component';
 import { DialogComponent } from './dialog.component';
-
+import { BidHistoryComponent } from './bid-history.component';
 
 import { SearchPipe } from './search.pipe';
 import { APP_BASE_HREF } from '@angular/common';
@@ -57,7 +57,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ProfileComponent,
     SearchPipe,
     DialogComponent,
-    FileSelectDirective,
+    BidHistoryComponent,
+    FileSelectDirective
   ],
   bootstrap: [HomeComponent],
   providers: [
@@ -66,6 +67,6 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ItemService
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent, BidHistoryComponent]
 })
 export class AppModule {}

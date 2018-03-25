@@ -10,8 +10,9 @@ import {
   Feedback
 } from './shared/services/item.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDateFormats } from '@angular/material';
 import { DialogComponent } from './dialog.component';
+import { BidHistoryComponent } from './bid-history.component';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -24,9 +25,9 @@ export class ItemDetailsComponent implements OnDestroy {
 
   loadComplete = false;
 
-  private distinctViewers: number = 0;
-  private totalViews: number = 0;
-  private numberBids: number = 0;
+  private distinctViewers = 0;
+  private totalViews = 0;
+  private numberBids = 0;
   private highestBid: number;
   private buyItNowPrice: number;
   private reservePrice: number;
@@ -61,10 +62,10 @@ export class ItemDetailsComponent implements OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public http: HttpClient,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public bidHistoryDialog: MatDialog
   ) {
     route.params.subscribe(val => {
-
       this.auctionID = +this.route.snapshot.url[1].path;
       this.user = this.getUser();
       this.getAuctionInformation();
@@ -84,8 +85,8 @@ export class ItemDetailsComponent implements OnDestroy {
     this.slideIndex = 1;
   }
 
-  reauction():void{
-      this.router.navigate(['add-item']);
+  reauction(): void {
+    this.router.navigate(['add-item']);
   }
 
   getItem(): Item {
@@ -127,7 +128,11 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...','', false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
     return null;
@@ -158,7 +163,11 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...','',false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
     return;
@@ -180,7 +189,11 @@ export class ItemDetailsComponent implements OnDestroy {
       },
       (error: any) => {
         // If there is an error, return to main search page.
-        this.openDialog('Oops! Something went wrong; redirecting you to safety...','',false);
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
       }
     );
     return;
@@ -197,8 +210,9 @@ export class ItemDetailsComponent implements OnDestroy {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.item = data[0];
-        this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
-                    this.item.photo.substring(5,this.item.photo.length - 5);
+        this.item.photo =
+          'https://php-group30.azurewebsites.net/uploads/' +
+          this.item.photo.substring(5, this.item.photo.length - 5);
         if (data[0].sellerID !== this.user.userID) {
           this.incrementViewings(data[0].auctionID);
         }
@@ -231,16 +245,15 @@ export class ItemDetailsComponent implements OnDestroy {
     return null;
   }
 
-  getViewings():void{
-     const headers: any = new HttpHeaders({
+  getViewings(): void {
+    const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       options: any = {
         auctionID: +this.route.snapshot.url[1].path,
         userID: this.user.userID
       },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_viewings.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
@@ -269,11 +282,7 @@ export class ItemDetailsComponent implements OnDestroy {
       url: any = 'https://php-group30.azurewebsites.net/increment_viewings.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        if (data != null) {
-          //console.log(data);
-        }
-      },
+      (data: any) => {},
       (error: any) => {
         console.log(error);
       }
@@ -563,7 +572,6 @@ export class ItemDetailsComponent implements OnDestroy {
     return null;
   }
 
-
   watchAuction(): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -721,6 +729,23 @@ export class ItemDetailsComponent implements OnDestroy {
 
   openDialog(message: string, username: string, succeeded: boolean): void {
     const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!succeeded) {
+        this.router.navigate(['/search']);
+      } else {
+        window.location.reload();
+      }
+    });
+  }
+
+  showBidHistory(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(BidHistoryComponent, {
       data: {
         message: message,
         username: username

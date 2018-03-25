@@ -46,7 +46,6 @@
 
         </div>
 
-
         <h3 class="item-description">{{ item?.description }}</h3>
         <br>
         <br>
@@ -54,7 +53,6 @@
           <div class="vertical-align">
             <h3 id="sellerInfo" class="sellerInfo">Seller: </h3>
             <h3 id="sellerName" class="sellerName link" [routerLink]="['/profile', seller?.userID]">{{ seller?.username }}</h3>
-
             <div class="star" title="{{ seller?.username }}'s average rating">
               <div class="rating" [style.width.%]="sellerRating">
                 <span>&#x2605; &#x2605; &#x2605; &#x2605; &#x2605;</span>
@@ -86,7 +84,7 @@
 
 
 
-        <h3 class="item-right" *ngIf="distinctViewers">Total bids: {{ numberBids }}</h3>
+        <h3 class="item-right" *ngIf="distinctViewers" (click)="showBidHistory('hi','Tom',true)">Total bids: {{ numberBids }}</h3>
         <br *ngIf="distinctViewers">
         <br *ngIf="distinctViewers">
 
@@ -133,13 +131,14 @@
       <div class="bid-box">
         <input type="submit" value="Buy It Now" (click)="buyItNow()" id="buy-now-btn" *ngIf="buyItNowPrice != null && (buyItNowPrice > highestBid || highestBid == null)">
         <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf="isWatching === false && isOutbid == false && highestBidderID != user.userID">
-        <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true && highestBidderID != user.userID && isOutbid === false" class="stopwatching">
+        <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true && highestBidderID != user.userID && isOutbid === false"
+          class="stopwatching">
       </div>
     </form>
-  
-  <button class="reauction-button" (click)="reauction()"  *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item?.sellerID === user.userID">
-    <span>Reauction Item</span>
-  </button>
+
+    <button class="reauction-button" (click)="reauction()" *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item?.sellerID === user.userID">
+      <span>Reauction Item</span>
+    </button>
 
     <br>
   </div>
