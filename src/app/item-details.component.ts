@@ -68,7 +68,6 @@ export class ItemDetailsComponent implements OnDestroy {
       this.auctionID = +this.route.snapshot.url[1].path;
       this.user = this.getUser();
       this.getAuctionInformation();
-      this.getAllBids();
 
       let countdownText = document.getElementById('countdown');
       countdownText = null;
@@ -231,6 +230,7 @@ export class ItemDetailsComponent implements OnDestroy {
         this.reservePrice = data[0].reservePrice;
 
         this.getAuctionRecommendations(data[0].auctionID);
+        this.getAllBids(data[0].auctionID);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -353,11 +353,11 @@ export class ItemDetailsComponent implements OnDestroy {
     return null;
   }
 
-  getAllBids(): void {
+  getAllBids(auctionID): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-      options: any = { auctionID: this.auctionID },
+      options: any = { auctionID: auctionID },
       url: any =
         'https://php-group30.azurewebsites.net/retrieve_all_auction_bids.php';
 
@@ -365,7 +365,6 @@ export class ItemDetailsComponent implements OnDestroy {
       (data: any) => {
         if (data != null) {
           this.bids = data;
-          console.log(this.bids);
         }
       },
       (error: any) => {
@@ -471,7 +470,11 @@ export class ItemDetailsComponent implements OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.endAuction();
-          this.openDialog('Congratulations, you have won this auction!','',true);
+          this.openDialog(
+            'Congratulations, you have won this auction!',
+            '',
+            true
+          );
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -769,12 +772,14 @@ export class ItemDetailsComponent implements OnDestroy {
   }
 
   showBidHistory(): void {
-    const dialogRef = this.dialog.open(BidHistoryComponent, {
-      data: {
-        message: this.bids[0].time,
-        username: this.bids[0].price
-      }
-    });
+    if (this.numberBids > 0) {
+      const dialogRef = this.dialog.open(BidHistoryComponent, {
+        data: {
+          message: this.bids[0].time,
+          username: this.bids[0].price
+        }
+      });
+    }
   }
 
   goBack(): void {

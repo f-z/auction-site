@@ -82,8 +82,6 @@
         <br *ngIf="buyItNowPrice != null && buyItNowPrice !=0 && (highestBid == null || buyItNowPrice > highestBid)">
         <br *ngIf="buyItNowPrice != null && buyItNowPrice !=0 && (highestBid == null || buyItNowPrice > highestBid)">
 
-
-
         <h3 class="item-right" *ngIf="distinctViewers" (click)="showBidHistory()">Total bids: {{ numberBids }}</h3>
         <br *ngIf="distinctViewers">
         <br *ngIf="distinctViewers">

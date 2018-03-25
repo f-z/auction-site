@@ -23,6 +23,11 @@ export class SearchPipe implements PipeTransform {
         items[i].categoryName.toLowerCase().includes(term)
       ) {
         filteredItems.push(items[i]);
+      } else if (
+        items[i].description != null &&
+        items[i].description.toLowerCase().includes(term)
+      ) {
+        filteredItems.push(items[i]);
       }
     }
 
