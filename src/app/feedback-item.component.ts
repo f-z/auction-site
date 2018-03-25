@@ -47,13 +47,6 @@ export class FeedbackItemComponent implements OnInit {
       (data: any) => {
         if (data != null) {
           this.item = data;
-          if (this.item.photo.substring(0, 1) === '"') {
-            this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
-              this.item.photo.substring(1, this.item.photo.length - 1);
-          } else {
-            this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
-              this.item.photo.substring(5, this.item.photo.length - 5);
-          }
         }
       },
       (error: any) => {

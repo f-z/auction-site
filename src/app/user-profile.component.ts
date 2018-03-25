@@ -106,24 +106,6 @@ export class ProfileComponent {
         this.phone = data.phone;
         this.email = data.email;
         this.DOB = data.DOB;
-
-        if (this.profileUser.photo != null) {
-          if (this.profileUser.photo.substring(0, 1) === '"') {
-            this.profileUser.photo =
-              'http://php-group30.azurewebsites.net/uploads/' +
-              this.profileUser.photo.substring(
-                1,
-                this.profileUser.photo.length - 1
-              );
-          } else {
-            this.profileUser.photo =
-              'http://php-group30.azurewebsites.net/uploads/' +
-              this.profileUser.photo.substring(
-                5,
-                this.profileUser.photo.length - 5
-              );
-          }
-        }
       },
       (error: any) => {}
     );
@@ -194,23 +176,6 @@ export class ProfileComponent {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.userAuctions = data.auctions;
-        for (let i = 0; i < data.auctions.length; i++) {
-          if (this.userAuctions[i].photo.substring(0, 1) === '"') {
-            this.userAuctions[i].photo =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.userAuctions[i].photo.substring(
-                1,
-                this.userAuctions[i].photo.length - 1
-              );
-          } else {
-            this.userAuctions[i].photo =
-              'https://php-group30.azurewebsites.net/uploads/' +
-              this.userAuctions[i].photo.substring(
-                5,
-                this.userAuctions[i].photo.length - 5
-              );
-          }
-        }
       },
       (error: any) => {
         alert('Error in get items!');

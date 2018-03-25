@@ -4,8 +4,8 @@
     $result = "";
     $status = 200;
     $error = true;
-    $imageName = generateRandomString(30);
-    $targetFile = $targetDir . $imageName.basename($_FILES["photo"]["name"]);
+    $imageName = generateRandomString(20);
+    $targetFile = $targetDir . $imageName . basename($_FILES["photo"]["name"]);
     $uploadOk = 1;
     $imageFileType = pathinfo($targetFile, PATHINFO_EXTENSION);
 
@@ -13,42 +13,37 @@
     $validate = getimagesize($_FILES["photo"]["tmp_name"]);
     if($validate !== false) {
         $uploadOk = 1;
-        // Checking if the image already exists in our server.
-        if (file_exists($targetFile)) {
-            $result = "Error: the image already exists!";
-            $error = true;   
+        // Checking that the image size is not too large.
+        if ($_FILES["photo"]["size"] > 5000000) {
+            $result .= "Error: the image is too large!"; 
+            $error =true;
             $uploadOk = 0;
         } else {
-            // Checking that the image size is not too large.
-            if ($_FILES["photo"]["size"] > 5000000) {
-                $result .= "Error: the image is too large!"; 
-                $error =true;
+            // Checking that the image is in one of the accepted file formats.
+            if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
+                $error = true;
+                $result .= "Error: please upload a JPG, JPEG, PNG, or GIF file!";
                 $uploadOk = 0;
             } else {
-                // Checking that the image is in one of the accepted file formats.
-                if($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
+                // Checking if there has been some other type of error.
+                if ($uploadOk == 0) {
+                    $result .= "Error: the file has not been uploaded!";
                     $error = true;
-                    $result .= "Error: please upload a JPG, JPEG, PNG, or GIF file!";
-                    $uploadOk = 0;
                 } else {
-                    // Checking if there has been some other type of error.
-                    if ($uploadOk == 0) {
-                        $result .= "Error: the file has not been uploaded!";
-                        $error = true;
+                    // If all checks pass, attempt to upload the image.
+                    $temp = explode(".", $_FILES["photo"]["name"]);
+                    $uploadedFileName = $imageName . round(microtime(true)) . '.' . end($temp);
+                    if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetDir . $uploadedFileName)) {
+                        $result = 'https://php-group30.azurewebsites.net/uploads/' . $uploadedFileName;
+                        $status = 200;
+                        $error = false;       
                     } else {
-                        // If all checks pass, attempt to upload the image.
-                        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
-                            $result = $imageName.basename( $_FILES["photo"]["name"]);
-                            $status = 200;
-                            $error = false;       
-                        } else {
-                            $error = true;
-                            $result .= "Error: could not upload the image!";
-                        }
+                        $error = true;
+                        $result .= "Error: could not upload the image!";
                     }
                 }
-            }     
-        } 
+            }
+        }
     }
     else {
         $result = "The file provided is not a real image!";

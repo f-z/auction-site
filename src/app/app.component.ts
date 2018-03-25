@@ -86,16 +86,6 @@ export class AppComponent implements OnInit {
             const now = new Date().getTime();
             // Find the distance between now and the end date.
             const distance = endDate - now;
-
-            if (this.items[i].photo.substring(0, 1) === '"') {
-              this.items[i].photo =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.items[i].photo.substring(1, this.items[i].photo.length - 1);
-            } else {
-              this.items[i].photo =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.items[i].photo.substring(5, this.items[i].photo.length - 5);
-            }
           }
         },
         (error: any) => {
@@ -117,24 +107,6 @@ export class AppComponent implements OnInit {
         if (data != null && data.length > 0) {
           this.recommendedItems = data;
           if (this.recommendedItems != null) {
-            for (let i = 0; i < data.length; i++) {
-              if (this.recommendedItems[i].photo.substring(0, 1) === '"') {
-                this.recommendedItems[i].photo =
-                  'https://php-group30.azurewebsites.net/uploads/' +
-                  this.recommendedItems[i].photo.substring(
-                    1,
-                    this.recommendedItems[i].photo.length - 1
-                );
-              } else {
-                this.recommendedItems[i].photo =
-                'https://php-group30.azurewebsites.net/uploads/' +
-                this.recommendedItems[i].photo.substring(
-                  5,
-                  this.recommendedItems[i].photo.length - 5
-                );
-              }
-            }
-
             this.term = null;
           }
         }
