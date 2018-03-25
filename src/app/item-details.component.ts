@@ -22,6 +22,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
+
+  private loadComplete = false;
+
   private distinctViewers = 0;
   private totalViews = 0;
   private numberBids = 0;
@@ -49,8 +52,7 @@ export class ItemDetailsComponent implements OnDestroy {
   private isWatching: boolean;
   private isOutbid: boolean;
 
-  loadComplete = false;
-  slideIndex: number;
+  private slideIndex: number;
 
   private recommendedAuctions: Observable<Item[]> = null;
   private bids: Observable<Bid[]> = null;
@@ -223,7 +225,7 @@ export class ItemDetailsComponent implements OnDestroy {
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
-        this.buyItNowPrice = data[0].buyNowPrice;
+        this.buyItNowPrice = +data[0].buyNowPrice;
         if (this.buyItNowPrice === 0) {
           this.buyItNowPrice = null;
         }
@@ -358,14 +360,11 @@ export class ItemDetailsComponent implements OnDestroy {
         'Content-Type': 'application/json'
       }),
       options: any = { auctionID: auctionID },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_all_auction_bids.php';
+      url: any = 'https://php-group30.azurewebsites.net/retrieve_all_auction_bids.php';
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        if (data != null) {
           this.bids = data;
-        }
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -391,7 +390,7 @@ export class ItemDetailsComponent implements OnDestroy {
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data.bid.highestBid;
+          this.highestBid = +data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
           this.getUsers(data.bid.buyerID, this.item.sellerID);
@@ -630,12 +629,10 @@ export class ItemDetailsComponent implements OnDestroy {
   setIsExpired(auction_endTime: string): void {
     // Set the date we're counting down to
     const countDownDate = new Date(auction_endTime).getTime();
-    // console.log(countDownDate);
     const now = new Date().getTime();
 
     // Find the distance between now an the count down date
     const distance = countDownDate - now;
-    // console.log(distance);
     if (distance <= 0) {
       this.isExpired = true;
     } else {
