@@ -81,7 +81,7 @@ export class ProfileComponent {
       status: any,
       headers: any
     ) => {
-      this.photo = response;
+      this.photo = response.substring(1, response.length - 1);
     };
   }
 
