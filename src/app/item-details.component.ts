@@ -22,6 +22,9 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
+
+  loadComplete = false;
+
   private distinctViewers = 0;
   private totalViews = 0;
   private numberBids = 0;
@@ -49,11 +52,9 @@ export class ItemDetailsComponent implements OnDestroy {
   private isWatching: boolean;
   private isOutbid: boolean;
 
-  loadComplete = false;
   slideIndex: number;
 
-  private recommendedAuctions: Observable<Item[]> = null;
-  private bids: Observable<Bid[]> = null;
+  recommendedAuctions: Observable<Item[]> = null;
 
   constructor(
     private userService: UserService,
@@ -223,14 +224,14 @@ export class ItemDetailsComponent implements OnDestroy {
         this.getWatchers(data[0].auctionID);
         this.getFeedback(data[0].auctionID);
         this.isUserWatching(data[0].auctionID);
-        this.buyItNowPrice = data[0].buyNowPrice;
+        this.buyItNowPrice = +data[0].buyNowPrice;
+        console.log(this.buyItNowPrice);
         if (this.buyItNowPrice === 0) {
           this.buyItNowPrice = null;
         }
         this.reservePrice = data[0].reservePrice;
 
         this.getAuctionRecommendations(data[0].auctionID);
-        this.getAllBids(data[0].auctionID);
       },
       (error: any) => {
         // If there is an error, return to main search page.
@@ -353,32 +354,6 @@ export class ItemDetailsComponent implements OnDestroy {
     return null;
   }
 
-  getAllBids(auctionID): void {
-    const headers: any = new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      options: any = { auctionID: auctionID },
-      url: any =
-        'https://php-group30.azurewebsites.net/retrieve_all_auction_bids.php';
-
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        if (data != null) {
-          this.bids = data;
-        }
-      },
-      (error: any) => {
-        // If there is an error, return to main search page.
-        this.openDialog(
-          'Oops! Something went wrong; redirecting you to safety...',
-          '',
-          false
-        );
-      }
-    );
-    return null;
-  }
-
   getHighestBid(auctionID): void {
     const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
@@ -391,7 +366,7 @@ export class ItemDetailsComponent implements OnDestroy {
       (data: any) => {
         // Set the date we're counting down to.
         if (data != null) {
-          this.highestBid = data.bid.highestBid;
+          this.highestBid = +data.bid.highestBid;
           this.numberBids = data.count.count;
           this.highestBidderID = data.bid.buyerID;
           this.getUsers(data.bid.buyerID, this.item.sellerID);
@@ -470,11 +445,7 @@ export class ItemDetailsComponent implements OnDestroy {
       this.http.post(url, JSON.stringify(options), headers).subscribe(
         (data: any) => {
           this.endAuction();
-          this.openDialog(
-            'Congratulations, you have won this auction!',
-            '',
-            true
-          );
+          this.openDialog('Congratulations, you have won this auction!','',true);
         },
         (error: any) => {
           // If there is an error, return to main search page.
@@ -539,7 +510,7 @@ export class ItemDetailsComponent implements OnDestroy {
         auctionID: auctionID,
         buyerID: buyerID,
         highestBid: newBid,
-        itemID: +this.route.snapshot.url[1].path
+        itemID: this.itemID
       },
       url: any =
         'https://php-group30.azurewebsites.net/notify_current_bidder.php';
@@ -564,7 +535,7 @@ export class ItemDetailsComponent implements OnDestroy {
         auctionID: auctionID,
         prevBidderID: this.highestBidderID,
         newBuyer: newBuyer,
-        itemID: this.auctionID
+        itemID: this.itemID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
 
@@ -771,15 +742,21 @@ export class ItemDetailsComponent implements OnDestroy {
     });
   }
 
-  showBidHistory(): void {
-    if (this.numberBids > 0) {
-      const dialogRef = this.dialog.open(BidHistoryComponent, {
-        data: {
-          message: this.bids[0].time,
-          username: this.bids[0].price
-        }
-      });
-    }
+  showBidHistory(message: string, username: string, succeeded: boolean): void {
+    const dialogRef = this.dialog.open(BidHistoryComponent, {
+      data: {
+        message: message,
+        username: username
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!succeeded) {
+        this.router.navigate(['/search']);
+      } else {
+        window.location.reload();
+      }
+    });
   }
 
   goBack(): void {
