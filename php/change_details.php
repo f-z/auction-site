@@ -40,11 +40,19 @@ if ($row === false) {
         $city = filter_var($obj->city, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $postcode = filter_var($obj->postcode, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
-        $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);         
+        $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+        $hashedPassword = sha1($password);
 
-        $sql = 'UPDATE user SET username = :username, DOB = :DOB, phone = :phone, street =:street, city=:city, postcode=:postcode WHERE userID = :userID';
-
-        $update = $pdo->prepare($sql);
+        if ($password != null) {
+            $sql = 'UPDATE user SET username = :username, password = :password, DOB = :DOB, phone = :phone, street =:street, city=:city, postcode=:postcode WHERE userID = :userID';
+            $update = $pdo->prepare($sql);
+            $update->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+        } else {
+            $sql = 'UPDATE user SET username = :username, DOB = :DOB, phone = :phone, street =:street, city=:city, postcode=:postcode WHERE userID = :userID';
+            $update = $pdo->prepare($sql);
+        }
+        
 
         // Binding parameter values to prepared statement.
         $update->bindParam(':userID', $userID, PDO::PARAM_STR);
