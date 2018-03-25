@@ -45,12 +45,25 @@ if ($row === false) {
         $hashedPassword = sha1($password);
 
         if ($password != null) {
-            $sql = 'UPDATE user SET username=:username, password=:password, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
-            $update = $pdo->prepare($sql);
+            if ($photo != null) {
+                $sql = 'UPDATE user SET username=:username, password=:password, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
+                $update = $pdo->prepare($sql);
+                $update->bindParam(':photo', $photo, PDO::PARAM_STR);
+            } else {
+                $sql = 'UPDATE user SET username=:username, password=:password, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode WHERE userID=:userID';
+                $update = $pdo->prepare($sql);
+            }
             $update->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+
         } else {
-            $sql = 'UPDATE user SET username=:username, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
-            $update = $pdo->prepare($sql);
+            if ($photo != null) {
+                $sql = 'UPDATE user SET username=:username, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
+                $update = $pdo->prepare($sql);
+                $update->bindParam(':photo', $photo, PDO::PARAM_STR);
+            } else {
+                $sql = 'UPDATE user SET username=:username, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode WHERE userID=:userID';
+                $update = $pdo->prepare($sql);
+            }
         }
 
         // Binding parameter values to prepared statement.
@@ -61,7 +74,6 @@ if ($row === false) {
         $update->bindParam(':street', $street, PDO::PARAM_STR);
         $update->bindParam(':city', $city, PDO::PARAM_STR);
         $update->bindParam(':postcode', $postcode, PDO::PARAM_STR);
-        $update->bindParam(':photo', $photo, PDO::PARAM_STR);
 
         $update->execute();
         echo json_encode(array('message' => 'Congratulations, the record ' . $username . ' was added to the database!'));
