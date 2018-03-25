@@ -112,6 +112,12 @@ export class RegistrationComponent {
     const day = date.getDate();
     const maxBirthDate = new Date(year + 18, month, day);
     const minBirthDate = new Date(year + 110, month, day);
+ 
+    var pw_regex_number =  /[0-9]/;
+    var pw_regex_lowercase = /[a-z]/;
+    var pw_regex_uppercase = /[A-Z]/;
+    var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
     if (
       this.firstName == null ||
@@ -141,7 +147,7 @@ export class RegistrationComponent {
       this.confirmedPassword.trim().length === 0 ||
       this.phone === 0 ||
       this.phone.toString().length < 8 ||
-      this.phone.toString().length > 10 ||
+      this.phone.toString().length > 13 ||
       minBirthDate < new Date()
     ) {
       // If there are any incorrect details entered, notify the user.
@@ -171,7 +177,23 @@ export class RegistrationComponent {
       // If the user has not accepted the terms and conditions, do not allow them to proceed with registration.
       this.openDialog('Please add a profile photo!', '', false);
       return false;
+    } else if (this.password.length < 8){
+       this.openDialog('Passwords must be at least 8 characters long!', '', false);
+      return false;
     }
+     else if (!pw_regex_number.test(this.password)){
+       this.openDialog('Passwords must contain at least one number!', '', false);
+      return false;
+    } else if (!pw_regex_lowercase.test(this.password)){
+       this.openDialog('Passwords must contain at least one lowercase letter!', '', false);
+      return false;
+    } else if (!pw_regex_uppercase.test(this.password)){
+       this.openDialog('Passwords must contain at least one uppercase letter!', '', false);
+      return false;
+    } else if (!email_regex.test(this.email)){
+       this.openDialog('Please enter a valid email address!', '', false);
+      return false;
+    } 
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.

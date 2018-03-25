@@ -260,6 +260,12 @@ export class ProfileComponent {
     const maxBirthDate = new Date(year + 18, month, day);
     const minBirthDate = new Date(year + 110, month, day);
 
+    var pw_regex_number =  /[0-9]/;
+    var pw_regex_lowercase = /[a-z]/;
+    var pw_regex_uppercase = /[A-Z]/;
+    var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
     if (
       this.street == null ||
       this.city == null ||
@@ -304,7 +310,23 @@ export class ProfileComponent {
       // If old and new passwords match, notify the user.
       this.openDialog('New password must be different to old one!', '', false);
       return false;
+    }else if (this.password.length < 8){
+       this.openDialog('Passwords must be at least 8 characters long!', '', false);
+      return false;
     }
+     else if (!pw_regex_number.test(this.password)){
+       this.openDialog('Passwords must contain at least one number!', '', false);
+      return false;
+    } else if (!pw_regex_lowercase.test(this.password)){
+       this.openDialog('Passwords must contain at least one lowercase letter!', '', false);
+      return false;
+    } else if (!pw_regex_uppercase.test(this.password)){
+       this.openDialog('Passwords must contain at least one uppercase letter!', '', false);
+      return false;
+    } else if (!email_regex.test(this.email)){
+       this.openDialog('Please enter a valid email address!', '', false);
+      return false;
+    } 
 
     return true;
   }
