@@ -134,7 +134,7 @@
       </div>
     </form>
 
-    <button class="reauction-button" (click)="reauction()" *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || highestBid == null) && item?.sellerID === user.userID">
+    <button class="reauction-button" (click)="reauction()" *ngIf="isExpired && (highestBid < reservePrice || highestBid === 0 || !highestBid) && item?.sellerID === user.userID">
       <span>Reauction Item</span>
     </button>
 
