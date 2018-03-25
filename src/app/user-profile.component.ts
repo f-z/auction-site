@@ -280,14 +280,18 @@ export class ProfileComponent {
       // If passwords do not match, notify the user.
       this.openDialog('Passwords need to match!', '', false);
       return false;
-    } 
-    if(this.password){
-       if (
+    }
+    if (this.password) {
+      if (
         this.password === this.confirmedPassword &&
         this.password === this.oldPassword
       ) {
         // If old and new passwords match, notify the user.
-        this.openDialog('New password must be different to old one!', '', false);
+        this.openDialog(
+          'New password must be different to old one!',
+          '',
+          false
+        );
         return false;
       } else if (this.password.length < 8) {
         this.openDialog(
@@ -297,7 +301,11 @@ export class ProfileComponent {
         );
         return false;
       } else if (!pw_regex_number.test(this.password)) {
-        this.openDialog('Passwords must contain at least one number!', '', false);
+        this.openDialog(
+          'Passwords must contain at least one number!',
+          '',
+          false
+        );
         return false;
       } else if (!pw_regex_lowercase.test(this.password)) {
         this.openDialog(
@@ -313,8 +321,8 @@ export class ProfileComponent {
           false
         );
         return false;
-    }
-  } else if (!email_regex.test(this.email)) {
+      }
+    } else if (!email_regex.test(this.email)) {
       this.openDialog('Please enter a valid email address!', '', false);
       return false;
     }

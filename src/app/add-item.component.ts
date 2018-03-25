@@ -79,7 +79,6 @@ export class AddItemComponent implements OnInit {
       headers: any
     ) => {
       this.photo = response.substring(1, response.length - 1);
-      console.log(this.photo);
     };
   }
 
