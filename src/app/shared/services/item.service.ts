@@ -94,6 +94,7 @@ export interface Bid {
   time: string;
   buyerID: number;
   highest: number;
+  username: string;
 }
 
 export interface Feedback {

@@ -22,9 +22,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ItemDetailsComponent implements OnDestroy {
   private item: Item;
-
-  loadComplete = false;
-
   private distinctViewers = 0;
   private totalViews = 0;
   private numberBids = 0;
@@ -52,9 +49,11 @@ export class ItemDetailsComponent implements OnDestroy {
   private isWatching: boolean;
   private isOutbid: boolean;
 
+  loadComplete = false;
   slideIndex: number;
 
-  recommendedAuctions: Observable<Item[]> = null;
+  private recommendedAuctions: Observable<Item[]> = null;
+  private bids: Observable<Bid[]> = null;
 
   constructor(
     private userService: UserService,
@@ -69,6 +68,7 @@ export class ItemDetailsComponent implements OnDestroy {
       this.auctionID = +this.route.snapshot.url[1].path;
       this.user = this.getUser();
       this.getAuctionInformation();
+      this.getAllBids();
 
       let countdownText = document.getElementById('countdown');
       countdownText = null;
@@ -339,6 +339,33 @@ export class ItemDetailsComponent implements OnDestroy {
         // Set the date we're counting down to.
         if (data != null) {
           this.watchers = data.watchers;
+        }
+      },
+      (error: any) => {
+        // If there is an error, return to main search page.
+        this.openDialog(
+          'Oops! Something went wrong; redirecting you to safety...',
+          '',
+          false
+        );
+      }
+    );
+    return null;
+  }
+
+  getAllBids(): void {
+    const headers: any = new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      options: any = { auctionID: this.auctionID },
+      url: any =
+        'https://php-group30.azurewebsites.net/retrieve_all_auction_bids.php';
+
+    this.http.post(url, JSON.stringify(options), headers).subscribe(
+      (data: any) => {
+        if (data != null) {
+          this.bids = data;
+          console.log(this.bids);
         }
       },
       (error: any) => {
@@ -744,19 +771,11 @@ export class ItemDetailsComponent implements OnDestroy {
     });
   }
 
-  showBidHistory(message: string, username: string, succeeded: boolean): void {
+  showBidHistory(): void {
     const dialogRef = this.dialog.open(BidHistoryComponent, {
       data: {
-        message: message,
-        username: username
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!succeeded) {
-        this.router.navigate(['/search']);
-      } else {
-        window.location.reload();
+        message: this.bids[0].time,
+        username: this.bids[0].price
       }
     });
   }

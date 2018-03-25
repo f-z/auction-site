@@ -13,7 +13,7 @@
                                 WHERE auctionID = a.auctionID
                                 )
                                 WHERE i.itemID = a.itemID
-                                AND a.endTime >= NOW()
+                                AND a.endTime > NOW()
                                 GROUP BY a.auctionID');
 
         $stmnt->execute();
