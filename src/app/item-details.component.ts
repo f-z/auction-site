@@ -774,11 +774,9 @@ export class ItemDetailsComponent implements OnDestroy {
   showBidHistory(): void {
     if (this.numberBids > 0) {
       const dialogRef = this.dialog.open(BidHistoryComponent, {
-        data: {
-          message: this.bids[0].time,
-          username: this.bids[0].price
-        }
+        data: this.bids
       });
+      dialogRef.updateSize('70%', '70%');
     }
   }
 
