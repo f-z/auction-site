@@ -53,42 +53,78 @@ export class MyItemsComponent implements OnInit {
       (data: any) => {
         this.userAuctions = data.auctions;
         for (let i = 0; i < data.auctions.length; i++) {
-          this.userAuctions[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo.substring(
-              5,
-              this.userAuctions[i].photo.length - 5
-            );
+          if (this.userAuctions[i].photo.substring(0, 1) === '"') {
+            this.userAuctions[i].photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo.substring(
+                1,
+                this.userAuctions[i].photo.length - 1
+              );
+          } else {
+            this.userAuctions[i].photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo.substring(
+                5,
+                this.userAuctions[i].photo.length - 5
+              );
+          }
         }
 
         this.userTopBids = data.topbids;
         for (let i = 0; i < data.topbids.length; i++) {
-          this.userTopBids[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userTopBids[i].photo.substring(
-              5,
-              this.userTopBids[i].photo.length - 5
+          if (this.userTopBids[i].photo.substring(0, 1) === '"') {
+            this.userTopBids[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userTopBids[i].photo.substring(
+                1,
+                this.userTopBids[i].photo.length - 1
             );
+          } else {
+              this.userTopBids[i].photo =
+                'https://php-group30.azurewebsites.net/uploads/' +
+                this.userTopBids[i].photo.substring(
+                  5,
+                this.userTopBids[i].photo.length - 5
+              );
+            }
         }
 
         this.userWatching = data.watching;
         for (let i = 0; i < data.watching.length; i++) {
-          this.userWatching[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userWatching[i].photo.substring(
-              5,
-              this.userWatching[i].photo.length - 5
+          if (this.userWatching[i].photo.substring(0, 1) === '"') {
+            this.userWatching[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userWatching[i].photo.substring(
+                1,
+                this.userWatching[i].photo.length - 1
             );
+          } else {
+            this.userWatching[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userWatching[i].photo.substring(
+                5,
+                this.userWatching[i].photo.length - 5
+            );
+          }
         }
 
         this.userOutbid = data.outbid;
         for (let i = 0; i < data.outbid.length; i++) {
-          this.userOutbid[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userOutbid[i].photo.substring(
-              5,
-              this.userOutbid[i].photo.length - 5
+          if (this.userOutbid[i].photo.substring(0, 1) === '"') {
+            this.userOutbid[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userOutbid[i].photo.substring(
+                1,
+                this.userOutbid[i].photo.length - 1
             );
+          } else {
+            this.userOutbid[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userOutbid[i].photo.substring(
+                5,
+                this.userOutbid[i].photo.length - 5
+            );
+          }
         }
       },
       (error: any) => {
@@ -117,22 +153,5 @@ export class MyItemsComponent implements OnInit {
     this.user = null;
     this.setUser(null);
     this.router.navigate(['/search']);
-  }
-
-  openTab(button, auctionList): void {
-    let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName('tabcontent');
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].className = tabcontent[i].className.replace(
-        ' activetab',
-        ''
-      );
-    }
-    tablinks = document.getElementsByClassName('tablinks');
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(' active', '');
-    }
-    document.getElementById(auctionList).className += ' activetab';
-    document.getElementById(button).className += ' active';
   }
 }

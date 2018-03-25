@@ -115,14 +115,14 @@ export class ProfileComponent {
                 1,
                 this.profileUser.photo.length - 1
               );
-            } else {
-              this.profileUser.photo =
+          } else {
+            this.profileUser.photo =
               'http://php-group30.azurewebsites.net/uploads/' +
               this.profileUser.photo.substring(
                 5,
                 this.profileUser.photo.length - 5
               );
-            }
+          }
         }
       },
       (error: any) => {}
@@ -195,12 +195,21 @@ export class ProfileComponent {
       (data: any) => {
         this.userAuctions = data.auctions;
         for (let i = 0; i < data.auctions.length; i++) {
-          this.userAuctions[i].photo =
-            'https://php-group30.azurewebsites.net/uploads/' +
-            this.userAuctions[i].photo.substring(
-              5,
-              this.userAuctions[i].photo.length - 5
-            );
+          if (this.userAuctions[i].photo.substring(0, 1) === '"') {
+            this.userAuctions[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo.substring(
+                1,
+                this.userAuctions[i].photo.length - 1
+              );
+          } else {
+            this.userAuctions[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.userAuctions[i].photo.substring(
+                5,
+                this.userAuctions[i].photo.length - 5
+              );
+          }
         }
       },
       (error: any) => {
@@ -212,42 +221,38 @@ export class ProfileComponent {
   changeDetails(): void {
     if (this.validate()) {
       const headers: any = new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      options: any = {
-        userID: this.userID,
-        street: this.street,
-        city: this.city,
-        postcode: this.postcode,
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        confirmedPassword: this.confirmedPassword,
-        oldPassword: this.oldPassword,
-        phone: this.phone,
-        DOB: this.DOB,
-        photo: this.photo
-      },
-      url: any = 'https://php-group30.azurewebsites.net/change_details.php';
+          'Content-Type': 'application/json'
+        }),
+        options: any = {
+          userID: this.userID,
+          street: this.street,
+          city: this.city,
+          postcode: this.postcode,
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          confirmedPassword: this.confirmedPassword,
+          oldPassword: this.oldPassword,
+          phone: this.phone,
+          DOB: this.DOB,
+          photo: this.photo
+        },
+        url: any = 'https://php-group30.azurewebsites.net/change_details.php';
 
-    this.http.post(url, JSON.stringify(options), headers).subscribe(
-      (data: any) => {
-        // If the request was successful, notify the user.
-        this.openDialog(
-          'Congratulations, your changes have been saved!',
-          '',
-          false
-        );
-      },
-      (error: any) => {
-        // If the supplied username or email already exist in the database, notify the user.
-        this.openDialog(
-          'Supplied password is incorrect!',
-          '',
-          false
-        );
-      },
-    );
+      this.http.post(url, JSON.stringify(options), headers).subscribe(
+        (data: any) => {
+          // If the request was successful, notify the user.
+          this.openDialog(
+            'Congratulations, your changes have been saved!',
+            '',
+            false
+          );
+        },
+        (error: any) => {
+          // If the supplied username or email already exist in the database, notify the user.
+          this.openDialog('Supplied password is incorrect!', '', false);
+        }
+      );
     }
   }
 
@@ -260,11 +265,11 @@ export class ProfileComponent {
     const maxBirthDate = new Date(year + 18, month, day);
     const minBirthDate = new Date(year + 110, month, day);
 
-    var pw_regex_number =  /[0-9]/;
-    var pw_regex_lowercase = /[a-z]/;
-    var pw_regex_uppercase = /[A-Z]/;
-    var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+    const pw_regex_number = /[0-9]/;
+    const pw_regex_lowercase = /[a-z]/;
+    const pw_regex_uppercase = /[A-Z]/;
+    // tslint:disable-next-line:max-line-length
+    const email_regex = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (
       this.street == null ||
@@ -279,7 +284,11 @@ export class ProfileComponent {
       this.openDialog('Please fill in all the fields!', '', false);
       return false;
     } else if (this.oldPassword == null) {
-      this.openDialog('Please type your current password to save changes!', '', false);
+      this.openDialog(
+        'Please type your current password to save changes!',
+        '',
+        false
+      );
       return false;
     } else if (
       this.street.trim().length === 0 ||
@@ -306,27 +315,41 @@ export class ProfileComponent {
       // If passwords do not match, notify the user.
       this.openDialog('Passwords need to match!', '', false);
       return false;
-    } else if (this.password === this.confirmedPassword && this.password === this.oldPassword) {
+    } else if (
+      this.password === this.confirmedPassword &&
+      this.password === this.oldPassword
+    ) {
       // If old and new passwords match, notify the user.
       this.openDialog('New password must be different to old one!', '', false);
       return false;
-    }else if (this.password.length < 8){
-       this.openDialog('Passwords must be at least 8 characters long!', '', false);
+    } else if (this.password.length < 8) {
+      this.openDialog(
+        'Passwords must be at least 8 characters long!',
+        '',
+        false
+      );
+      return false;
+    } else if (!pw_regex_number.test(this.password)) {
+      this.openDialog('Passwords must contain at least one number!', '', false);
+      return false;
+    } else if (!pw_regex_lowercase.test(this.password)) {
+      this.openDialog(
+        'Passwords must contain at least one lowercase letter!',
+        '',
+        false
+      );
+      return false;
+    } else if (!pw_regex_uppercase.test(this.password)) {
+      this.openDialog(
+        'Passwords must contain at least one uppercase letter!',
+        '',
+        false
+      );
+      return false;
+    } else if (!email_regex.test(this.email)) {
+      this.openDialog('Please enter a valid email address!', '', false);
       return false;
     }
-     else if (!pw_regex_number.test(this.password)){
-       this.openDialog('Passwords must contain at least one number!', '', false);
-      return false;
-    } else if (!pw_regex_lowercase.test(this.password)){
-       this.openDialog('Passwords must contain at least one lowercase letter!', '', false);
-      return false;
-    } else if (!pw_regex_uppercase.test(this.password)){
-       this.openDialog('Passwords must contain at least one uppercase letter!', '', false);
-      return false;
-    } else if (!email_regex.test(this.email)){
-       this.openDialog('Please enter a valid email address!', '', false);
-      return false;
-    } 
 
     return true;
   }
@@ -341,10 +364,10 @@ export class ProfileComponent {
 
     dialogRef.afterOpen().subscribe(result => {
       setTimeout(dialogRef.close(), 5000);
-      });
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-        this.refresh();
+      this.refresh();
     });
   }
 

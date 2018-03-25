@@ -657,18 +657,34 @@ export class ItemDetailsComponent implements OnDestroy {
         if (data != null) {
           this.highestBidder = data[0];
           if (this.highestBidder.photo != null) {
+            if (this.highestBidder.photo.substring(0, 1) === '"') {
+              this.highestBidder.photo =
+                'http://php-group30.azurewebsites.net/uploads/' +
+                this.highestBidder.photo.substring(
+                  1,
+                  this.highestBidder.photo.length - 1
+              );
+          } else {
             this.highestBidder.photo =
-              'http://php-group30.azurewebsites.net/uploads/' +
-              this.highestBidder.photo.substring(
-                1,
-                this.highestBidder.photo.length - 1
+                'http://php-group30.azurewebsites.net/uploads/' +
+                this.highestBidder.photo.substring(
+                  5,
+                  this.highestBidder.photo.length - 5
               );
           }
+        }
+
           this.seller = data[1];
           if (this.seller.photo != null) {
+            if (this.seller.photo.substring(0, 1) === '"') {
+              this.seller.photo =
+                'http://php-group30.azurewebsites.net/uploads/' +
+                this.seller.photo.substring(1, this.seller.photo.length - 1);
+            }
+          } else {
             this.seller.photo =
               'http://php-group30.azurewebsites.net/uploads/' +
-              this.seller.photo.substring(1, this.seller.photo.length - 1);
+              this.seller.photo.substring(5, this.seller.photo.length - 5);
           }
         }
       },
@@ -840,12 +856,21 @@ export class ItemDetailsComponent implements OnDestroy {
         if (data != null) {
           this.recommendedAuctions = data;
           for (let i = 0; i < data.length; i++) {
-            this.recommendedAuctions[i].photo =
+            if (this.recommendedAuctions[i].photo.substring(0, 1) === '"') {
+              this.recommendedAuctions[i].photo =
+              'https://php-group30.azurewebsites.net/uploads/' +
+              this.recommendedAuctions[i].photo.substring(
+                1,
+                this.recommendedAuctions[i].photo.length - 1
+              );
+            } else {
+              this.recommendedAuctions[i].photo =
               'https://php-group30.azurewebsites.net/uploads/' +
               this.recommendedAuctions[i].photo.substring(
                 5,
                 this.recommendedAuctions[i].photo.length - 5
               );
+            }
           }
         }
       },

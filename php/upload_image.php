@@ -4,11 +4,11 @@
     $result = "";
     $status = 200;
     $error = true;
-    $imageName = generateRandomString(20);
+    $imageName = generateRandomString(30);
     $targetFile = $targetDir . $imageName.basename($_FILES["photo"]["name"]);
     $uploadOk = 1;
     $imageFileType = pathinfo($targetFile, PATHINFO_EXTENSION);
-     
+
     // Validating that the image file is a real image.
     $validate = getimagesize($_FILES["photo"]["tmp_name"]);
     if($validate !== false) {

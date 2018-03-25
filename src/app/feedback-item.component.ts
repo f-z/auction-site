@@ -45,11 +45,15 @@ export class FeedbackItemComponent implements OnInit {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        // Set the date we are counting down to.
         if (data != null) {
           this.item = data;
-          this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
-            this.item.photo.substring(5, this.item.photo.length - 5);
+          if (this.item.photo.substring(0, 1) === '"') {
+            this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
+              this.item.photo.substring(1, this.item.photo.length - 1);
+          } else {
+            this.item.photo = 'https://php-group30.azurewebsites.net/uploads/' +
+              this.item.photo.substring(5, this.item.photo.length - 5);
+          }
         }
       },
       (error: any) => {
