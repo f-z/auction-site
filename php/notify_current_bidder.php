@@ -57,7 +57,7 @@
                           <p>Looking good so far. It is almost yours, but you could still be outbid. You can improve your chances by increasing your max bid.</p>
                             <tbody>
                                 <tr>
-                                  <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
+                                  <td> <a href="https://ucl-group30.azurewebsites.net/items/'.$itemID.'" target="_blank">View Item</a> </td>
                                 </tr>
                             </tbody>
                         </td>

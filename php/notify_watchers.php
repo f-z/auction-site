@@ -62,7 +62,7 @@
                                   <p>Follow the link below to make a new bid and improve your chances of winning!</p>
                                     <tbody>
                                         <tr>
-                                        <td> <a href="http://localhost:4200/items/'.$itemID.'" target="_blank">View Item</a> </td>
+                                        <td> <a href="https://ucl-group30.azurewebsites.net/items/'.$itemID.'" target="_blank">View Item</a> </td>
                                         </tr>
                                     </tbody>
                                 </td>

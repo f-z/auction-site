@@ -109,7 +109,7 @@ foreach($bidders as $bidder){
                                   <p>Follow the link below to bid on other items.</p>
                                     <tbody>
                                         <tr>
-                                          <td> <a href="http://localhost:4200" target="_blank">View Item</a> </td>
+                                          <td> <a href="https://ucl-group30.azurewebsites.net/" target="_blank">Visit UCLBay</a> </td>
                                         </tr>
                                     </tbody>
                                 </td>
