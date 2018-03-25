@@ -41,13 +41,15 @@
 }
 
 .grid-list-container {
-  width: 100%;
-  margin: auto;
+  width: 80%;
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 16px;
   z-index: 4;
   border: none;
+  margin-right: 10%;
+   margin-left: 10%;
+
 }
 
 @import '../palette';
