@@ -78,7 +78,7 @@
         <br *ngIf="item && !highestBid">
         <br *ngIf="item && !highestBid">
 
-        <h3 class="item-right" *ngIf="buyItNowPrice !=0 && (buyItNowPrice > highestBid || !highestBid)">Buy-it-now price: £{{ buyItNowPrice }} </h3>
+        <h3 class="item-right" *ngIf="buyItNowPrice && buyItNowPrice !=0 && (buyItNowPrice > highestBid || !highestBid)">Buy-it-now price: £{{ buyItNowPrice }} </h3>
         <br *ngIf="buyItNowPrice && buyItNowPrice !=0 && (!highestBid  || buyItNowPrice > highestBid)">
         <br *ngIf="buyItNowPrice && buyItNowPrice !=0 && (!highestBid || buyItNowPrice > highestBid)">
 
