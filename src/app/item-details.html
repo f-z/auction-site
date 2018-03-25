@@ -127,7 +127,7 @@
       </div>
       <br>
       <div class="bid-box">
-        <input type="submit" value="Buy It Now" (click)="buyItNow()" id="buy-now-btn" *ngIf="buyItNowPrice != null && (buyItNowPrice > highestBid || highestBid == null)">
+        <input type="submit" value="Buy It Now" (click)="buyItNow()" id="buy-now-btn" *ngIf="buyItNowPrice && (buyItNowPrice > highestBid || !highestBid)">
         <input type="submit" value="Watch Auction" (click)="watchAuction()" id="watch-btn" *ngIf="isWatching === false && isOutbid == false && highestBidderID != user.userID">
         <input type="submit" value="Remove from watch list" (click)="stopWatching()" *ngIf="isWatching === true && highestBidderID != user.userID && isOutbid === false"
           class="stopwatching">
