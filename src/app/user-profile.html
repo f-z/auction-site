@@ -27,7 +27,7 @@
 <section class="user-details" *ngIf="user!=null">
 
   <div>
-    <img class="viewingProfilePhoto centred" src="{{ profileUser?.photo }}" *ngIf="user.userID != profileUser?.userID">
+    <img class="viewingProfilePhoto centred" src="{{ profileUser?.photo }}">
     <h2 class="viewingProfileName centred" *ngIf="user.userID != profileUser?.userID">{{ profileUser?.username }}</h2>
     <h2 class="viewingProfileName centred" *ngIf="user.userID == profileUser?.userID">My Profile</h2>
   </div>
