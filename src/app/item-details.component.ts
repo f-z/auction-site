@@ -539,7 +539,7 @@ export class ItemDetailsComponent implements OnDestroy {
         auctionID: auctionID,
         buyerID: buyerID,
         highestBid: newBid,
-        itemID: this.itemID
+        itemID: +this.route.snapshot.url[1].path
       },
       url: any =
         'https://php-group30.azurewebsites.net/notify_current_bidder.php';
@@ -564,7 +564,7 @@ export class ItemDetailsComponent implements OnDestroy {
         auctionID: auctionID,
         prevBidderID: this.highestBidderID,
         newBuyer: newBuyer,
-        itemID: this.itemID
+        itemID: this.auctionID
       },
       url: any = 'https://php-group30.azurewebsites.net/notify_prev_bidder.php';
 
