@@ -30,11 +30,11 @@ use PHPMailer\PHPMailer\Exception;
 require_once('./vendor/autoload.php');
 
 $selectSellers = 'SELECT a.auctionID, u.firstName, u.email, i.itemid, i.name
-        FROM user u, item i, auction a
-        WHERE u.userid = i.sellerID 
-        AND i.itemID = a.itemID 
-        AND a.endTime < NOW()
-        AND a.isNotified = 0';
+                    FROM user u, item i, auction a
+                    WHERE u.userid = i.sellerID 
+                    AND i.itemID = a.itemID 
+                    AND a.endTime < NOW()
+                    AND a.isNotified = 0';
 
 $stmt = $pdo->prepare($selectSellers);
 $stmt->execute();
