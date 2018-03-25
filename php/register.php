@@ -49,7 +49,7 @@
             $city = filter_var($obj->city, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $postcode = filter_var($obj->postcode, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
-            $photo = $obj->photo;
+            $photo = filter_var($obj->photo, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 
             $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);         
 
@@ -65,7 +65,7 @@
             $insert->bindParam(':DOB', $DOB, PDO::PARAM_STR);
             $insert->bindParam(':firstname', $firstName, PDO::PARAM_STR);
             $insert->bindParam(':lastname', $lastName, PDO::PARAM_STR);
-            $insert->bindParam(':photo', $photo, PDO::PARAM_LOB);
+            $insert->bindParam(':photo', $photo, PDO::PARAM_STR);
             $insert->bindParam(':phone', $phone, PDO::PARAM_INT);
             $insert->bindParam(':street', $street, PDO::PARAM_STR);
             $insert->bindParam(':city', $city, PDO::PARAM_STR);

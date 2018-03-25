@@ -18,13 +18,13 @@ import { FileUploader } from 'ng2-file-upload';
   styleUrls: ['./add-item.css']
 })
 export class AddItemComponent implements OnInit {
-  item : Item;
+  item: Item;
   private user: User;
 
   private name: string;
   private description: string;
   private condition: string;
-  private quantity: number = 1;
+  private quantity = 1;
   private category: string;
   private photo: string;
   private endDate: string;
@@ -85,7 +85,7 @@ export class AddItemComponent implements OnInit {
   addItem(): void {
 
     let phpurl = '';
-    if(!this.item.name){
+    if (!this.item.name) {
         phpurl = 'https://php-group30.azurewebsites.net/insert_item.php';
     } else {
        phpurl = 'https://php-group30.azurewebsites.net/update_item.php';
@@ -236,7 +236,7 @@ export class AddItemComponent implements OnInit {
     } else if (+this.startPrice > +this.reservePrice) {
         this.openDialog('Reserve price cannot be smaller than start price', '', false);
         return false;
-      } 
+    }
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.

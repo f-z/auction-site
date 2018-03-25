@@ -68,6 +68,21 @@ export class ProfileComponent {
       this.getItems();
       this.imageAdded = false;
     });
+
+    this.uploader.onAfterAddingFile = file => {
+      file.withCredentials = false;
+      this.uploader.uploadAll();
+    };
+    // Overriding the default onCompleteItem property of the uploader,
+    // so we are able to deal with the server response.
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      this.photo = response;
+    };
   }
 
   retrieveProfile(): void {
@@ -92,8 +107,6 @@ export class ProfileComponent {
         this.email = data.email;
         this.DOB = data.DOB;
 
-        console.log(this.username);
-        console.log(this.userID);
         if (this.profileUser.photo != null) {
           this.profileUser.photo =
             'http://php-group30.azurewebsites.net/uploads/' +
@@ -153,8 +166,7 @@ export class ProfileComponent {
     return null;
   }
 
-  
-  additem():void{
+  additem(): void {
     this.itemService.setItem(null);
     this.router.navigate(['add-item']);
   }
@@ -183,19 +195,13 @@ export class ProfileComponent {
         }
       },
       (error: any) => {
-        // If there is unauthorised / improper access, log out and return to Login page.
-        //  this.user = null;
-        // this.setUser(null);
-        // this.router.navigate(['/login']);
-        alert('error in get items');
+        alert('Error in get items!');
       }
     );
   }
 
-  changeDetails():void {
-
-    if (this.validate()){
-
+  changeDetails(): void {
+    if (this.validate()) {
       const headers: any = new HttpHeaders({
         'Content-Type': 'application/json'
       }),
@@ -214,7 +220,7 @@ export class ProfileComponent {
         photo: this.photo
       },
       url: any = 'https://php-group30.azurewebsites.net/change_details.php';
-  
+
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         console.log(data);
@@ -228,7 +234,7 @@ export class ProfileComponent {
       (error: any) => {
         // If the supplied username or email already exist in the database, notify the user.
         this.openDialog(
-          'Supplied password is not correct!',
+          'Supplied password is incorrect!',
           '',
           false
         );
@@ -239,7 +245,7 @@ export class ProfileComponent {
   }
 
   validate(): boolean {
-    // If the details supplied are incomplete/incorrect, do not proceed with the transaction.
+    // If the details supplied are incomplete / incorrect, do not proceed with the transaction.
     const date = new Date(this.DOB);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -259,7 +265,7 @@ export class ProfileComponent {
       // If there are any empty fields, notify the user.
       this.openDialog('Please fill in all the fields!', '', false);
       return false;
-    } else if(this.oldPassword == null){
+    } else if (this.oldPassword == null) {
       this.openDialog('Please type your current password to save changes!', '', false);
       return false;
     } else if (
@@ -288,7 +294,7 @@ export class ProfileComponent {
       // If passwords do not match, notify the user.
       this.openDialog('Passwords need to match!', '', false);
       return false;
-    } else if (this.password == this.confirmedPassword && this.password == this.oldPassword) {
+    } else if (this.password === this.confirmedPassword && this.password === this.oldPassword) {
       // If old and new passwords match, notify the user.
       this.openDialog('New password must be different to old one!', '', false);
       return false;
@@ -296,7 +302,7 @@ export class ProfileComponent {
 
     // If all the checks have passed, then proceed with uploading the image
     // and creating the registration record in the database.
-    if (this.imageAdded){
+    if (this.imageAdded) {
       this.uploader.uploadAll();
     }
     console.log(this.phone);
