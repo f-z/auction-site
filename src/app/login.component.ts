@@ -42,9 +42,15 @@ export class LoginComponent {
         // If the request was successful, set the current user and notify him/her.
         this.user = data;
         if (this.user.photo != null) {
-          this.user.photo =
+          if (this.user.photo.substring(0, 1) === '"') {
+            this.user.photo =
             'http://php-group30.azurewebsites.net/uploads/' +
             this.user.photo.substring(1, this.user.photo.length - 1);
+          } else {
+            this.user.photo =
+            'http://php-group30.azurewebsites.net/uploads/' +
+            this.user.photo.substring(5, this.user.photo.length - 5);
+          }
         }
         this.openDialog('Congratulations, logging in...', '', true);
       },

@@ -72,7 +72,7 @@
     onfocus="this.value=''">
 </div>
 
-<div class="grid-list-container" *ngIf="!term">
+<div class="grid-list-container" *ngIf="!term && user!=null && user.role!='admin'">
   <h2 *ngIf="recommendedItems">Items we recommend for you</h2>
   <mat-grid-list cols="3" gutterSize="16">
     <mat-grid-tile *ngFor="let item of recommendedItems">

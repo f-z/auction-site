@@ -66,7 +66,10 @@ export class AppComponent implements OnInit {
     this.user = this.getUser();
     this.term = 'All';
     this.getItems();
-    this.getUserRecommendations();
+
+    if (this.user != null) {
+      this.getUserRecommendations();
+    }
   }
 
   getItems(): void {

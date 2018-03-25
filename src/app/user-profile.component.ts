@@ -223,7 +223,6 @@ export class ProfileComponent {
 
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
-        console.log(data);
         // If the request was successful, notify the user.
         this.openDialog(
           'Congratulations, your changes have been saved!',
@@ -274,7 +273,6 @@ export class ProfileComponent {
       this.postcode.trim().length === 0 ||
       this.username.trim().length === 0 ||
       this.oldPassword.trim().length === 0 ||
-      // this.phone.trim().length === 0 ||
       this.phone.length < 10 ||
       this.phone.length > 13 ||
       minBirthDate < new Date()
@@ -300,12 +298,6 @@ export class ProfileComponent {
       return false;
     }
 
-    // If all the checks have passed, then proceed with uploading the image
-    // and creating the registration record in the database.
-    if (this.imageAdded) {
-      this.uploader.uploadAll();
-    }
-    console.log(this.phone);
     return true;
   }
 

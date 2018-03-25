@@ -40,16 +40,16 @@ if ($row === false) {
         $postcode = filter_var($obj->postcode, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
         $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-        $photo = $obj->photo;
+        $photo = filter_var($obj->photo, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $password = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
         $hashedPassword = sha1($password);
 
         if ($password != null) {
-            $sql = 'UPDATE user SET username = :username, password = :password, DOB = :DOB, phone = :phone, street = :street, city = :city, postcode = :postcode, photo = :photo WHERE userID = :userID';
+            $sql = 'UPDATE user SET username=:username, password=:password, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
             $update = $pdo->prepare($sql);
             $update->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         } else {
-            $sql = 'UPDATE user SET username = :username, DOB = :DOB, phone = :phone, street = :street, city = :city, postcode = :postcode, photo = :photo WHERE userID = :userID';
+            $sql = 'UPDATE user SET username=:username, DOB=:DOB, phone=:phone, street=:street, city=:city, postcode=:postcode, photo=:photo WHERE userID=:userID';
             $update = $pdo->prepare($sql);
         }
 
@@ -61,7 +61,7 @@ if ($row === false) {
         $update->bindParam(':street', $street, PDO::PARAM_STR);
         $update->bindParam(':city', $city, PDO::PARAM_STR);
         $update->bindParam(':postcode', $postcode, PDO::PARAM_STR);
-        $insert->bindParam(':photo', $photo, PDO::PARAM_STR);
+        $update->bindParam(':photo', $photo, PDO::PARAM_STR);
 
         $update->execute();
         echo json_encode(array('message' => 'Congratulations, the record ' . $username . ' was added to the database!'));

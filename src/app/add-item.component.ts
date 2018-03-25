@@ -114,7 +114,6 @@ export class AddItemComponent implements OnInit {
     this.http.post(url, JSON.stringify(options), headers).subscribe(
       (data: any) => {
         this.addAuction(data);
-        console.log(data);
       },
       (error: any) => {
         // If there is an error, notify the user.
