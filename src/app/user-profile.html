@@ -84,7 +84,7 @@
   <br>
   <br>
 
-  <div class="container">
+  <div class="container" *ngIf=" user.userID == profileUser?.userID">
     <form id="change-details-form">
       <h2 class="viewingProfileName centred" *ngIf="user.userID == profileUser?.userID">Personal Details</h2>
 
