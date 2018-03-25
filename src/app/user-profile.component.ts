@@ -108,12 +108,21 @@ export class ProfileComponent {
         this.DOB = data.DOB;
 
         if (this.profileUser.photo != null) {
-          this.profileUser.photo =
-            'http://php-group30.azurewebsites.net/uploads/' +
-            this.profileUser.photo.substring(
-              1,
-              this.profileUser.photo.length - 1
-            );
+          if (this.profileUser.photo.substring(0, 1) === '"') {
+            this.profileUser.photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.profileUser.photo.substring(
+                1,
+                this.profileUser.photo.length - 1
+              );
+            } else {
+              this.profileUser.photo =
+              'http://php-group30.azurewebsites.net/uploads/' +
+              this.profileUser.photo.substring(
+                5,
+                this.profileUser.photo.length - 5
+              );
+            }
         }
       },
       (error: any) => {}

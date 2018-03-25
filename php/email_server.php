@@ -39,5 +39,4 @@ $mail->Debugoutput = 'html';
 
 // Set message sender.
 $mail->setFrom('uclbay.gc06@gmail.com', 'UCLBay');
-
 ?>

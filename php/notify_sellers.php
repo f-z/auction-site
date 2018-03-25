@@ -68,7 +68,7 @@ if (!empty($sellers)) {
         $reservePrice = $winner['reservePrice'];
         $itemName = $winner['name'];
 
-        //Server settings
+        // Server settings
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
         $mail->Host = 'smtp.gmail.com';

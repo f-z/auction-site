@@ -29,7 +29,6 @@
             $incrementViewings->execute();
 
          } else { // If the user has already viewed the auction:
-
             $incrementQuery = 'UPDATE viewing 
                                SET viewCount = viewCount + 1 
                                WHERE auctionID = :auctionID AND userID = :userID';

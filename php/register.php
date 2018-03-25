@@ -50,7 +50,6 @@
             $postcode = filter_var($obj->postcode, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
             $phone = filter_var($obj->phone, FILTER_SANITIZE_NUMBER_INT);
             $photo = filter_var($obj->photo, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-
             $DOB = filter_var($obj->DOB, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);         
 
             $sql = 'INSERT INTO user(username, password, role, photo, firstName, lastName, DOB, email, phone, street, city, postcode) VALUES (:username, :password, :role, :photo, :firstname, :lastname, :DOB, :email, :phone, :street, :city, :postcode)';

@@ -65,7 +65,7 @@ foreach($bidders as $bidder){
 
     try {
         $mail = new PHPMailer(true);
-        //Server settings
+        // Server settings
         $mail->isSMTP();
         $mail->SMTPDebug = 2;
         $mail->Host = 'smtp.gmail.com';
