@@ -280,38 +280,41 @@ export class ProfileComponent {
       // If passwords do not match, notify the user.
       this.openDialog('Passwords need to match!', '', false);
       return false;
-    } else if (
-      this.password === this.confirmedPassword &&
-      this.password === this.oldPassword
-    ) {
-      // If old and new passwords match, notify the user.
-      this.openDialog('New password must be different to old one!', '', false);
-      return false;
-    } else if (this.password.length < 8) {
-      this.openDialog(
-        'Passwords must be at least 8 characters long!',
-        '',
-        false
-      );
-      return false;
-    } else if (!pw_regex_number.test(this.password)) {
-      this.openDialog('Passwords must contain at least one number!', '', false);
-      return false;
-    } else if (!pw_regex_lowercase.test(this.password)) {
-      this.openDialog(
-        'Passwords must contain at least one lowercase letter!',
-        '',
-        false
-      );
-      return false;
-    } else if (!pw_regex_uppercase.test(this.password)) {
-      this.openDialog(
-        'Passwords must contain at least one uppercase letter!',
-        '',
-        false
-      );
-      return false;
-    } else if (!email_regex.test(this.email)) {
+    } 
+    if(this.password){
+       if (
+        this.password === this.confirmedPassword &&
+        this.password === this.oldPassword
+      ) {
+        // If old and new passwords match, notify the user.
+        this.openDialog('New password must be different to old one!', '', false);
+        return false;
+      } else if (this.password.length < 8) {
+        this.openDialog(
+          'Passwords must be at least 8 characters long!',
+          '',
+          false
+        );
+        return false;
+      } else if (!pw_regex_number.test(this.password)) {
+        this.openDialog('Passwords must contain at least one number!', '', false);
+        return false;
+      } else if (!pw_regex_lowercase.test(this.password)) {
+        this.openDialog(
+          'Passwords must contain at least one lowercase letter!',
+          '',
+          false
+        );
+        return false;
+      } else if (!pw_regex_uppercase.test(this.password)) {
+        this.openDialog(
+          'Passwords must contain at least one uppercase letter!',
+          '',
+          false
+        );
+        return false;
+    }
+  } else if (!email_regex.test(this.email)) {
       this.openDialog('Please enter a valid email address!', '', false);
       return false;
     }
