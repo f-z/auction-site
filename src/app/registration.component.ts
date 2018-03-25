@@ -58,7 +58,7 @@ export class RegistrationComponent {
       status: any,
       headers: any
     ) => {
-      this.photo = response;
+      this.photo = response.substring(1, response.length - 1);
       this.register();
       // console.log('ImageUpload:uploaded:', item, status, response);
     };
