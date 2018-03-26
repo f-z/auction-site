@@ -13,7 +13,8 @@
         $stmnt = $pdo->prepare('SELECT b.buyerID, b.price, b.time, u.username FROM user u, bid b
                                 WHERE b.buyerID = u.userID
                                 AND b.price > 0
-                                AND b.auctionID = :auctionID;');
+                                AND b.auctionID = :auctionID
+                                ORDER BY b.time DESC;');
        
         // Binding the provided auction ID to our prepared statement.
         $stmnt->bindParam(':auctionID', $auctionID, PDO::PARAM_INT);
