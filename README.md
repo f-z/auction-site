@@ -1,4 +1,10 @@
-# Newauction
+# Auction Site
+
+Front-end (Angular) source code in src folder.
+
+Server (Express) in api folder.
+
+Back-end (PHP, MySQL) in php folder.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
 
